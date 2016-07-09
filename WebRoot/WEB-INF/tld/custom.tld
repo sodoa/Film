@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+	version="2.0">
+
+	<tlib-version>1.1</tlib-version>
+	<short-name>h</short-name>
+	<uri>http://mos.xinfan.com/</uri>
+
+	<tag>
+		<name>dateformat</name>
+		<tag-class>com.xinfan.wxshop.business.tag.DateFormatTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>time</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>format</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>currentime</name>
+		<tag-class>com.xinfan.wxshop.business.tag.CurrentTimeTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>format</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>auth</name>
+		<tag-class>com.xinfan.wxshop.business.tag.AuthTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>funid</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>config</name>
+		<tag-class>com.xinfan.wxshop.business.tag.ConfigTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>top_goods_list_tag</name>
+		<tag-class>com.xinfan.wxshop.business.tag.TopGoodsListTag</tag-class>
+		<body-content>scriptless</body-content>
+	</tag>
+
+	<tag>
+		<name>main_good_burst_tag</name>
+		<tag-class>com.xinfan.wxshop.business.tag.MainGoodsListTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>size</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>type</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>goods_type_list_tag</name>
+		<tag-class>com.xinfan.wxshop.business.tag.GoodsTypeListTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>size</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>topGoodsType</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>goods_image_list_tag</name>
+		<tag-class>com.xinfan.wxshop.business.tag.GoodsNatvPictureTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>size</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>goodsId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>type</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>goods_appraise_short_tag</name>
+		<tag-class>com.xinfan.wxshop.business.tag.GoodsAppraiseShortTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>size</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>goodsId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+
+	<tag>
+		<name>goods_groom_tag</name>
+		<tag-class>com.xinfan.wxshop.business.tag.GoodsGroomTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>size</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>typeLevel2</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+
+	<tag>
+		<name>area_tag</name>
+		<tag-class>com.xinfan.wxshop.business.tag.AreaTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>type</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>code</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>goods_type_name_tag</name>
+		<tag-class>com.xinfan.wxshop.business.tag.GoodsTypeNametTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>id</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>goods_type_option_tag</name>
+		<tag-class>com.xinfan.wxshop.business.tag.GoodsTypeOptionTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>leaf</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+
+	<tag>
+		<name>wx_current_customerid_Tag</name>
+		<tag-class>com.xinfan.wxshop.business.tag.WXCurrentCustomerIdTag</tag-class>
+		<body-content>scriptless</body-content>
+	</tag>
+
+	<tag>
+		<name>search_words_list_tag</name>
+		<tag-class>com.xinfan.wxshop.business.tag.SearchWordsListTag</tag-class>
+		<body-content>scriptless</body-content>
+	</tag>
+
+	<tag>
+		<name>dict_list_tag</name>
+		<tag-class>com.xinfan.wxshop.business.tag.DictListTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>type</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>dict_option_tag</name>
+		<tag-class>com.xinfan.wxshop.business.tag.DictOptionTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>type</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>theme</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>		
+	</tag>
+
+	<tag>
+		<name>goods_theme_option_tag</name>
+		<tag-class>com.xinfan.wxshop.business.tag.GoodsThemeOptionTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>theme</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>	
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>			
+	</tag>
+
+	<tag>
+		<name>dict_label_tag</name>
+		<tag-class>com.xinfan.wxshop.business.tag.DictLabelTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>type</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>cart_num_tag</name>
+		<tag-class>com.xinfan.wxshop.business.tag.CartNumTag</tag-class>
+		<body-content>scriptless</body-content>
+	</tag>
+
+	<tag>
+		<name>phone_hidden_part_tag</name>
+		<tag-class>com.xinfan.wxshop.business.tag.PhoneHiddenPartTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>		
+	</tag>	
+	
+
+
+</taglib>

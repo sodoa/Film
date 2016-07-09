@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.1.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+
+	
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>	
+            <tx:method name="login*" propagation="REQUIRED" />
+            <tx:method name="delete*" propagation="REQUIRED" />
+            <tx:method name="add*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="insert*" propagation="REQUIRED" />
+  			<tx:method name="save*" propagation="REQUIRED" />       
+  			<tx:method name="del*" propagation="REQUIRED" />         
+  			<tx:method name="modify*" propagation="REQUIRED" />   
+        </tx:attributes>
+    </tx:advice>
+    
+    <tx:advice id="txTransactionAdvice" transaction-manager="transactionManager">
+        <tx:attributes>	
+            <tx:method name="nextVal" propagation="NOT_SUPPORTED" />      
+        </tx:attributes>
+    </tx:advice>
+    
+    <aop:config>
+        <aop:pointcut id="interceptorPointCuts1"  expression="execution(* com.xinfan.wxshop.business.service.*.*(..)) " />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="interceptorPointCuts1" />   
+    </aop:config>
+  <!--   
+   <aop:config>
+        <aop:pointcut id="interceptorPointCuts2"  expression="execution(* com.xinfan.wxshop.business.dao.SequenceDao.*(..)) " />
+        <aop:advisor advice-ref="txTransactionAdvice" pointcut-ref="interceptorPointCuts2" />  
+    </aop:config>
+     -->
+</beans>

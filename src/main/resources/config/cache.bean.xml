@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+	
+	<bean id="ehCacheManager" class="com.xinfan.wxshop.common.cache.EhCacheManagerFacotryBean">
+		<property name="configLocation">
+			<value>classpath:/config/ehcache.config.xml</value>
+		</property>
+	</bean>
+			
+	<!--通用永久性缓存-->
+	<bean class="com.xinfan.wxshop.common.cache.EhcacheCacheProvider" >
+		<property name="cacheManager">
+			<ref local="ehCacheManager"/>
+		</property>
+		<property name="cacheName">
+			<value>common_cache</value>
+		</property>		
+	</bean>
+	
+	<bean class="com.xinfan.wxshop.common.cache.EhcacheCacheProvider" >
+		<property name="cacheManager">
+			<ref local="ehCacheManager"/>
+		</property>
+		<property name="cacheName">
+			<value>exp_cache</value>
+		</property>		
+	</bean>	
+
+	<bean class="com.xinfan.wxshop.business.cache.ConfigCacheLoader" >
+		<property name="cacheKey" value="ConfigCache" />
+	</bean>	
+	
+	<bean class="com.xinfan.wxshop.business.cache.DictCacheLoader" >
+		<property name="cacheKey" value="DictCache" />
+	</bean>			
+	
+			
+</beans>

@@ -1,0 +1,2 @@
+/*! js weidian 2015-05-22 */
+var downloadBuyerAppBanner=function(){$("#dlBuyerAppWrap").length()};"com.koudai.haidai"!=M.getCookie("from_appid")&&"com.chunfen.brand5"!=M.getCookie("from_appid")&&"com.koudai.weidian.buyer"!=M.getCookie("from_appid")&&"com.geili.koudai"!=M.getCookie("from_appid")&&downloadBuyerAppBanner();

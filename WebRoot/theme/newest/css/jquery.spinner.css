@@ -1,0 +1,57 @@
+.spinner-sprite, .spinner .decrease, .spinner .decrease[disabled], .spinner .increase, .spinner .value, .spinner .value.passive {
+	
+}
+.spinner {
+	height: 25px;
+	width: 71px;
+	overflow: hidden;
+*zoom:1;
+	border: 1px solid #dedddd;
+    border-radius: 5px;
+}
+.spinner button, .spinner .value {
+	text-align: center;
+	display: block;
+	float: left;
+	height: 100%;
+	line-height: 25px;
+	margin: 0
+}
+.spinner button {
+	border: none;
+	width: 23px;
+	color: #a59d9d;
+	font: 22px Arial bold;
+	padding: 0;
+	outline: none;
+	background:#fff;
+}
+.spinner .decrease {
+	border-right:1px solid #dedddd;
+	cursor: pointer;
+	
+}
+.spinner .decrease[disabled] {
+	background-position: 0 -75px;
+	cursor: default
+}
+.spinner .increase {
+	cursor: pointer;
+	border-left:1px solid #dedddd;
+}
+.spinner .value {
+	background-position: 0 -100px;
+	width: 24px;
+	height: 27px;
+	border: none;
+	font-family: Arial;
+	color: #a59d9d;
+	padding: 0px
+}
+.spinner .value.passive {
+	background-position: 0 -25px;
+	color: #919191
+}
+.spinner .error, .spinner .invalid {
+	background: #aa0000
+}

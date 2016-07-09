@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="SequenceDao" class="com.xinfan.wxshop.business.dao.SequenceDao">
+		<property name="namespace"
+			value="com.xinfan.wxshop.business.dao.SequenceMapper" />
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+
+	<bean id="ConfigDao" class="com.xinfan.wxshop.business.dao.ConfigDao">
+		<property name="namespace" value="com.xinfan.wxshop.business.dao.ConfigMapper" />
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+	
+	<bean id="DictDao" class="com.xinfan.wxshop.business.dao.DictDao">
+		<property name="namespace" value="com.xinfan.wxshop.business.dao.DictMapper" />
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>		
+
+	<bean id="CustomerDao" class="com.xinfan.wxshop.business.dao.CustomerDao">
+		<property name="namespace"
+			value="com.xinfan.wxshop.business.dao.CustomerMapper" />
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+	
+	<bean id="BillDao" class="com.xinfan.wxshop.business.dao.BillDao">
+		<property name="namespace"
+			value="com.xinfan.wxshop.business.dao.BillMapper" />
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+	
+	<bean id="FilmDao" class="com.xinfan.wxshop.business.dao.FilmDao">
+		<property name="namespace"
+			value="com.xinfan.wxshop.business.dao.FilmMapper" />
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+	
+	<bean id="MovieDao" class="com.xinfan.wxshop.business.dao.MovieDao">
+		<property name="namespace"
+			value="com.xinfan.wxshop.business.dao.MovieMapper" />
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+	<bean id="KeymovieDao" class="com.xinfan.wxshop.business.dao.KeymovieDao">
+		<property name="namespace"
+			value="com.xinfan.wxshop.business.dao.KeymovieMapper" />
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+	<bean id="SearchkeyDao" class="com.xinfan.wxshop.business.dao.SearchkeyDao">
+		<property name="namespace"
+			value="com.xinfan.wxshop.business.dao.SearchkeyMapper" />
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+
+	
+	
+</beans>

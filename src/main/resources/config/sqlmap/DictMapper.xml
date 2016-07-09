@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xinfan.wxshop.business.dao.DictMapper" >
+  <resultMap id="BaseResultMap" type="com.xinfan.wxshop.business.entity.Dict" >
+    <id column="dtype" property="dtype" jdbcType="VARCHAR" />
+    <id column="vvalue" property="vvalue" jdbcType="VARCHAR" />
+    <result column="dname" property="dname" jdbcType="VARCHAR" />
+    <result column="vname" property="vname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    dtype, vvalue, dname, vname
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xinfan.wxshop.business.entity.DictExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_dict
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.xinfan.wxshop.business.entity.DictKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_dict
+    where dtype = #{dtype,jdbcType=VARCHAR}
+      and vvalue = #{vvalue,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.xinfan.wxshop.business.entity.DictKey" >
+    delete from t_dict
+    where dtype = #{dtype,jdbcType=VARCHAR}
+      and vvalue = #{vvalue,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xinfan.wxshop.business.entity.DictExample" >
+    delete from t_dict
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xinfan.wxshop.business.entity.Dict" >
+    insert into t_dict (dtype, vvalue, dname, 
+      vname)
+    values (#{dtype,jdbcType=VARCHAR}, #{vvalue,jdbcType=VARCHAR}, #{dname,jdbcType=VARCHAR}, 
+      #{vname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xinfan.wxshop.business.entity.Dict" >
+    insert into t_dict
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dtype != null" >
+        dtype,
+      </if>
+      <if test="vvalue != null" >
+        vvalue,
+      </if>
+      <if test="dname != null" >
+        dname,
+      </if>
+      <if test="vname != null" >
+        vname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dtype != null" >
+        #{dtype,jdbcType=VARCHAR},
+      </if>
+      <if test="vvalue != null" >
+        #{vvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="dname != null" >
+        #{dname,jdbcType=VARCHAR},
+      </if>
+      <if test="vname != null" >
+        #{vname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xinfan.wxshop.business.entity.DictExample" resultType="java.lang.Integer" >
+    select count(*) from t_dict
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_dict
+    <set >
+      <if test="record.dtype != null" >
+        dtype = #{record.dtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vvalue != null" >
+        vvalue = #{record.vvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dname != null" >
+        dname = #{record.dname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vname != null" >
+        vname = #{record.vname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_dict
+    set dtype = #{record.dtype,jdbcType=VARCHAR},
+      vvalue = #{record.vvalue,jdbcType=VARCHAR},
+      dname = #{record.dname,jdbcType=VARCHAR},
+      vname = #{record.vname,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xinfan.wxshop.business.entity.Dict" >
+    update t_dict
+    <set >
+      <if test="dname != null" >
+        dname = #{dname,jdbcType=VARCHAR},
+      </if>
+      <if test="vname != null" >
+        vname = #{vname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dtype = #{dtype,jdbcType=VARCHAR}
+      and vvalue = #{vvalue,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xinfan.wxshop.business.entity.Dict" >
+    update t_dict
+    set dname = #{dname,jdbcType=VARCHAR},
+      vname = #{vname,jdbcType=VARCHAR}
+    where dtype = #{dtype,jdbcType=VARCHAR}
+      and vvalue = #{vvalue,jdbcType=VARCHAR}
+  </update>
+</mapper>

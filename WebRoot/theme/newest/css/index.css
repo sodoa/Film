@@ -1,0 +1,65 @@
+@charset "utf-8";
+
+
+
+
+/* 菜单选择 */
+.m-menu{padding-top:0.2rem}
+.m-labels {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+	padding-bottom:0.25rem;
+}
+.m-labels a {
+    display: block;
+    width: 33.333%;
+    text-align: center;
+    color: #666;
+    font-size: 0.2rem;
+    background-color: #fefefe;
+}
+.m-labels a::before {
+    margin: 0 auto 0.14rem;
+    background-size: 0.93rem!important;
+}
+.m-labels a:before {
+    content: "";
+    display: block;
+    width: 0.93rem;
+    height: 0.93rem;
+    clear: both;
+}
+.m-labels .ico-fruit:before{ background-image:url(../images/fruit.png); }
+.m-labels .ico-girlfriend:before{ background-image:url(../images/girlfriend.png); }
+.m-labels .ico-parents:before{ background-image:url(../images/parents.png); }
+.m-labels .ico-player:before{ background-image:url(../images/player.png); }
+.m-labels .ico-activity:before{ background-image:url(../images/activity.png); }
+.m-labels .ico-money:before{ background-image:url(../images/money.png); }
+
+.m-index-th{height:0.6rem;line-height:0.6rem;font-size:0.25rem;color:#ff4f01;background:url(../images/fire.png) center   left no-repeat;background-size:0.36rem;padding-left:0.43rem}
+.list-pic li{width:100%;margin-bottom:0.2rem;overflow:hidden}
+.list-pic li a{position:relative;display:block}
+.list-pic li img{width:100%;}
+.list-pic .tit{width:95%;height:0.5rem;position:absolute;bottom:0;left:0;line-height:0.5rem;padding:0 0.47rem;background-color: rgba(0,0,0,0.5);color:#fff;font-size:0.2rem}
+.list-pic .discount,.list-pic .price{position:absolute;background:#ff0101;color:#fff;}
+.list-pic .discount{top:0;right:25px;padding:0.05rem;line-height:0.3rem;font-size:0.24rem;}
+.list-pic .price{font-size:0.16px;left:0.1rem;top:0.05rem; border-radius:100px;width:0.8rem;height:0.65rem;line-height:0.22rem;padding-top:0.15rem;text-align:center}
+.list-pic .price .big{font-size:0.24rem}
+
+/* 火爆活动 */
+.toolbar{height:0.4rem;line-height:0.4rem;background:#eee;padding:0 0.1rem;font-size:0.18rem}
+.toolbar .time {float:left;}
+.toolbar .time em{background-color:#8b8b8b;color:#fff;padding:0.02rem 0.05rem;margin:0 0.05rem;
+-webkit-border-radius: 5px;
+    -moz-border-radius:5px;
+    -ms-border-radius: 5px;
+    border-radius:5px;
+}
+.toolbar .count{float:right;color:#8b8b8b}
+.toolbar em{color:#f83130}
