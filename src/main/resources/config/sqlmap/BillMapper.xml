@@ -225,4 +225,20 @@
       wx_id = #{wxId,jdbcType=VARCHAR}
     where bill_id = #{billId,jdbcType=INTEGER}
   </update>
+  
+    <!-- 以下手动添加 -->
+  <select id="selectPageList" parameterType="com.xinfan.wxshop.common.base.DataMap" resultType="com.xinfan.wxshop.common.base.DataMap">
+  		select * from t_bill t where 1=1
+  		
+		 <if test="startdate!=null">
+			<![CDATA[and paytime >= #{startdate,jdbcType=TIMESTAMP}]]> 
+		</if>
+		
+		<if test="enddate !=null">
+			<![CDATA[ and paytime <= #{enddate,jdbcType=TIMESTAMP} ]]> 
+		</if>
+		
+		order by bill_id desc 
+  </select>
+ 
 </mapper>

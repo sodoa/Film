@@ -2,7 +2,9 @@ package com.xinfan.wxshop.business.entity;
 
 import java.util.Date;
 
-public class Film {
+import com.xinfan.wxshop.common.base.BaseEntity;
+
+public class Film extends BaseEntity {
     private Integer filmId;
 
     private String name;
@@ -22,6 +24,8 @@ public class Film {
     private Date publish;
 
     private Integer format;
+
+    private String picture;
 
     private Integer player;
 
@@ -105,6 +109,14 @@ public class Film {
 
     public void setFormat(Integer format) {
         this.format = format;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture == null ? null : picture.trim();
     }
 
     public Integer getPlayer() {

@@ -208,4 +208,14 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where searchkey_id = #{searchkeyId,jdbcType=INTEGER}
   </update>
+  
+  <!-- 以下手动添加 -->
+  <select id="selectPageList" parameterType="com.xinfan.wxshop.common.base.DataMap" resultType="com.xinfan.wxshop.common.base.DataMap">
+  		select * from t_searchkey t where 1=1
+		<if test="word != null">
+			and word = #{word,jdbcType=VARCHAR}
+		</if>
+		order by searchkey_id desc 
+  </select>
+  
 </mapper>

@@ -2,7 +2,9 @@ package com.xinfan.wxshop.business.entity;
 
 import java.util.Date;
 
-public class Customer {
+import com.xinfan.wxshop.common.base.BaseEntity;
+
+public class Customer extends BaseEntity {
     private Integer customerId;
 
     private String displayname;

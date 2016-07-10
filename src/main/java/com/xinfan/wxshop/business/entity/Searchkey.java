@@ -2,7 +2,9 @@ package com.xinfan.wxshop.business.entity;
 
 import java.util.Date;
 
-public class Searchkey {
+import com.xinfan.wxshop.common.base.BaseEntity;
+
+public class Searchkey extends BaseEntity {
     private Integer searchkeyId;
 
     private String word;

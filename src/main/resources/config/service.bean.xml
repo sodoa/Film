@@ -8,5 +8,9 @@
 	<bean id="ConfigService" class="com.xinfan.wxshop.business.service.ConfigService" />
 	<bean id="CustomerService" class="com.xinfan.wxshop.business.service.CustomerService" />
 	<bean id="FilmService" class="com.xinfan.wxshop.business.service.FilmService" />
+	<bean id="MovieService" class="com.xinfan.wxshop.business.service.MovieService" />
+	<bean id="KeymovieService" class="com.xinfan.wxshop.business.service.KeymovieService" />
+	<bean id="SearchkeyService" class="com.xinfan.wxshop.business.service.SearchkeyService" />
+	<bean id="BillService" class="com.xinfan.wxshop.business.service.BillService" />
 	
 </beans>

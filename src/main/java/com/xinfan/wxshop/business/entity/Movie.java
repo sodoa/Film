@@ -1,6 +1,8 @@
 package com.xinfan.wxshop.business.entity;
 
-public class Movie {
+import com.xinfan.wxshop.common.base.BaseEntity;
+
+public class Movie extends BaseEntity {
     private Integer movieId;
 
     private Integer filmId;

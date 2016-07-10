@@ -208,4 +208,16 @@
       word = #{word,jdbcType=VARCHAR}
     where keymovie_id = #{keymovieId,jdbcType=INTEGER}
   </update>
+  
+      <!-- 以下手动添加 -->
+  <select id="selectPageList" parameterType="com.xinfan.wxshop.common.base.DataMap" resultType="com.xinfan.wxshop.common.base.DataMap">
+  		select * from t_keymovie t where 1=1
+		<if test="name != null">
+			and name = #{name,jdbcType=VARCHAR}
+		</if>
+		<if test="word != null">
+			and word = #{word,jdbcType=VARCHAR}
+		</if>
+		order by keymovie_id desc 
+  </select>
 </mapper>

@@ -208,4 +208,16 @@
       type = #{type,jdbcType=INTEGER}
     where movie_id = #{movieId,jdbcType=INTEGER}
   </update>
+  
+    <!-- 以下手动添加 -->
+  <select id="selectPageList" parameterType="com.xinfan.wxshop.common.base.DataMap" resultType="com.xinfan.wxshop.common.base.DataMap">
+  		select * from t_movie t where 1=1
+		<if test="name != null">
+			and name = #{name,jdbcType=VARCHAR}
+		</if>
+		<if test="type != null">
+			and type = #{type,jdbcType=INTEGER}
+		</if>
+		order by movie_id desc 
+  </select>
 </mapper>

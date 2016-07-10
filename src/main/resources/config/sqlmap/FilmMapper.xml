@@ -12,6 +12,7 @@
     <result column="country" property="country" jdbcType="INTEGER" />
     <result column="publish" property="publish" jdbcType="TIMESTAMP" />
     <result column="format" property="format" jdbcType="INTEGER" />
+    <result column="picture" property="picture" jdbcType="VARCHAR" />
     <result column="player" property="player" jdbcType="INTEGER" />
     <result column="player_url" property="playerUrl" jdbcType="VARCHAR" />
   </resultMap>
@@ -74,8 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    film_id, name, resume, type, url, director, actor, country, publish, format, player, 
-    player_url
+    film_id, name, resume, type, url, director, actor, country, publish, format, picture, 
+    player, player_url
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xinfan.wxshop.business.entity.FilmExample" >
     select
@@ -111,13 +112,13 @@
     insert into t_film (film_id, name, resume, 
       type, url, director, 
       actor, country, publish, 
-      format, player, player_url
-      )
+      format, picture, player, 
+      player_url)
     values (#{filmId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{resume,jdbcType=VARCHAR}, 
       #{type,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{director,jdbcType=VARCHAR}, 
       #{actor,jdbcType=VARCHAR}, #{country,jdbcType=INTEGER}, #{publish,jdbcType=TIMESTAMP}, 
-      #{format,jdbcType=INTEGER}, #{player,jdbcType=INTEGER}, #{playerUrl,jdbcType=VARCHAR}
-      )
+      #{format,jdbcType=INTEGER}, #{picture,jdbcType=VARCHAR}, #{player,jdbcType=INTEGER}, 
+      #{playerUrl,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xinfan.wxshop.business.entity.Film" >
     insert into t_film
@@ -151,6 +152,9 @@
       </if>
       <if test="format != null" >
         format,
+      </if>
+      <if test="picture != null" >
+        picture,
       </if>
       <if test="player != null" >
         player,
@@ -189,6 +193,9 @@
       </if>
       <if test="format != null" >
         #{format,jdbcType=INTEGER},
+      </if>
+      <if test="picture != null" >
+        #{picture,jdbcType=VARCHAR},
       </if>
       <if test="player != null" >
         #{player,jdbcType=INTEGER},
@@ -237,6 +244,9 @@
       <if test="record.format != null" >
         format = #{record.format,jdbcType=INTEGER},
       </if>
+      <if test="record.picture != null" >
+        picture = #{record.picture,jdbcType=VARCHAR},
+      </if>
       <if test="record.player != null" >
         player = #{record.player,jdbcType=INTEGER},
       </if>
@@ -260,6 +270,7 @@
       country = #{record.country,jdbcType=INTEGER},
       publish = #{record.publish,jdbcType=TIMESTAMP},
       format = #{record.format,jdbcType=INTEGER},
+      picture = #{record.picture,jdbcType=VARCHAR},
       player = #{record.player,jdbcType=INTEGER},
       player_url = #{record.playerUrl,jdbcType=VARCHAR}
     <if test="_parameter != null" >
@@ -296,6 +307,9 @@
       <if test="format != null" >
         format = #{format,jdbcType=INTEGER},
       </if>
+      <if test="picture != null" >
+        picture = #{picture,jdbcType=VARCHAR},
+      </if>
       <if test="player != null" >
         player = #{player,jdbcType=INTEGER},
       </if>
@@ -316,6 +330,7 @@
       country = #{country,jdbcType=INTEGER},
       publish = #{publish,jdbcType=TIMESTAMP},
       format = #{format,jdbcType=INTEGER},
+      picture = #{picture,jdbcType=VARCHAR},
       player = #{player,jdbcType=INTEGER},
       player_url = #{playerUrl,jdbcType=VARCHAR}
     where film_id = #{filmId,jdbcType=INTEGER}
@@ -332,6 +347,9 @@
 		</if>
 		<if test="country != null">
 			and country = #{country,jdbcType=INTEGER}
+		</if>
+		<if test="notin != null">
+			and film_id not in (${notin} )
 		</if>
 		order by film_id desc 
   </select>
