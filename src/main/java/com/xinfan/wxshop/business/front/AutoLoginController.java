@@ -23,7 +23,6 @@ import com.xinfan.wxshop.business.util.WeixinUtils;
 import com.xinfan.wxshop.business.vo.LoginSession;
 import com.xinfan.wxshop.business.vo.OAuthInfo;
 import com.xinfan.wxshop.business.vo.UserInfo;
-import com.xinfan.wxshop.common.base.DataMap;
 import com.xinfan.wxshop.common.config.FileConfig;
 
 /**
@@ -32,7 +31,7 @@ import com.xinfan.wxshop.common.config.FileConfig;
  * 
  */
 @Controller
-@RequestMapping("/weixin")
+@RequestMapping("/movie")
 public class AutoLoginController  {
 	
         private static final Logger logger = LoggerFactory.getLogger(AutoLoginController.class);

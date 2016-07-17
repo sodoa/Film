@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.xinfan.wxshop.business.entity.Customer;
 import com.xinfan.wxshop.business.entity.Film;
 import com.xinfan.wxshop.business.service.CustomerService;
 import com.xinfan.wxshop.business.service.FilmService;
@@ -49,7 +48,7 @@ public class MovieController {
 		String msg = "";
 
 		if (sessionMap == null) {
-			mv.setViewName("redirect:/weixin/login.jspx?fid=" + fid);
+			mv.setViewName("redirect:/movie/login.jspx?fid=" + fid);
 			return mv;
 		} else {
 			logger.debug("###########" + sessionMap.getExpiryDate());
@@ -87,9 +86,9 @@ public class MovieController {
 	public ModelAndView movie(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("/front/movie");
 
-		String state = request.getParameter("state");
-		if (StringUtils.isNotBlank(state)) {
-			Film film = filmService.getFilm(Integer.valueOf(state));
+		String fid = request.getParameter("fid");
+		if (StringUtils.isNotBlank(fid)) {
+			Film film = filmService.getFilm(Integer.valueOf(fid));
 			if (null != film) {
 				mv.setViewName("/front/movie");
 				mv.addObject("film", film);
@@ -102,7 +101,7 @@ public class MovieController {
 			mv.setViewName("/front/err");
 		}
 
-		logger.debug("###########" + state);
+		logger.debug("###########" + fid);
 
 		return mv;
 	}

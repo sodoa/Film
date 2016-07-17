@@ -348,6 +348,7 @@ public class PayController {
 		mv.addObject("nonceStr", paramterMap.get("nonceStr")[0]);
 		mv.addObject("packageValue", paramterMap.get("package")[0]);
 		mv.addObject("signType", paramterMap.get("signType")[0]);
+		mv.addObject("fid", paramterMap.get("fid")[0]);
 		mv.addObject("sign", sign);
 		
 		return mv;

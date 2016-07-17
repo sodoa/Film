@@ -74,8 +74,6 @@ public class WeixinController extends WeixinControllerSupport {
             String content = msg.getContent();
             log.debug("用户发送到服务器的内容:", content);
             
-            String appid = FileConfig.getInstance().getString("weixin.appid");
-            
             String domain = FileConfig.getInstance().getString("domain.name");
             
             //snsapi_base  --   snsapi_userinfo
