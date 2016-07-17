@@ -30,6 +30,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
+import com.xinfan.wxshop.common.config.FileConfig;
+
 public class WxHttpsUtils {
 	
 	private static final Logger logger = LoggerFactory.getLogger(WxHttpsUtils.class);
@@ -46,7 +48,7 @@ public class WxHttpsUtils {
 	// HTTP请求器
 	private static CloseableHttpClient httpclient;
 	
-	private static String KEY_VERSIONS = "1319785801";
+	private static String KEY_VERSIONS = FileConfig.getInstance().getString("weixin.mch_id");
 	
 	private static String KEY_PATH = "/keys/apiclient_cert.p12"	;
 
