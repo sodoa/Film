@@ -75,11 +75,9 @@ public class WeixinController extends WeixinControllerSupport {
             log.debug("用户发送到服务器的内容:", content);
             
             String appid = FileConfig.getInstance().getString("weixin.appid");
-            String backUri = FileConfig.getInstance().getString("weixin.authlogin.backurl");
             
-            String url = "https://open.weixin.qq.com/connect/oauth2/authorize?" 
-            		+ "appid=" + appid + "&redirect_uri=" + backUri
-    				+ "&response_type=code&scope=snsapi_base&state=_STATE_#wechat_redirect";
+            String domain = FileConfig.getInstance().getString("domain.name");
+            
             //snsapi_base  --   snsapi_userinfo
             //电影分类
             if("1".equals(content.trim()) || "2".equals(content.trim()) || "3".equals(content.trim())){
@@ -93,9 +91,8 @@ public class WeixinController extends WeixinControllerSupport {
             			log.debug("################" +movie.getName());
             			Article article = new Article();
             			article.setTitle(movie.getName());
-            			article.setPicUrl("http://www.11grand.cn/film" + StringUtils.replace( movie.getPicture(), "\\", "/"));
-            			article.setUrl(url.replaceFirst("_STATE_", movie.getFilmId().toString()));
-            			
+            			article.setPicUrl(domain + StringUtils.replace( movie.getPicture(), "\\", "/"));
+            			article.setUrl(domain+"/movie/see.jspx?fid="+movie.getFilmId());
             			articles.add(article);
             		}
             		return new NewsMsg(articles);
@@ -135,8 +132,8 @@ public class WeixinController extends WeixinControllerSupport {
             			log.debug("################" +movie.getName());
             			Article article = new Article();
             			article.setTitle(movie.getName());
-            			article.setPicUrl("http://www.11grand.cn/film" + StringUtils.replace( movie.getPicture(), "\\", "/"));
-            			article.setUrl(url.replaceFirst("_STATE_", movie.getFilmId().toString()));
+            			article.setPicUrl(domain + StringUtils.replace( movie.getPicture(), "\\", "/"));
+            			article.setUrl(domain+"/movie/see.jspx?fid="+movie.getFilmId());
             			
             			articles.add(article);
             		}

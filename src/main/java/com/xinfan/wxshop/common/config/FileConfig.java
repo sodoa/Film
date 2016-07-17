@@ -41,6 +41,10 @@ public class FileConfig {
 		return prop.getProperty(name, defaultValue);
 	}
 	
+	public String getDomainUrlString(String name){
+		return this.getString("domain.name") + this.getString(name);
+	}
+	
 	public int getInt(String name) {
 		return Integer.parseInt(getString(name));
 	}

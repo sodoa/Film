@@ -62,7 +62,7 @@ public class AutoLoginController  {
     	public void weixin1(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
     		String appid = FileConfig.getInstance().getString("weixin.appid");
-    		String backUri = FileConfig.getInstance().getString("weixin.authlogin.backurl");
+    		String backUri = FileConfig.getInstance().getDomainUrlString("weixin.authlogin.backurl");
     		
     		String fid = request.getParameter("fid");
 
@@ -81,7 +81,7 @@ public class AutoLoginController  {
     		response.sendRedirect(url);
     	}
 
-    	@RequestMapping("/weixin_auto_login_back.html")
+    	@RequestMapping("/login_back.jspx")
     	public void weixin2(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
     		String code = request.getParameter("code");
