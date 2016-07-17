@@ -2,8 +2,8 @@ package com.xinfan.wxshop.business.dao;
 
 import java.util.List;
 
-import com.xinfan.wxshop.business.entity.MovieExample;
 import com.xinfan.wxshop.business.entity.Searchkey;
+import com.xinfan.wxshop.business.entity.SearchkeyExample;
 import com.xinfan.wxshop.common.base.DataMap;
 import com.xinfan.wxshop.common.dal.SqlSessionDaoSupport;
 import com.xinfan.wxshop.common.page.Pagination;
@@ -14,7 +14,7 @@ public class SearchkeyDao  extends SqlSessionDaoSupport {
 		return getSqlSession().selectList(wrapCommand("selectPageList"), map, page);
 	}
 	
-	public List<Searchkey> selectByExample(MovieExample pojo) {
+	public List<Searchkey> selectByExample(SearchkeyExample pojo) {
 		return getSqlSession().selectList(wrapCommand("selectByExample"), pojo);
 	}
 	

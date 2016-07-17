@@ -76,4 +76,6 @@
 		<appender-ref ref="stdout" />		
 	</root>
 
+	<logger name="com.github" level="DEBUG" />
+    <logger name="org" level="DEBUG"/>
 </configuration>

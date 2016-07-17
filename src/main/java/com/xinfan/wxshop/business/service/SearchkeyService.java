@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.xinfan.wxshop.business.constants.SequenceConstants;
 import com.xinfan.wxshop.business.dao.SearchkeyDao;
 import com.xinfan.wxshop.business.dao.SequenceDao;
-import com.xinfan.wxshop.business.entity.MovieExample;
 import com.xinfan.wxshop.business.entity.Searchkey;
+import com.xinfan.wxshop.business.entity.SearchkeyExample;
 import com.xinfan.wxshop.common.base.DataMap;
 import com.xinfan.wxshop.common.page.Pagination;
 
@@ -40,20 +40,20 @@ public class SearchkeyService {
 	}
 	
 	public List<Searchkey> selectList(DataMap map){
-		MovieExample example = new MovieExample();
+		SearchkeyExample example = new SearchkeyExample();
 		if(StringUtils.isNotBlank(map.getString("word"))){
-			example.createCriteria().andTypeEqualTo(map.getInt("word"));	
+			example.createCriteria().andWordEqualTo(map.getString("word"));	
 		}
 		
 		return searchkeyDao.selectByExample(example);
 	}
 	
-	public Searchkey getMovie(Integer movieId){
+	public Searchkey getSearchkey(Integer movieId){
 		return searchkeyDao.selectByPrimaryKey(movieId);
 	}
 	
 	
-	public void saveMovie(Searchkey searchkey){
+	public void saveSearchkey(Searchkey searchkey){
 		int movieId = this.sequenceDao.getSequence(SequenceConstants.SEQ_SEARCHKEY);
 		searchkey.setSearchkeyId(movieId);
 		searchkey.setCreateTime(new Date());

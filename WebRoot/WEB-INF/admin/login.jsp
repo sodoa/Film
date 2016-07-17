@@ -7,14 +7,14 @@
 
 <head>
    <jsp:include page="head.jsp"></jsp:include>
-   <link href="/jslib/uiadmin/css/H-ui.login.css" rel="stylesheet" type="text/css" />
+   <link href="${pageContext.request.contextPath}/jslib/uiadmin/css/H-ui.login.css" rel="stylesheet" type="text/css" />
 	<title>Admin Console</title>
 </head>
 
 <div class="header"></div>
 <div class="loginWraper">
   <div id="loginform" class="loginBox">
-    <form class="form form-horizontal" action="/m_login.jspx" method="post">
+    <form class="form form-horizontal" action="${pageContext.request.contextPath}/m_login.jspx" method="post">
     
          	 <c:if test="${not empty errormsg}">
          	  <div class="row cl">

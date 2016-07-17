@@ -3,7 +3,7 @@ package com.xinfan.wxshop.business.dao;
 import java.util.List;
 
 import com.xinfan.wxshop.business.entity.Keymovie;
-import com.xinfan.wxshop.business.entity.MovieExample;
+import com.xinfan.wxshop.business.entity.KeymovieExample;
 import com.xinfan.wxshop.common.base.DataMap;
 import com.xinfan.wxshop.common.dal.SqlSessionDaoSupport;
 import com.xinfan.wxshop.common.page.Pagination;
@@ -14,7 +14,7 @@ public class KeymovieDao extends SqlSessionDaoSupport {
 		return getSqlSession().selectList(wrapCommand("selectPageList"), map, page);
 	}
 	
-	public List<Keymovie> selectByExample(MovieExample pojo) {
+	public List<Keymovie> selectByExample(KeymovieExample pojo) {
 		return getSqlSession().selectList(wrapCommand("selectByExample"), pojo);
 	}
 	

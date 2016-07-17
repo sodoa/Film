@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.NumberUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,7 +127,7 @@ public class CustomerService {
 		bean.setSex(Integer.parseInt(sex));
 		bean.setCustomerId(customerId);
 		bean.setWxId(wxId);
-//		bean.setUplineId(Integer.parseInt(share_id));
+		bean.setExpirydate(DateUtils.addDays(new Date(), 10));
 
 		this.customerDao.insertSelective(bean);
 

@@ -11,7 +11,7 @@ import com.xinfan.wxshop.business.dao.KeymovieDao;
 import com.xinfan.wxshop.business.dao.SequenceDao;
 import com.xinfan.wxshop.business.entity.Film;
 import com.xinfan.wxshop.business.entity.Keymovie;
-import com.xinfan.wxshop.business.entity.MovieExample;
+import com.xinfan.wxshop.business.entity.KeymovieExample;
 import com.xinfan.wxshop.common.base.DataMap;
 import com.xinfan.wxshop.common.page.Pagination;
 
@@ -40,9 +40,9 @@ public class KeymovieService {
 	}
 	
 	public List<Keymovie> selectList(DataMap map){
-		MovieExample example = new MovieExample();
-		if(StringUtils.isNotBlank(map.getString("type"))){
-			example.createCriteria().andTypeEqualTo(map.getInt("type"));	
+		KeymovieExample example = new KeymovieExample();
+		if(StringUtils.isNotBlank(map.getString("name"))){
+			example.createCriteria().andNameLike("%" + map.getString("name") + "%");
 		}
 		
 		return movieDao.selectByExample(example);

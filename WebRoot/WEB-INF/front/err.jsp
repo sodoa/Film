@@ -14,11 +14,7 @@
 
 <body style="font-family: 微软雅黑;">
 <div style="min-height:350px;max-width:650px;float:0 auto; MARGIN-RIGHT: auto; MARGIN-LEFT: auto;text-align: center; ">
-  <p>爆品小业荷包小</p>
-  <p>希望亲们赏包烟</p>
-  <p>好来我为找影片</p>
-  
-  <button>打赏</button>
+  <p>没有该影片资料</p>
 </div>
 </body>
 </html>
