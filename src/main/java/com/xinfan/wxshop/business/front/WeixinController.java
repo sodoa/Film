@@ -154,44 +154,5 @@ public class WeixinController extends WeixinControllerSupport {
 		//欢迎关注爆品电影！回复“1”获取最新院线电影，回复“2”获取网络事件影片，回复“3”获取激情伦理电影，
 		//或者直接回复影片名获取电影。如果没有您想看的电影，请回复“我想看XXX”,我们将为您尽快添加。 
         
-        
-		@RequestMapping("/auto_login_back.html")
-		public void weixin2(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-			String code = request.getParameter("code");
-			
-			String appid = FileConfig.getInstance().getString("weixin.appid");
-			String appsecret = FileConfig.getInstance().getString("weixin.appsecret");
-			
-			if (null != code && !"".equals(code)) {
-				log.info("==============[OAuthServlet]获取网页授权code不为空，code=" + code);
-				// 根据code换取openId
-				OAuthInfo oa = WeixinUtils.getOAuthOpenId(appid, appsecret, code);
-				
-				if (oa != null) {
-					Customer customer = CustomerService.getByWeixinId(oa.getOpenId());
-					request.setAttribute("wx_id", oa.getOpenId());
-					if(customer == null){
-						UserInfo info = WeixinUtils.getUserInfo(oa.getAccessToken(), oa.getOpenId());
-						if(info!=null){
-							String account = "";
-							String password = "12345678";
-							String displayName = info.getNickname();
-							
-							DataMap attributes = new DataMap();
-							attributes.put("wx_id", info.getOpenid());
-							attributes.put("sex", info.getSex());
-							attributes.put("share_id", "");
-							
-							this.CustomerService.regist(account, password, displayName, attributes);
-						}
-					}
-				}
-				
-			} else {
-				log.info("==============[OAuthServlet]获取网页授权code失败！");
-			}
-			
-			request.getRequestDispatcher("/movie/see.jspx").forward(request, response);
-		}
+     
 }

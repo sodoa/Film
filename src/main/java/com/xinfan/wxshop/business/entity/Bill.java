@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.xinfan.wxshop.common.base.BaseEntity;
 
-public class Bill extends BaseEntity {
+public class Bill extends BaseEntity{
     private Integer billId;
 
     private Integer amount;
@@ -16,6 +16,10 @@ public class Bill extends BaseEntity {
     private Integer customerId;
 
     private String wxId;
+
+    private Integer state;
+
+    private String orderno;
 
     public Integer getBillId() {
         return billId;
@@ -63,5 +67,21 @@ public class Bill extends BaseEntity {
 
     public void setWxId(String wxId) {
         this.wxId = wxId == null ? null : wxId.trim();
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public String getOrderno() {
+        return orderno;
+    }
+
+    public void setOrderno(String orderno) {
+        this.orderno = orderno == null ? null : orderno.trim();
     }
 }

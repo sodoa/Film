@@ -16,6 +16,8 @@ import com.xinfan.wxshop.business.entity.Customer;
 import com.xinfan.wxshop.business.entity.Film;
 import com.xinfan.wxshop.business.service.CustomerService;
 import com.xinfan.wxshop.business.service.FilmService;
+import com.xinfan.wxshop.business.util.RequestUtils;
+import com.xinfan.wxshop.common.base.DataMap;
 
 /**
  * @author huangmin
@@ -26,7 +28,8 @@ import com.xinfan.wxshop.business.service.FilmService;
 @RequestMapping("/movie")
 public class MovieController {
 
-	private static final Logger logger = LoggerFactory.getLogger(MovieController.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(MovieController.class);
 
 	@Autowired
 	private CustomerService customerService;
@@ -34,45 +37,82 @@ public class MovieController {
 	@Autowired
 	private FilmService filmService;
 
-	
 	/**
-	 *  不过期--->跳转到电影页面
+	 * 不过期--->跳转到电影页面
 	 */
 	@RequestMapping("/see.jspx")
-	public ModelAndView waitOrder(HttpServletRequest request) {
+	public ModelAndView see(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("/front/film.jsp");
 		
-		String wx_id = (String) request.getAttribute("wx_id");
 		
-		Customer customer =customerService.getByWeixinId(wx_id);
-		logger.debug("###########" + customer.getExpirydate().toString());
-		//检查是否有过期 
-		if(new Date().after(customer.getExpirydate())  ){
-			//过期-->微信支付 
-			mv.setViewName("/front/pay");
+		DataMap sessionMap = RequestUtils.getConsumerSessionMap();
+		String fid = request.getParameter("fid");
+		if(sessionMap == null){
+			///
+			mv.setViewName("redirect:/weixin/login.html?fid="+fid);
+			return mv;
+		}
+		//logined
+		else{
+			///
+			String wxId = sessionMap.getString("wx_id");
 			
-			
-		}else{
-			String state = request.getParameter("state");
-			if(StringUtils.isNotBlank(state)){
-				Film film = filmService.getFilm(Integer.valueOf(state));
-				if(null != film) {
-					mv.setViewName("/front/movie");
-					mv.addObject("film", film);
-					
-				}else{
+			Customer customer = customerService.getByWeixinId(wxId);
+			logger.debug("###########" + customer.getExpirydate().toString());
+			// 检查是否有过期
+			if (new Date().after(customer.getExpirydate())) {
+				// 过期-->微信支付
+				
+				mv.addObject("fid", fid);
+				mv.setViewName("/front/pay");
+				
+
+			} else {
+				String state = request.getParameter("state");
+				if (StringUtils.isNotBlank(state)) {
+					Film film = filmService.getFilm(Integer.valueOf(state));
+					if (null != film) {
+						mv.setViewName("/front/movie");
+						mv.addObject("film", film);
+
+					} else {
+						mv.setViewName("/front/err");
+					}
+
+				} else {
 					mv.setViewName("/front/err");
 				}
-				
-			}else{
-				mv.setViewName("/front/err");
+
+				logger.debug("###########" + state);
 			}
 			
-			logger.debug( "###########" + state);
+			return mv;
 		}
+
 		
-		
+	}
+
+	@RequestMapping("/movie.jspx")
+	public ModelAndView movie(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("/front/movie");
+
+		String state = request.getParameter("state");
+		if (StringUtils.isNotBlank(state)) {
+			Film film = filmService.getFilm(Integer.valueOf(state));
+			if (null != film) {
+				mv.setViewName("/front/movie");
+				mv.addObject("film", film);
+
+			} else {
+				mv.setViewName("/front/err");
+			}
+
+		} else {
+			mv.setViewName("/front/err");
+		}
+
+		logger.debug("###########" + state);
+
 		return mv;
 	}
-	
 }
