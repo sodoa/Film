@@ -18,7 +18,7 @@
   <p>希望亲们赏包烟</p>
   <p>好来我为找影片</p>
   
-  <a href="./movie/pay.html?fid=${fid}">打赏一月</a>
+  <a href="./movie/pay.jspx?fid=${fid}">打赏一月</a>
   <button>打赏</button>
 </div>
 </body>

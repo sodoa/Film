@@ -14,7 +14,7 @@
 
 <body style="font-family: 微软雅黑;">
 <div style="min-height:350px;max-width:650px;float:0 auto; MARGIN-RIGHT: auto; MARGIN-LEFT: auto;text-align: center; ">
-  <p>没有该影片资料</p>
+  <p>${msg}</p>
 </div>
 </body>
 </html>

@@ -29,7 +29,7 @@
 		</div>
 		<div id="fakeloader"></div>
 		<div style="margin-top: 20px;margin-bottom:20px;text-align: center;">
-			<a href="./see.html?fid=${fid}" style="padding: 5px;border: 1px solid #eee;">去看电影</a>
+			<a href="${pageContext.request.contextPath}/movie/see.jspx?fid=${fid}" style="padding: 5px;border: 1px solid #eee;">去看电影</a>
 		</div>
 		
 	  <script type="text/javascript">
