@@ -2,15 +2,15 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
 
-	<classPathEntry location="D:\Environment\maven-3.1.0\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar" />
+	<classPathEntry location="D:/jar/mysql-connector-java-5.0.8-bin.jar" />
 
 	<context id="film" targetRuntime="MyBatis3">
 		<commentGenerator>
 			<property name="suppressAllComments" value="true" />
 		</commentGenerator>
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://127.0.0.1:3306/film?useUnicode=true&amp;characterEncoding=UTF-8"
-			userId="root" password="">
+			connectionURL="jdbc:mysql://120.25.61.157:3306/film?useUnicode=true&amp;characterEncoding=UTF-8"
+			userId="root" password="password123">
 		</jdbcConnection>
 
 		<!-- <javaTypeResolver> <property name="forceBigDecimals" value="false" 
@@ -39,7 +39,7 @@
 	 	<table tableName="t_keymovie" domainObjectName="Keymovie"/>
 	 	<table tableName="t_movie" domainObjectName="Movie"/>
 	 -->
-	 	<table tableName="t_film" domainObjectName="Film"/>
+	 	<table tableName="t_bill" domainObjectName="Bill"/>
 	 	
 
 	</context>

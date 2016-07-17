@@ -82,39 +82,15 @@ public class CustomerService {
 		return customer;
 	}
 
-	public void regist(String account, String password, String displayName, DataMap attributes) {
+	public Customer regist(String account, String password, String displayName, String wxId,String sex) {
 
-		account = account.trim();
-
-		String sex = attributes.getString("sex");
 		if (sex == null || sex.trim().length() == 0) {
 			sex = "1";
 		}
-
-		String share_id = attributes.getString("share_id");
-		Customer shareCustomer = null;
-		if (share_id == null || share_id.length() == 0) {
-			share_id = "0";
-		} else {
-			if (NumberUtils.isNumber(share_id)) {
-				shareCustomer = customerDao.selectByPrimaryKey(Integer.parseInt(share_id));
-			}
-		}
-
-		String wxId = attributes.getString("wx_id");
-
-//		if (wxId != null && wxId.length() > 0 ) {
-//			if(share_id == null || share_id.length() ==0 || share_id.equals("0")){
-//				Integer fromId = WxShareService.getWxMapping(wxId);
-//				if (fromId != null) {
-//					share_id = String.valueOf(fromId);
-//				}
-//			}
-//		}
-
-		Customer exist = customerDao.selectByAccount(account);
+		
+		Customer exist = customerDao.selectByWxId(wxId);
 		if (exist != null) {
-			throw new BizException("用户名已存在");
+			return exist;
 		}
 
 		int customerId = this.sequenceDao.getSequence(SequenceConstants.SEQ_CUSTOMER);
@@ -127,26 +103,14 @@ public class CustomerService {
 		bean.setSex(Integer.parseInt(sex));
 		bean.setCustomerId(customerId);
 		bean.setWxId(wxId);
-		bean.setExpirydate(DateUtils.addDays(new Date(), 10));
+		bean.setExpirydate(DateUtils.addDays(new Date(), 3));
+		bean.setRegType(1);
 
 		this.customerDao.insertSelective(bean);
-
-//		Wallet wallet = new Wallet();
-//		wallet.setBalance(0f);
-//		wallet.setCustomerId(bean.getCustomerId());
-//		wallet.setDistrBalance(0f);
-//		wallet.setDistrCount(0);
-
-//		this.walletDao.insertSelective(wallet);
-//		
-//		WxShareService.delWxMapping(wxId);
-
-		if (shareCustomer != null) {
-			if (shareCustomer.getWxId() != null && shareCustomer.getWxId().length() > 1) {
-				WxNotifyUtils.customerDownlineJoinNotify(shareCustomer.getWxId(), displayName, "2");
-			}
-		}
-
+		
+		return bean;
+		
+		//WxNotifyUtils.customerDownlineJoinNotify(shareCustomer.getWxId(), displayName, "2");
 	}
 
 	public Customer getByAccount(String account) {

@@ -16,8 +16,8 @@ import com.xinfan.wxshop.business.entity.Customer;
 import com.xinfan.wxshop.business.entity.Film;
 import com.xinfan.wxshop.business.service.CustomerService;
 import com.xinfan.wxshop.business.service.FilmService;
-import com.xinfan.wxshop.business.util.RequestUtils;
-import com.xinfan.wxshop.common.base.DataMap;
+import com.xinfan.wxshop.business.util.LoginSessionUtils;
+import com.xinfan.wxshop.business.vo.LoginSession;
 
 /**
  * @author huangmin
@@ -42,54 +42,45 @@ public class MovieController {
 	 */
 	@RequestMapping("/see.jspx")
 	public ModelAndView see(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("/front/film.jsp");
-		
-		
-		DataMap sessionMap = RequestUtils.getConsumerSessionMap();
+		ModelAndView mv = new ModelAndView();
+
+		LoginSession sessionMap = LoginSessionUtils.getCustomerUserSessionMap();
 		String fid = request.getParameter("fid");
-		if(sessionMap == null){
-			///
-			mv.setViewName("redirect:/weixin/login.html?fid="+fid);
+		String msg = "";
+
+		if (sessionMap == null) {
+			mv.setViewName("redirect:/weixin/login.jspx?fid=" + fid);
 			return mv;
-		}
-		//logined
-		else{
-			///
-			String wxId = sessionMap.getString("wx_id");
-			
-			Customer customer = customerService.getByWeixinId(wxId);
-			logger.debug("###########" + customer.getExpirydate().toString());
+		} else {
+			logger.debug("###########" + sessionMap.getExpiryDate());
 			// 检查是否有过期
-			if (new Date().after(customer.getExpirydate())) {
+			if (new Date().after(sessionMap.getExpiryDate())) {
 				// 过期-->微信支付
-				
 				mv.addObject("fid", fid);
 				mv.setViewName("/front/pay");
-				
 
 			} else {
-				String state = request.getParameter("state");
-				if (StringUtils.isNotBlank(state)) {
-					Film film = filmService.getFilm(Integer.valueOf(state));
+				if (StringUtils.isNotBlank(fid)) {
+					Film film = filmService.getFilm(Integer.valueOf(fid));
 					if (null != film) {
 						mv.setViewName("/front/movie");
 						mv.addObject("film", film);
-
 					} else {
+						msg = "没有找到对应的电影";
+						mv.addObject("msg", msg);
 						mv.setViewName("/front/err");
 					}
-
 				} else {
+					msg = "没有找到对应的电影";
+					mv.addObject("msg", msg);
 					mv.setViewName("/front/err");
 				}
-
-				logger.debug("###########" + state);
+				logger.debug("###########" + fid);
 			}
-			
+
 			return mv;
 		}
 
-		
 	}
 
 	@RequestMapping("/movie.jspx")

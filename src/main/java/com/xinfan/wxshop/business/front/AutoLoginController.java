@@ -1,14 +1,12 @@
 package com.xinfan.wxshop.business.front;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +19,12 @@ import com.xinfan.wxshop.business.service.KeymovieService;
 import com.xinfan.wxshop.business.service.MovieService;
 import com.xinfan.wxshop.business.service.SearchkeyService;
 import com.xinfan.wxshop.business.util.LoginSessionUtils;
-import com.xinfan.wxshop.business.util.RequestUtils;
 import com.xinfan.wxshop.business.util.WeixinUtils;
+import com.xinfan.wxshop.business.vo.LoginSession;
 import com.xinfan.wxshop.business.vo.OAuthInfo;
 import com.xinfan.wxshop.business.vo.UserInfo;
 import com.xinfan.wxshop.common.base.DataMap;
 import com.xinfan.wxshop.common.config.FileConfig;
-import com.xinfan.wxshop.common.security.DesUtils;
 
 /**
  * @author huangmin
@@ -53,7 +50,7 @@ public class AutoLoginController  {
     	private CustomerService CustomerService;
     	
     	
-    	@RequestMapping("/login.html")
+    	@RequestMapping("/login.jspx")
     	public void loginAndRegist(HttpServletRequest request, HttpServletResponse response){
     		try {
 				weixin1(request,response);
@@ -100,34 +97,31 @@ public class AutoLoginController  {
     			OAuthInfo oa = WeixinUtils.getOAuthOpenId(appid, appsecret, code);
     			
     			if (oa != null) {
-    				Customer customer = CustomerService.getByWeixinId(oa.getOpenId());
-    				if(customer == null){
-    					UserInfo info = WeixinUtils.getUserInfo(oa.getAccessToken(), oa.getOpenId());
-    					if(info!=null){
-    						String account = "";
-    						String password = "12345678";
-    						String displayName = info.getNickname();
-    						
-    						DataMap attributes = new DataMap();
-    						attributes.put("wx_id", info.getOpenid());
-    						attributes.put("sex", info.getSex());
-    						attributes.put("share_id", "");
-    						
-    						this.CustomerService.regist(account, password, displayName, attributes);
-    						
-    						LoginSessionUtils.setCustomerUserSessionMap(attributes);
-    						
-    						request.getRequestDispatcher("/see.jspx?fid="+fid).forward(request, response);
-    						
-    					}
-    				}
+					UserInfo info = WeixinUtils.getUserInfo(oa.getAccessToken(), oa.getOpenId());
+					if(info!=null){
+						String account = "";
+						String password = "12345678";
+						String displayName = info.getNickname();
+						
+						Customer customer = this.CustomerService.regist(account, password, displayName, info.getOpenid(),info.getSex());
+						
+						LoginSession session = new LoginSession();
+						session.setCustomerId(customer.getCustomerId());
+						session.setDisplayName(customer.getDisplayname());
+						session.setWx_id(info.getOpenid());
+						session.setExpiryDate(customer.getExpirydate());
+						
+						LoginSessionUtils.setCustomerUserSessionMap(session);
+						
+						request.getRequestDispatcher("/movie/see.jspx?fid="+fid).forward(request, response);
+					}
     			}
     			
     		} else {
     			logger.info("==============[OAuthServlet]获取网页授权code失败！");
     		}
     		
-    		request.getRequestDispatcher("/").forward(request, response);
+    		request.getRequestDispatcher("/err.jspx?msg=").forward(request, response);
     	}
     	
     	

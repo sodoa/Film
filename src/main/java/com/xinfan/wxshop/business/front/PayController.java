@@ -61,7 +61,7 @@ public class PayController {
 	@Autowired
 	private BillService billService;
 
-	@RequestMapping("/pay.html")
+	@RequestMapping("/pay.jspx")
 	public void weixin1(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		
 		String fid = request.getParameter("fid");
@@ -71,11 +71,11 @@ public class PayController {
 		String backUri = FileConfig.getInstance().getString("weixin.auth.backurl");
 		
 		Integer customerId = LoginSessionUtils.getCustomerIdFromUserSessionMap();
-		String wxId = LoginSessionUtils.getCustomerUserSessionMap().getString("wx_id");
+		String wxId = LoginSessionUtils.getCustomerUserSessionMap().getWx_id();
 		
 		String orderNo = OrderCreaterUtils.createOrderNo(String.valueOf(customerId));
-		Float money =  10f;
-		String describe = "电影包月费用";
+		Float money =  1f;
+		String describe = "VIP电影包月费用";
 		
 		Bill bill = new Bill();
 		bill.setAmount(money.intValue());
@@ -83,7 +83,7 @@ public class PayController {
 		bill.setPaytime(new Date());
 		bill.setWxId(wxId);
 		
-		this.billService.addOrder(bill);
+		billService.addOrder(bill);
 		
 		//String backUri = "http://***/topayServlet";
 		//授权后要跳转的链接所需的参数一般有会员号，金额，订单号之类，
@@ -114,7 +114,7 @@ public class PayController {
 	}
 	
 
-	@RequestMapping("/createorder.html")
+	@RequestMapping("/createorder.jspx")
 	public void weixin2(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		
 		String authData = request.getParameter("data").replaceAll(" ", "+");
@@ -303,10 +303,10 @@ public class PayController {
 		
 		System.out.println("pay.jsp?data="+encData);
 		
-		response.sendRedirect("/paying.html?data=" + encData);
+		response.sendRedirect("/paying.jspx?data=" + encData);
 	}
 	
-	@RequestMapping("/paying.html")
+	@RequestMapping("/paying.jspx")
 	public ModelAndView weixin3(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		
 		ModelAndView mv = new ModelAndView("/front/paying");
@@ -354,7 +354,7 @@ public class PayController {
 	}
 
 
-	@RequestMapping("/notify.html")
+	@RequestMapping("/notify.jspx")
 	public void weixin4(HttpServletRequest request,HttpServletResponse response) throws IOException {
 
 		String rt_return_code = "";
