@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="format-detection" content="telephone=no">
-<title>爆品电影</title>
+<title>${film.name}</title>
 <script src="${pageContext.request.contextPath}/jslib/html5media.min.js"></script> 
 </head>
 
