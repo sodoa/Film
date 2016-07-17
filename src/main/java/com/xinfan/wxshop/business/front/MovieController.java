@@ -51,9 +51,11 @@ public class MovieController {
 			mv.setViewName("redirect:/movie/login.jspx?fid=" + fid);
 			return mv;
 		} else {
-			logger.debug("###########" + sessionMap.getExpiryDate());
+			
+			Date expiryDate = customerService.getByWeixinId(sessionMap.getWx_id()).getExpirydate();
+			logger.debug("###########" + expiryDate);
 			// 检查是否有过期
-			if (new Date().after(sessionMap.getExpiryDate())) {
+			if (new Date().after(expiryDate) ){
 				// 过期-->微信支付
 				mv.addObject("fid", fid);
 				mv.setViewName("/front/pay");

@@ -68,7 +68,7 @@ public class PayController {
 		
 		//共账号及商户相关参数
 		String appid = FileConfig.getInstance().getString("weixin.appid");
-		String backUri = FileConfig.getInstance().getString("weixin.payauth.backurl");
+		String backUri = FileConfig.getInstance().getDomainUrlString("weixin.payauth.backurl");
 		
 		Integer customerId = LoginSessionUtils.getCustomerIdFromUserSessionMap();
 		String wxId = LoginSessionUtils.getCustomerUserSessionMap().getWx_id();
@@ -82,6 +82,7 @@ public class PayController {
 		bill.setCustomerId(customerId);
 		bill.setPaytime(new Date());
 		bill.setWxId(wxId);
+		bill.setOrderno(orderNo);
 		
 		billService.addOrder(bill);
 		
@@ -95,6 +96,7 @@ public class PayController {
 		String desPassword = FileConfig.getInstance().getString("weixin.des.password");
 		
 		logger.debug("weixin_pay_auth despassword :" + desPassword);
+		logger.debug("weixin_pay_auth body :" + body);
 		
 		String decData = Base64.encodeBase64String(DesUtils.encrypt(body.getBytes("UTF-8"), desPassword));
 		
@@ -110,12 +112,20 @@ public class PayController {
 				"&redirect_uri=" +
 				 backUri+
 				"&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";
+		
+		logger.debug("weixin_pay_auth url :" + url);
+		
 		response.sendRedirect(url);
 	}
 	
 
 	@RequestMapping("/createorder.jspx")
-	public void weixin2(HttpServletRequest request,HttpServletResponse response) throws IOException {
+	public String weixin2(HttpServletRequest request,HttpServletResponse response) throws IOException {
+		
+		String code = request.getParameter("code");
+		if(code == null || code.length() ==0 || "null".equals(code)){
+			return null;
+		}
 		
 		String authData = request.getParameter("data").replaceAll(" ", "+");
 		
@@ -138,9 +148,12 @@ public class PayController {
 		String orderNo = paramterMap.get("orderNo")[0];
 		
 		String money = paramterMap.get("money")[0];
-		String code = request.getParameter("code");
+		
 		String describe = paramterMap.get("describe")[0];
 		String fid = paramterMap.get("fid")[0];
+		
+		
+		logger.debug("weixin pay order  code is :" + code);
 		
 		// 金额转化为分为单位
 		float sessionmoney = Float.parseFloat(money);
@@ -208,7 +221,7 @@ public class PayController {
 		// String goods_tag = "";
 
 		// 这里notify_url是 支付完成后微信发给该链接信息，可以判断会员是否支付成功，改变订单状态等。
-		String notify_url = FileConfig.getInstance().getString("weixin.pay.notifyurl");
+		String notify_url = FileConfig.getInstance().getDomainUrlString("weixin.pay.notifyurl");
 
 		String trade_type = "JSAPI";
 		String openid = openId;
@@ -270,9 +283,8 @@ public class PayController {
 		try {
 			prepay_id = GetWxOrderNo.getPayNo(createOrderURL, xml);
 			if (prepay_id.equals("")) {
-				request.setAttribute("ErrorMsg", "统一支付接口获取预支付订单出错");
-				response.sendRedirect("error.html");
-				return;
+				request.setAttribute("msg", "统一支付接口获取预支付订单出错");
+				return "redirect:/err.jspx?msg="+"统一支付接口获取预支付订单出错";
 			}
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
@@ -303,7 +315,7 @@ public class PayController {
 		
 		System.out.println("pay.jsp?data="+encData);
 		
-		response.sendRedirect("/paying.jspx?data=" + encData);
+		return "redirect:/movie/paying.jspx?data=" + encData;
 	}
 	
 	@RequestMapping("/paying.jspx")
@@ -371,6 +383,9 @@ public class PayController {
 	        }
 	        
 	        SortedMap<String,String> resultMap = WxHttpsUtils.doXMLParse(sb.toString());
+	        
+	        logger.debug("pay notify data : "+JSONUtils.toJSONString(resultMap));
+	        
 			String return_code = resultMap.get("return_code");
 			String return_msg = resultMap.get("return_msg");
 			String result_code = resultMap.get("result_code");
@@ -381,11 +396,14 @@ public class PayController {
 				
 				String orderNo = resultMap.get("out_trade_no");
 				
-				billService.updateOrderIsPay(orderNo);
-				
-				rt_return_code = "SUCCESS";
-				rt_return_msg = "ok";
-				
+				Date expiryDate  = billService.updateOrderIsPay(orderNo);
+				if(expiryDate == null){
+					rt_return_code = "FAIL";
+					rt_return_msg = "call back : update order error" ;
+				}else{
+					rt_return_code = "SUCCESS";
+					rt_return_msg = "ok";
+				}
 			}
 			else{
 				rt_return_code = "FAIL";

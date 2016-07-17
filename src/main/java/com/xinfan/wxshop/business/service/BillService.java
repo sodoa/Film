@@ -56,10 +56,11 @@ public class BillService {
 	public void addOrder(Bill bill) {
 		int billId = this.sequenceDao.getSequence(SequenceConstants.SEQ_BILL);
 		bill.setBillId(billId);
+		bill.setState(2);
 		billDao.insertSelective(bill);
 	}
 
-	public boolean updateOrderIsPay(String orderNo) {
+	public Date updateOrderIsPay(String orderNo) {
 		BillExample example = new BillExample();
 		example.createCriteria().andOrdernoEqualTo(orderNo);
 
@@ -72,6 +73,8 @@ public class BillService {
 			Date expiryDate = customer.getExpirydate();
 			if (expiryDate == null) {
 				expiryDate = new Date();
+			} else {
+				expiryDate = new Date();
 			}
 
 			Date newExpiryDate = DateUtils.addMonths(expiryDate, 1);
@@ -80,11 +83,17 @@ public class BillService {
 			update.setCustomerId(customer.getCustomerId());
 			update.setExpirydate(newExpiryDate);
 			customerDao.updateByPrimaryKeySelective(update);
+			
+			Bill updateBill = new Bill();
+			updateBill.setBillId(bill.getBillId());
+			updateBill.setState(1);
+				
+			billDao.updateByPrimaryKeySelective(updateBill);
 
-			return true;
+			return newExpiryDate;
 		}
 
-		return false;
+		return null;
 
 	}
 

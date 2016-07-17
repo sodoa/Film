@@ -24,6 +24,7 @@ import com.xinfan.wxshop.business.vo.LoginSession;
 import com.xinfan.wxshop.business.vo.OAuthInfo;
 import com.xinfan.wxshop.business.vo.UserInfo;
 import com.xinfan.wxshop.common.config.FileConfig;
+import com.xinfan.wxshop.common.util.JSONUtils;
 
 /**
  * @author huangmin
@@ -81,7 +82,7 @@ public class AutoLoginController  {
     	}
 
     	@RequestMapping("/login_back.jspx")
-    	public void weixin2(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    	public String weixin2(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
     		String code = request.getParameter("code");
     		String fid = request.getParameter("fid");
@@ -110,9 +111,12 @@ public class AutoLoginController  {
 						session.setWx_id(info.getOpenid());
 						session.setExpiryDate(customer.getExpirydate());
 						
+						
+						logger.debug("#####"+JSONUtils.toJSONString(customer) +" login sucess");
+						
 						LoginSessionUtils.setCustomerUserSessionMap(session);
 						
-						request.getRequestDispatcher("/movie/see.jspx?fid="+fid).forward(request, response);
+						return "redirect:/movie/see.jspx?fid="+fid;
 					}
     			}
     			
@@ -120,7 +124,7 @@ public class AutoLoginController  {
     			logger.info("==============[OAuthServlet]获取网页授权code失败！");
     		}
     		
-    		request.getRequestDispatcher("/err.jspx?msg=").forward(request, response);
+    		return "redirect:/err.jspx?msg="+"error";
     	}
     	
     	
