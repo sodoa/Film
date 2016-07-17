@@ -18,8 +18,8 @@
   <p>希望亲们赏包烟</p>
   <p>好来我为找影片</p>
   
-  <a href="./movie/pay.jspx?fid=${fid}">打赏一月</a>
-  <button>打赏</button>
+  <a style="border:1px solid #eee; padding: 10px;" href="${pageContext.request.contextPath}/movie/pay.jspx?fid=${fid}">打赏一月</a>
+  
 </div>
 </body>
 </html>
