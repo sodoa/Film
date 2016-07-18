@@ -12,5 +12,6 @@
 	<bean id="KeymovieService" class="com.xinfan.wxshop.business.service.KeymovieService" />
 	<bean id="SearchkeyService" class="com.xinfan.wxshop.business.service.SearchkeyService" />
 	<bean id="BillService" class="com.xinfan.wxshop.business.service.BillService" />
+	<bean id="SmsService" class="com.xinfan.wxshop.common.sms.YunPianSmsServiceImpl" />
 	
 </beans>
