@@ -21,7 +21,7 @@
 		<div id="tipmsg"  class="" style="border: 0px solid #eee;padding-top: 30px;padding-bottom: 30px;text-align: center;">
 				正在支付当中...
 		</div>
-		<div style="margin-top: 20px;margin-bottom:20px;text-align: center;" id="toPlay" >
+		<div style="margin-top: 20px;margin-bottom:20px;text-align: center;display:none" id="toPlay" >
 			<a href="${pageContext.request.contextPath}/movie/see.jspx?fid=${fid}" style="padding: 10px;padding-left: 30px;padding-right:30px;border: 1px solid #eee;background-color: green;color: #fff;">去看电影</a>
 		</div>
 		
