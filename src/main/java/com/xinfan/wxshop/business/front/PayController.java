@@ -86,11 +86,13 @@ public class PayController extends BaseController {
 			String wxId = LoginSessionUtils.getCustomerUserSessionMap().getWx_id();
 
 			String orderNo = OrderCreaterUtils.createOrderNo(String.valueOf(customerId));
-			Float money = Float.parseFloat(ParamterUtils.getString("monthly.rent", "10")) * 100;
+			
+			String moneyYuan = ParamterUtils.getString("monthly.rent", "10");
+			Float money = Float.parseFloat(moneyYuan) * 100;
 			String describe = "VIP电影包月打赏费用";
 
 			Bill bill = new Bill();
-			bill.setAmount(money.intValue());
+			bill.setAmount(((Float)Float.parseFloat(moneyYuan)).intValue());
 			bill.setCustomerId(customerId);
 			bill.setPaytime(new Date());
 			bill.setWxId(wxId);
@@ -218,7 +220,7 @@ public class PayController extends BaseController {
 			// 总金额以分为单位，不带小数点
 			int total_fee = intMoney;
 
-			total_fee = 1;
+			//total_fee = 1;
 
 			// 订单生成的机器 IP
 			String spbill_create_ip = request.getRemoteAddr();
