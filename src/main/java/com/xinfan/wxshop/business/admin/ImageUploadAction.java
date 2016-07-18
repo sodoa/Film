@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.xinfan.wxshop.business.helper.FilePathHelper;
+import com.xinfan.wxshop.business.util.FilePathHelper;
 import com.xinfan.wxshop.common.util.JSONUtils;
 
 @Controller

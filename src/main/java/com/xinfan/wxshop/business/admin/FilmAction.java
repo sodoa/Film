@@ -22,11 +22,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.xinfan.wxshop.business.entity.Film;
-import com.xinfan.wxshop.business.helper.FilePathHelper;
 import com.xinfan.wxshop.business.model.DataTableDataGrid;
 import com.xinfan.wxshop.business.model.JSONResult;
 import com.xinfan.wxshop.business.service.FilmService;
 import com.xinfan.wxshop.business.service.MovieService;
+import com.xinfan.wxshop.business.util.FilePathHelper;
 import com.xinfan.wxshop.business.util.RequestUtils;
 import com.xinfan.wxshop.common.base.DataMap;
 import com.xinfan.wxshop.common.page.Pagination;

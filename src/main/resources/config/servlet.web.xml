@@ -55,19 +55,12 @@
         <property name="frontLoginUrl" value="/login"></property>
     </bean> 
     
-    <bean id="shareInterceptor" class="com.xinfan.wxshop.business.web.GobalInterceptor">
-    </bean>     
-    
     <mvc:interceptors> 
 		<mvc:interceptor> 
 				<mvc:mapping path="/admin/**" />
 				<mvc:mapping path="/center/**" />  
 				<ref bean="loginInterceptor"/>
 		</mvc:interceptor> 
-		<mvc:interceptor> 
-				<mvc:mapping path="/**" />
-				<ref bean="shareInterceptor"/>
-		</mvc:interceptor> 		
 	</mvc:interceptors>
     
 <!-- 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">

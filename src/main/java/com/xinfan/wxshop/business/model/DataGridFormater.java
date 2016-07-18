@@ -1,4 +1,4 @@
-package com.xinfan.wxshop.business.formater;
+package com.xinfan.wxshop.business.model;
 
 
 public interface DataGridFormater {

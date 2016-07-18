@@ -1,4 +1,4 @@
-package com.xinfan.wxshop.business.helper;
+package com.xinfan.wxshop.business.util;
 
 import java.io.File;
 import java.io.IOException;

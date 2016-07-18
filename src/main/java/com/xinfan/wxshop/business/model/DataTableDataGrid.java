@@ -3,7 +3,6 @@ package com.xinfan.wxshop.business.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.xinfan.wxshop.business.formater.DataGridFormater;
 import com.xinfan.wxshop.common.base.DataMap;
 import com.xinfan.wxshop.common.page.Pagination;
 
