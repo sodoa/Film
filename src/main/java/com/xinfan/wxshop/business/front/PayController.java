@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.xinfan.wxshop.business.cache.utils.ParamterUtils;
 import com.xinfan.wxshop.business.entity.Bill;
 import com.xinfan.wxshop.business.pay.weixin.CommonUtil;
 import com.xinfan.wxshop.business.pay.weixin.GetWxOrderNo;
@@ -87,8 +88,8 @@ public class PayController {
 		String wxId = LoginSessionUtils.getCustomerUserSessionMap().getWx_id();
 		
 		String orderNo = OrderCreaterUtils.createOrderNo(String.valueOf(customerId));
-		Float money =  1f;
-		String describe = "VIP电影包月费用";
+		Float money =  Float.parseFloat(ParamterUtils.getString("monthly.rent", "10"))*100;
+		String describe = "VIP电影包月打赏费用";
 		
 		Bill bill = new Bill();
 		bill.setAmount(money.intValue());
@@ -98,11 +99,6 @@ public class PayController {
 		bill.setOrderid(orderNo);
 		
 		billService.addOrder(bill);
-		
-		//String backUri = "http://***/topayServlet";
-		//授权后要跳转的链接所需的参数一般有会员号，金额，订单号之类，
-		//最好自己带上一个加密字符串将金额加上一个自定义的key用MD5签名或者自己写的签名,
-		//比如 Sign = %3D%2F%CS% 
 		
 		String body = "customerId="+customerId+"&orderNo="+orderNo+"&describe="+describe+"&money="+money+"&fid="+fid;
 		
