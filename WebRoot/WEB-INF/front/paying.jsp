@@ -8,41 +8,27 @@
 
 <jsp:include page="header.jsp"></jsp:include>
 <link href="${pageContext.request.contextPath}/theme/newest/css/order.css" type="text/css" rel="stylesheet" />
-<link href="${pageContext.request.contextPath}/jslib/loading/css/msgbox.css" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/loading/js/msgbox.js"></script>
-
 </head>
 <body >
 <div class="g-doc">
     <div class="top-fxied">
             <header class="header"> 
-                <div class="back"><a href="/"><span class="icon-back"></span></a></div> 
-                <div class="title">微信支付</div> 
+                <div class="back"></div> 
+                <div class="title">微信打赏</div> 
                 <div class="subMark"><p></p></div> 
             </header>
   </div>
   	<div class="scroll-content"  style="background-color: white;padding: 20px;">
-		
-		<div  class="" style="border: 1px solid #eee;padding-top: 10px;padding-bottom: 10px;padding-left: 30px;text-align: center;">
+		<div id="tipmsg"  class="" style="border: 0px solid #eee;padding-top: 30px;padding-bottom: 30px;text-align: center;">
 				正在支付当中...
 		</div>
-		<div id="tipmsg"></div>
-		
-		<div>  		 
-		</div>
-		<div id="fakeloader"></div>
-		<div style="margin-top: 20px;margin-bottom:20px;text-align: center;">
-		
-		"appId" : "${appId}","timeStamp" : "${timeStamp}", "nonceStr" : "${nonceStr}", "package" : "${packageValue}","signType" : "MD5", "paySign" : "${sign}"
-		
-			<a href="${pageContext.request.contextPath}/movie/see.jspx?fid=${fid}" style="padding: 5px;border: 1px solid #eee;">去看电影</a>
+		<div style="margin-top: 20px;margin-bottom:20px;text-align: center;" id="toPlay" >
+			<a href="${pageContext.request.contextPath}/movie/see.jspx?fid=${fid}" style="padding: 10px;padding-left: 30px;padding-right:30px;border: 1px solid #eee;background-color: green;color: #fff;">去看电影</a>
 		</div>
 		
 	  <script type="text/javascript">
 	  
 	  $(function(){
-		  
-		  ZENG.msgbox.show("正在初始安全支付...", 6);
 		  
 		  if (typeof WeixinJSBridge == "undefined"){
 			   if( document.addEventListener ){
@@ -65,17 +51,14 @@
 				//alert(res.err_code + res.err_desc + res.err_msg);
 	            if(res.err_msg == "get_brand_wcpay_request:ok"){  
 	                $("#tipmsg").html("微信支付成功!");
+	                $("#toPlay").show();
 	            }else if(res.err_msg == "get_brand_wcpay_request:cancel"){  
-	                $("#tipmsg").html("微信支付取消，请在订单中心继续支付!");
+	                $("#tipmsg").html("微信支付取消!");
 	            }else{  
-	            	$("#tipmsg").html("支付失败!" + res.err_code + res.err_desc + res.err_msg);
+	            	$("#tipmsg").html("支付失败!" + res.err_code + "||"+res.err_desc +"||"+ res.err_msg);
 	            } 
-	            
-	            ZENG.msgbox._hide();
 			});
 	}
-  	
-  	// "appId" : "${appId}","timeStamp" : "${timeStamp}", "nonceStr" : "${nonceStr}", "package" : "${packageValue}","signType" : "MD5", "paySign" : "${sign}"
   	
   </script>
 	</div>
