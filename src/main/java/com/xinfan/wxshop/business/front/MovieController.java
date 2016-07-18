@@ -83,7 +83,7 @@ public class MovieController extends BaseController{
 		}
 	}
 
-	@RequestMapping("/movie.jspx")
+	@RequestMapping("/movie_test.jspx")
 	public ModelAndView movie(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("/front/movie");
 
