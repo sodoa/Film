@@ -1,7 +1,7 @@
 <configuration>
 
 	<!-- 日志文件名 -->
-	<property name="logName" value="wxshop"/>
+	<property name="logName" value="film"/>
 	<!-- 日志目录 -->
 	<property name="logBase" value="/logs" />
 
@@ -17,13 +17,13 @@
 	</appender>
 	
 	<!-- 所有日志输出到这里 -->
-	<appender name="wxshop"
+	<appender name="film"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<!-- 指定输出文件路径、序号 -->
 		<File>${logBase}/${logName}.log</File>
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-			<FileNamePattern>/logs/wxshop.%i.log</FileNamePattern>
+			<FileNamePattern>/logs/film.%i.log</FileNamePattern>
 			<MinIndex>1</MinIndex>
 			<MaxIndex>50</MaxIndex>
 		</rollingPolicy>
@@ -41,7 +41,7 @@
 	</appender>
 	
 	<!-- 所有错误日志输出到这里 -->
-	<appender name="wxshop-error"
+	<appender name="film-error"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<filter class="ch.qos.logback.classic.filter.LevelFilter">
 			<level>ERROR</level>
@@ -52,7 +52,7 @@
 		<File>${logBase}/${logName}-error.log</File>
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-			<FileNamePattern>/logs/wxshop-error.%i.log</FileNamePattern>
+			<FileNamePattern>/logs/film-error.%i.log</FileNamePattern>
 			<MinIndex>1</MinIndex>
 			<MaxIndex>50</MaxIndex>
 		</rollingPolicy>
@@ -68,14 +68,15 @@
 			</Pattern>
 		</layout>
 	</appender>
+	
+	<logger name="com.github" level="DEBUG" />
+    <logger name="org" level="DEBUG"/>
 
 	<root>
 		<level value="DEBUG" />	
-		<appender-ref ref="wxshop" />
-		<appender-ref ref="wxshop-error" />	
+		<appender-ref ref="film" />
+		<appender-ref ref="film-error" />	
 		<appender-ref ref="stdout" />		
 	</root>
-
-	<logger name="com.github" level="DEBUG" />
-    <logger name="org" level="DEBUG"/>
+    
 </configuration>
