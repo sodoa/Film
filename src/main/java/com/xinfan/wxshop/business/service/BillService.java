@@ -3,10 +3,12 @@ package com.xinfan.wxshop.business.service;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.xinfan.wxshop.business.cache.utils.ParamterUtils;
 import com.xinfan.wxshop.business.constants.SequenceConstants;
 import com.xinfan.wxshop.business.dao.BillDao;
 import com.xinfan.wxshop.business.dao.CustomerDao;
@@ -14,10 +16,11 @@ import com.xinfan.wxshop.business.dao.SequenceDao;
 import com.xinfan.wxshop.business.entity.Bill;
 import com.xinfan.wxshop.business.entity.BillExample;
 import com.xinfan.wxshop.business.entity.Customer;
-import com.xinfan.wxshop.business.entity.MovieExample;
 import com.xinfan.wxshop.business.util.QueryParamterUtils;
 import com.xinfan.wxshop.common.base.DataMap;
 import com.xinfan.wxshop.common.page.Pagination;
+import com.xinfan.wxshop.common.sms.SmsService;
+import com.xinfan.wxshop.common.sms.YunpianSmsBean;
 
 /**
  * @author huangmin
@@ -25,6 +28,8 @@ import com.xinfan.wxshop.common.page.Pagination;
  * 
  */
 public class BillService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(BillService.class);
 
 	@Autowired
 	private SequenceDao sequenceDao;
@@ -34,6 +39,9 @@ public class BillService {
 
 	@Autowired
 	private CustomerDao customerDao;
+	
+	@Autowired
+	private SmsService smsService;
 
 	public Pagination selectPageList(DataMap map, Pagination page) {
 
@@ -89,6 +97,17 @@ public class BillService {
 			updateBill.setState(1);
 				
 			billDao.updateByPrimaryKeySelective(updateBill);
+			
+			try{
+				String smss= ParamterUtils.getString("order.pay.sms", "18673119686");
+				String[] telphones = smss.split(",");
+				for (String tel : telphones) {
+					smsService.sendOderPaySms(tel, customer.getDisplayname() + " 付钱了，来米啦!" + bill.getAmount() +"$");
+				}
+			}
+			catch(Exception e){
+				logger.error(e.getMessage(),e);
+			}
 
 			return newExpiryDate;
 		}
