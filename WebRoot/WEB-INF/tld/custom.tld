@@ -35,17 +35,6 @@
 	</tag>
 
 	<tag>
-		<name>auth</name>
-		<tag-class>com.xinfan.wxshop.business.tag.AuthTag</tag-class>
-		<body-content>scriptless</body-content>
-		<attribute>
-			<name>funid</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-
-	<tag>
 		<name>config</name>
 		<tag-class>com.xinfan.wxshop.business.tag.ConfigTag</tag-class>
 		<body-content>scriptless</body-content>
@@ -55,16 +44,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
-
-
-
-
-	<tag>
-		<name>wx_current_customerid_Tag</name>
-		<tag-class>com.xinfan.wxshop.business.tag.WXCurrentCustomerIdTag</tag-class>
-		<body-content>scriptless</body-content>
-	</tag>
-
 
 	<tag>
 		<name>dict_list_tag</name>
