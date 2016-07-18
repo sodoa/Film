@@ -60,6 +60,19 @@ public class PayController {
 	
 	@Autowired
 	private BillService billService;
+	
+
+	@RequestMapping("/pay_test.jspx")
+	public ModelAndView pay_test(HttpServletRequest request,HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("/front/pay");
+		return mv;
+	}
+	
+	@RequestMapping("/paying_test.jspx")
+	public ModelAndView paying_test(HttpServletRequest request,HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("/front/paying");
+		return mv;
+	}
 
 	@RequestMapping("/pay.jspx")
 	public void weixin1(HttpServletRequest request,HttpServletResponse response) throws IOException {
