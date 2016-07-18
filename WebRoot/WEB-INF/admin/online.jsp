@@ -1,0 +1,1 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%><%@ taglib prefix="h" uri="http://mos.xinfan.com/"%><!DOCTYPE HTML><html><head>   <jsp:include page="head.jsp"></jsp:include><title>11Grand Admin Console</title></head><body>	<h1>在线人数为：</h1> ${count}人</body></html>

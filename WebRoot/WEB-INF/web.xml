@@ -60,6 +60,10 @@
 		<listener-class>com.xinfan.wxshop.business.web.SessionTimeoutListener</listener-class>
 	</listener>
 
+	<!-- 用户在线数和登录数统计 -->  
+	<listener>  
+	 <listener-class>com.xinfan.wxshop.common.context.CountLineListener</listener-class>   
+	</listener>
 	
 	<session-config>
 		<session-timeout>360</session-timeout>
