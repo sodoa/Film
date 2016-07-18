@@ -82,7 +82,7 @@ public class PayController {
 		bill.setCustomerId(customerId);
 		bill.setPaytime(new Date());
 		bill.setWxId(wxId);
-		bill.setOrderno(orderNo);
+		bill.setOrderid(orderNo);
 		
 		billService.addOrder(bill);
 		

@@ -62,7 +62,7 @@ public class BillService {
 
 	public Date updateOrderIsPay(String orderNo) {
 		BillExample example = new BillExample();
-		example.createCriteria().andOrdernoEqualTo(orderNo);
+		example.createCriteria().andOrderidEqualTo(orderNo);
 
 		List<Bill> bills = billDao.selectByExample(example);
 		if (bills.size() == 1) {
