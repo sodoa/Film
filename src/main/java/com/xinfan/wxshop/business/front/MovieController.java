@@ -25,7 +25,7 @@ import com.xinfan.wxshop.business.vo.LoginSession;
  */
 @Controller
 @RequestMapping("/movie")
-public class MovieController {
+public class MovieController extends BaseController{
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(MovieController.class);
@@ -45,20 +45,28 @@ public class MovieController {
 
 		LoginSession sessionMap = LoginSessionUtils.getCustomerUserSessionMap();
 		String fid = request.getParameter("fid");
-		String msg = "";
+
+		logger.debug("###########to see movie id : " + fid);
 
 		if (sessionMap == null) {
 			mv.setViewName("redirect:/movie/login.jspx?fid=" + fid);
 			return mv;
 		} else {
-			
-			Date expiryDate = customerService.getByWeixinId(sessionMap.getWx_id()).getExpirydate();
-			logger.debug("###########" + expiryDate);
+
+			String wxId = sessionMap.getWx_id();
+			if (wxId == null || wxId.trim().length() == 0) {
+				return toError("您没有通过微信授权");
+			}
+
+			Date expiryDate = customerService.getByWeixinId(
+					sessionMap.getWx_id()).getExpirydate();
+
 			// 检查是否有过期
-			if (new Date().after(expiryDate) ){
+			if (new Date().after(expiryDate)) {
 				// 过期-->微信支付
 				mv.addObject("fid", fid);
 				mv.setViewName("/front/pay");
+				return mv;
 
 			} else {
 				if (StringUtils.isNotBlank(fid)) {
@@ -66,22 +74,13 @@ public class MovieController {
 					if (null != film) {
 						mv.setViewName("/front/movie");
 						mv.addObject("film", film);
-					} else {
-						msg = "没有找到对应的电影";
-						mv.addObject("msg", msg);
-						mv.setViewName("/front/err");
+						return mv;
 					}
-				} else {
-					msg = "没有找到对应的电影";
-					mv.addObject("msg", msg);
-					mv.setViewName("/front/err");
 				}
-				logger.debug("###########" + fid);
+
+				return toError("没有找到对应的电影");
 			}
-
-			return mv;
 		}
-
 	}
 
 	@RequestMapping("/movie.jspx")

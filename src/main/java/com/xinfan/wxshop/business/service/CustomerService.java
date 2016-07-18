@@ -118,8 +118,8 @@ public class CustomerService {
 		return bean;
 	}
 
-	public Customer getByWeixinId(String account) {
-		Customer bean = customerDao.selectByWxId(account.trim());
+	public Customer getByWeixinId(String wxId) {
+		Customer bean = customerDao.selectByWxId(wxId.trim());
 		return bean;
 	}
 

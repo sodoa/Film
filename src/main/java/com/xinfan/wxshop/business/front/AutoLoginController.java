@@ -33,7 +33,7 @@ import com.xinfan.wxshop.common.util.JSONUtils;
  */
 @Controller
 @RequestMapping("/movie")
-public class AutoLoginController  {
+public class AutoLoginController  extends BaseController{
 	
         private static final Logger logger = LoggerFactory.getLogger(AutoLoginController.class);
         
@@ -53,36 +53,30 @@ public class AutoLoginController  {
     	@RequestMapping("/login.jspx")
     	public void loginAndRegist(HttpServletRequest request, HttpServletResponse response){
     		try {
-				weixin1(request,response);
+    			loginAuth(request,response);
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(),e);
+				this.toError(e.getMessage());
 			}
     	}
 
-    	public void weixin1(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    	public void loginAuth(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
     		String appid = FileConfig.getInstance().getString("weixin.appid");
     		String backUri = FileConfig.getInstance().getDomainUrlString("weixin.authlogin.backurl");
     		
     		String fid = request.getParameter("fid");
 
-    		// String backUri = "http://***/topayServlet";
-    		// 授权后要跳转的链接所需的参数一般有会员号，金额，订单号之类，
-    		// 最好自己带上一个加密字符串将金额加上一个自定义的key用MD5签名或者自己写的签名,
-    		// 比如 Sign = %3D%2F%CS%
-
     		backUri = backUri + "?fid=" + fid;
-    		// URLEncoder.encode 后可以在backUri 的url里面获取传递的所有参数
     		backUri = URLEncoder.encode(backUri);
 
-    		// scope 参数视各自需求而定，这里用scope=snsapi_base 不弹出授权页面直接授权目的只获取统一支付接口的openid
     		String url = "https://open.weixin.qq.com/connect/oauth2/authorize?" + "appid=" + appid + "&redirect_uri=" + backUri
     				+ "&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";
     		response.sendRedirect(url);
     	}
 
     	@RequestMapping("/login_back.jspx")
-    	public String weixin2(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    	public String loginAuthBack(HttpServletRequest request, HttpServletResponse response)  {
 
     		String code = request.getParameter("code");
     		String fid = request.getParameter("fid");
@@ -103,7 +97,7 @@ public class AutoLoginController  {
 						String password = "12345678";
 						String displayName = info.getNickname();
 						
-						Customer customer = this.CustomerService.regist(account, password, displayName, info.getOpenid(),info.getSex());
+						Customer customer = CustomerService.regist(account, password, displayName, info.getOpenid(),info.getSex());
 						
 						LoginSession session = new LoginSession();
 						session.setCustomerId(customer.getCustomerId());
@@ -111,26 +105,18 @@ public class AutoLoginController  {
 						session.setWx_id(info.getOpenid());
 						session.setExpiryDate(customer.getExpirydate());
 						
-						
-						logger.debug("#####"+JSONUtils.toJSONString(customer) +" login sucess");
+						logger.debug("#####auth user data : "+JSONUtils.toJSONString(customer) +" login sucess");
 						
 						LoginSessionUtils.setCustomerUserSessionMap(session);
 						
 						return "redirect:/movie/see.jspx?fid="+fid;
 					}
     			}
-    			
-    		} else {
-    			logger.info("==============[OAuthServlet]获取网页授权code失败！");
-    		}
+    		} 
     		
-    		return "redirect:/err.jspx?msg="+"error";
+    		logger.info("==============[OAuthServlet]获取网页授权code失败！");
+    		
+    		return "redirect:/err.jspx?msg=" + "微信登录授权失败，请同意微信授权！";
     	}
     	
-    	
-    	
-    	
-    	
-    	
-    
 }
