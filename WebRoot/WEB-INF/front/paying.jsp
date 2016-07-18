@@ -5,7 +5,6 @@
 
 <html class="no-js">
 <head>
-
 <jsp:include page="header.jsp"></jsp:include>
 <link href="${pageContext.request.contextPath}/theme/newest/css/order.css" type="text/css" rel="stylesheet" />
 </head>
