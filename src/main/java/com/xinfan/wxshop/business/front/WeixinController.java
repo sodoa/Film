@@ -1,13 +1,8 @@
 package com.xinfan.wxshop.business.front;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -24,7 +19,6 @@ import com.github.sd4324530.fastweixin.message.TextMsg;
 import com.github.sd4324530.fastweixin.message.req.BaseEvent;
 import com.github.sd4324530.fastweixin.message.req.TextReqMsg;
 import com.github.sd4324530.fastweixin.servlet.WeixinControllerSupport;
-import com.xinfan.wxshop.business.entity.Customer;
 import com.xinfan.wxshop.business.entity.Keymovie;
 import com.xinfan.wxshop.business.entity.Movie;
 import com.xinfan.wxshop.business.entity.Searchkey;
@@ -33,9 +27,6 @@ import com.xinfan.wxshop.business.service.KeymovieService;
 import com.xinfan.wxshop.business.service.MovieService;
 import com.xinfan.wxshop.business.service.SearchkeyService;
 import com.xinfan.wxshop.business.util.ConfigUtils;
-import com.xinfan.wxshop.business.util.WeixinUtils;
-import com.xinfan.wxshop.business.vo.OAuthInfo;
-import com.xinfan.wxshop.business.vo.UserInfo;
 import com.xinfan.wxshop.common.base.DataMap;
 import com.xinfan.wxshop.common.config.FileConfig;
 

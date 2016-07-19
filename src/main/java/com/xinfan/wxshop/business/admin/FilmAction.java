@@ -82,6 +82,10 @@ public class FilmAction {
 		
 		String notin = request.getParameter("notin");
 		if (StringUtils.isNotEmpty(notin)) {
+			if(notin.trim().startsWith(",")){
+				notin = notin.trim().substring(1);
+			}
+			
 			map.put("notin", notin);
 		}
 
@@ -112,7 +116,7 @@ public class FilmAction {
 		int index = 0;
 		if (!thumdFile.isEmpty()) {
 			File thumdImage = thumdFile.iterator().next();
-			film.setPicture(thumdImage.getPath().split("WebRoot")[1]);
+			film.setPicture(thumdImage.getPath().split("film")[1]);
 		}
 		
 		filmService.saveFilm(film);

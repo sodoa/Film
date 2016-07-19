@@ -3,7 +3,6 @@ package com.xinfan.wxshop.business.front;
 import java.io.IOException;
 import java.net.URLEncoder;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

@@ -16,7 +16,7 @@
 
 <body style="font-family: 微软雅黑;">
 <div style="min-height:350px;max-width:650px;float:0 auto; MARGIN-RIGHT: auto; MARGIN-LEFT: auto; ">
-  <video src="${film.url}" width="320" height="256" controls preload></video> 
+  <video src="${film.url}" width="100%" height="256" controls preload></video> 
 
 <p style="text-align: center;">${film.name}</p>
 <section style="text-align: center;">
