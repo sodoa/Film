@@ -2,9 +2,7 @@ package com.xinfan.wxshop.business.entity;
 
 import java.util.Date;
 
-import com.xinfan.wxshop.common.base.BaseEntity;
-
-public class Film extends BaseEntity {
+public class Film {
     private Integer filmId;
 
     private String name;
@@ -14,6 +12,8 @@ public class Film extends BaseEntity {
     private Integer type;
 
     private String url;
+
+    private Integer urltype;
 
     private String director;
 
@@ -69,6 +69,14 @@ public class Film extends BaseEntity {
 
     public void setUrl(String url) {
         this.url = url == null ? null : url.trim();
+    }
+
+    public Integer getUrltype() {
+        return urltype;
+    }
+
+    public void setUrltype(Integer urltype) {
+        this.urltype = urltype;
     }
 
     public String getDirector() {

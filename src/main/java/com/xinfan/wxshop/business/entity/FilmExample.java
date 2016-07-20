@@ -435,6 +435,66 @@ public class FilmExample {
             return (Criteria) this;
         }
 
+        public Criteria andUrltypeIsNull() {
+            addCriterion("urltype is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUrltypeIsNotNull() {
+            addCriterion("urltype is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUrltypeEqualTo(Integer value) {
+            addCriterion("urltype =", value, "urltype");
+            return (Criteria) this;
+        }
+
+        public Criteria andUrltypeNotEqualTo(Integer value) {
+            addCriterion("urltype <>", value, "urltype");
+            return (Criteria) this;
+        }
+
+        public Criteria andUrltypeGreaterThan(Integer value) {
+            addCriterion("urltype >", value, "urltype");
+            return (Criteria) this;
+        }
+
+        public Criteria andUrltypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("urltype >=", value, "urltype");
+            return (Criteria) this;
+        }
+
+        public Criteria andUrltypeLessThan(Integer value) {
+            addCriterion("urltype <", value, "urltype");
+            return (Criteria) this;
+        }
+
+        public Criteria andUrltypeLessThanOrEqualTo(Integer value) {
+            addCriterion("urltype <=", value, "urltype");
+            return (Criteria) this;
+        }
+
+        public Criteria andUrltypeIn(List<Integer> values) {
+            addCriterion("urltype in", values, "urltype");
+            return (Criteria) this;
+        }
+
+        public Criteria andUrltypeNotIn(List<Integer> values) {
+            addCriterion("urltype not in", values, "urltype");
+            return (Criteria) this;
+        }
+
+        public Criteria andUrltypeBetween(Integer value1, Integer value2) {
+            addCriterion("urltype between", value1, value2, "urltype");
+            return (Criteria) this;
+        }
+
+        public Criteria andUrltypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("urltype not between", value1, value2, "urltype");
+            return (Criteria) this;
+        }
+
         public Criteria andDirectorIsNull() {
             addCriterion("director is null");
             return (Criteria) this;
