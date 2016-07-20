@@ -72,6 +72,12 @@ public class MovieController extends BaseController{
 				if (StringUtils.isNotBlank(fid)) {
 					Film film = filmService.getFilm(Integer.valueOf(fid));
 					if (null != film) {
+						
+						if(2 == film.getUrltype()) {
+							mv.setViewName("redirect:" + film.getUrl());
+							return mv;
+						}
+						
 						mv.setViewName("/front/movie");
 						mv.addObject("film", film);
 						return mv;
