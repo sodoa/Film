@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.xinfan.wxshop.business.entity.Film;
 import com.xinfan.wxshop.business.service.CustomerService;
 import com.xinfan.wxshop.business.service.FilmService;
+import com.xinfan.wxshop.business.util.IpCache;
 import com.xinfan.wxshop.business.util.LoginSessionUtils;
 import com.xinfan.wxshop.business.vo.LoginSession;
 
@@ -78,6 +79,8 @@ public class MovieController extends BaseController{
 							return mv;
 						}
 						
+						film.setUrl("http://"+ IpCache.getcIp() + film.getUrl());
+						logger.debug("########## see film url" +film.getUrl());
 						mv.setViewName("/front/movie");
 						mv.addObject("film", film);
 						return mv;
