@@ -69,7 +69,9 @@ public class WeixinController extends WeixinControllerSupport {
             
             //snsapi_base  --   snsapi_userinfo
             //电影分类
-            if("1".equals(content.trim()) || "2".equals(content.trim()) || "3".equals(content.trim())){
+            if("1".equals(content.trim()) || "2".equals(content.trim()) || "3".equals(content.trim())
+        		|| "4".equals(content.trim())|| "5".equals(content.trim())
+            		){
             	DataMap map = new DataMap();
             	map.put("type", content.trim());
             	List<Movie> movieList = movieService.selectList(map);
@@ -86,7 +88,8 @@ public class WeixinController extends WeixinControllerSupport {
             		}
             		return new NewsMsg(articles);
             	}else{
-            		return new TextMsg(ConfigUtils.getValue("nofilm","对不起，没有您搜索的影片！"));
+            		return new TextMsg(ConfigUtils.getValue("nofilm","对不起，没有您搜索的影片！" 
+            				+ ConfigUtils.getValue("subscribe","欢迎关注！")));
             	}
             
             }else if(StringUtils.isNotBlank(content) && content.startsWith("我想看")){
@@ -106,7 +109,8 @@ public class WeixinController extends WeixinControllerSupport {
                 	searchkey.setTimes(1);
                 	searchkeyService.saveSearchkey(searchkey);
             	}
-            	return new TextMsg(ConfigUtils.getValue("iwantsee","已经收到您的请求，我们将会为您尽快添加！"));
+            	return new TextMsg(ConfigUtils.getValue("iwantsee","已经收到您的请求，我们将会为您尽快添加！"
+            			+ ConfigUtils.getValue("subscribe","欢迎关注！")));
             	
             }else{
             	//关键字电影
@@ -128,7 +132,8 @@ public class WeixinController extends WeixinControllerSupport {
             		}
             		return new NewsMsg(articles);
             	}else{
-            		return new TextMsg(ConfigUtils.getValue("nofilm","对不起，没有您搜索的影片！"));
+            		return new TextMsg(ConfigUtils.getValue("nofilm","对不起，没有您搜索的影片！")
+            				+ ConfigUtils.getValue("subscribe","欢迎关注！"));
             	}
             }
             

@@ -16,6 +16,8 @@
 
 <body style="font-family: 微软雅黑;">
 <div style="min-height:350px;max-width:650px;float:0 auto; MARGIN-RIGHT: auto; MARGIN-LEFT: auto; ">
+<h3 style="text-align: center;" >爆品电影，精挑细选 ，周周更新</h3>
+
   <video src="${film.url}" width="100%" height="256" controls preload></video> 
 
 <p style="text-align: center;">${film.name}</p>
@@ -67,6 +69,7 @@ ${film.resume}
 </span>
 <span style="font-size: 12px;"></span><span style="color: rgb(17, 17, 17); line-height: 22.39px; letter-spacing: 0px;"></span></p></section></section>
 
+<div style="font-size: 6px;text-align: center;">资源来源网络，如侵害您的权益，请联系微信号bpdy123456进行删除</div>
 </div>
 </body>
 </html>

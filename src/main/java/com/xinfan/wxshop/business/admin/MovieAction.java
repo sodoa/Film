@@ -61,12 +61,14 @@ public class MovieAction {
 		if (StringUtils.isNotEmpty(name)) {
 			map.put("name", name);
 		}
-		map.put("type", type);
+		if (StringUtils.isNotEmpty(type)) {
+			map.put("type", type);
+		}
 
 		page = movieService.selectPageList(map, page);
 
 		DataTableDataGrid grid = new DataTableDataGrid(Integer.parseInt(draw), page,
-				new String[] { "movie_id", "film_id", "name","picture"});
+				new String[] { "movie_id", "film_id", "name","type"});
 
 		return grid;
 	}

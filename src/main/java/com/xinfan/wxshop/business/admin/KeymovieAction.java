@@ -69,7 +69,7 @@ public class KeymovieAction {
 		page = movieService.selectPageList(map, page);
 
 		DataTableDataGrid grid = new DataTableDataGrid(Integer.parseInt(draw), page,
-				new String[] { "keymovie_id", "film_id", "name", "word", "picture"});
+				new String[] { "keymovie_id", "film_id", "name", "word"});
 
 		return grid;
 	}

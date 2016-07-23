@@ -41,6 +41,7 @@ public class MovieService {
 	
 	public List<Movie> selectList(DataMap map){
 		MovieExample example = new MovieExample();
+		example.setOrderByClause("movie_id desc");
 		if(StringUtils.isNotBlank(map.getString("type"))){
 			example.createCriteria().andTypeEqualTo(map.getInt("type"));	
 		}
