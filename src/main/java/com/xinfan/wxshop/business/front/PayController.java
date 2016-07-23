@@ -88,7 +88,7 @@ public class PayController extends BaseController {
 			String orderNo = OrderCreaterUtils.createOrderNo(String.valueOf(customerId));
 			
 			String moneyYuan = ParamterUtils.getString("monthly.rent", "10");
-			Float money = Float.parseFloat(moneyYuan) * 100;
+			Float money = Float.parseFloat(moneyYuan);
 			String describe = "VIP电影包月打赏费用";
 
 			Bill bill = new Bill();
