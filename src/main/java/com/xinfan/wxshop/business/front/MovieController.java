@@ -72,6 +72,10 @@ public class MovieController extends BaseController{
 			} else {
 				if (StringUtils.isNotBlank(fid)) {
 					Film film = filmService.getFilm(Integer.valueOf(fid));
+					film.setCount(film.getCount() + 1);
+					filmService.updateFilm(film);
+					
+					
 					if (null != film) {
 						
 						if(2 == film.getUrltype()) {

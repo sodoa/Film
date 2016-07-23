@@ -92,8 +92,8 @@ public class FilmAction {
 		page = filmService.selectPageList(map, page);
 
 		DataTableDataGrid grid = new DataTableDataGrid(Integer.parseInt(draw), page,
-				new String[] { "film_id", "name", "resume","type", "director",
-				"actor","country","publish"});
+				new String[] { "film_id", "name","type", "director",
+				"actor","country","publish","count"});
 
 		return grid;
 	}

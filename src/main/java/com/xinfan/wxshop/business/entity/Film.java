@@ -2,12 +2,16 @@ package com.xinfan.wxshop.business.entity;
 
 import java.util.Date;
 
-public class Film {
+import com.xinfan.wxshop.common.base.BaseEntity;
+
+public class Film extends BaseEntity {
     private Integer filmId;
 
     private String name;
 
     private String resume;
+
+    private Integer count;
 
     private Integer type;
 
@@ -53,6 +57,14 @@ public class Film {
 
     public void setResume(String resume) {
         this.resume = resume == null ? null : resume.trim();
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
     public Integer getType() {

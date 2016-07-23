@@ -4,6 +4,11 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+import com.xinfan.wxshop.business.constants.BizConstants;
+import com.xinfan.wxshop.business.util.LoginSessionUtils;
+import com.xinfan.wxshop.business.util.RequestUtils;
+import com.xinfan.wxshop.business.vo.LoginSession;
+
 /**
  * @author huangmin
  * @DATE 2016年7月19日上午12:09:00
@@ -18,20 +23,6 @@ public class CountLineListener implements HttpSessionListener{
     */   
     public void sessionCreated(HttpSessionEvent event) {   
     	
-    	synchronized (LOCK) {
-//    		System.out.println("创建session......");   
-            ServletContext context=event.getSession().getServletContext();   
-            Integer count=(Integer)context.getAttribute("count");   
-            if(count==null){   
-                count=new Integer(1);   
-            }else{   
-                int co = count.intValue( );   
-                count= new Integer(co+1);   
-            }   
-//            System.out.println("当前用户人数："+count);   
-            context.setAttribute("count", count);//保存人数   
-    	}
-        
   
     }   
   
@@ -40,13 +31,22 @@ public class CountLineListener implements HttpSessionListener{
     */   
     public void sessionDestroyed(HttpSessionEvent event) {  
     	synchronized (LOCK) {
-//    		System.out.println("销毁session......");   
-	        ServletContext context=event.getSession().getServletContext();   
-	        Integer count=(Integer)context.getAttribute("count");   
-	        int co=count.intValue();   
-	        count=new Integer(co-1);   
-	        context.setAttribute("count", count);   
-//	        System.out.println("当前用户人数："+count);   
+    		
+    		LoginSession sessionMap = (LoginSession) RequestUtils.getSession()
+    				.getAttribute(BizConstants.CUSTOMER_USER_SESSION_KEY);
+    		if(sessionMap!=null){
+        		System.out.println("销毁session......");   
+    	        ServletContext context=event.getSession().getServletContext();   
+    	        Integer count=(Integer)context.getAttribute("count");   
+    	        int co=count.intValue();   
+    	        count=new Integer(co-1);   
+    	        context.setAttribute("count", count);   
+    	        System.out.println("当前用户人数："+count);
+    	        
+        		event.getSession().removeAttribute(BizConstants.CUSTOMER_USER_SESSION_KEY);
+        	}
+	        
+
     	}
        
    }   
