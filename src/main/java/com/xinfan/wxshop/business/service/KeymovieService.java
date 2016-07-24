@@ -33,6 +33,14 @@ public class KeymovieService {
 
 	public Pagination selectPageList(DataMap map, Pagination page) {
 
+		if(StringUtils.isNotBlank(map.getString("name"))){
+			map.put("name", ("%" + map.getString("name") + "%"));
+		}
+		
+		if(StringUtils.isNotBlank(map.getString("word"))){
+			map.put("word", ("%" + map.getString("word") + "%"));
+		}
+		
 		List list = movieDao.selectPageList(map, page);
 		page.setList(list);
 

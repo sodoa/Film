@@ -370,7 +370,7 @@
   <select id="selectPageList" parameterType="com.xinfan.wxshop.common.base.DataMap" resultType="com.xinfan.wxshop.common.base.DataMap">
   		select * from t_film t where 1=1
 		<if test="name != null">
-			and name = #{name,jdbcType=VARCHAR}
+			and name like #{name,jdbcType=VARCHAR}
 		</if>
 		<if test="type != null">
 			and type = #{type,jdbcType=INTEGER}

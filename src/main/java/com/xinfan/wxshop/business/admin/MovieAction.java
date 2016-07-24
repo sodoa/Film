@@ -59,7 +59,7 @@ public class MovieAction {
 		String type = request.getParameter("type");
 
 		if (StringUtils.isNotEmpty(name)) {
-			map.put("name", name);
+			map.put("name", "%" + name +"%");
 		}
 		if (StringUtils.isNotEmpty(type)) {
 			map.put("type", type);

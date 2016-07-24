@@ -77,7 +77,7 @@ public class FilmAction {
 		String name = request.getParameter("name");
 
 		if (StringUtils.isNotEmpty(name)) {
-			map.put("name", name);
+			map.put("name", "%" + name +"%");
 		}
 		
 		String notin = request.getParameter("notin");
