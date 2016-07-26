@@ -1,8 +1,12 @@
 package com.xinfan.wxshop.business.front;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -17,11 +21,14 @@ import com.github.sd4324530.fastweixin.message.BaseMsg;
 import com.github.sd4324530.fastweixin.message.NewsMsg;
 import com.github.sd4324530.fastweixin.message.TextMsg;
 import com.github.sd4324530.fastweixin.message.req.BaseEvent;
+import com.github.sd4324530.fastweixin.message.req.MenuEvent;
+import com.github.sd4324530.fastweixin.message.req.SendMessageEvent;
 import com.github.sd4324530.fastweixin.message.req.TextReqMsg;
 import com.github.sd4324530.fastweixin.servlet.WeixinControllerSupport;
 import com.xinfan.wxshop.business.entity.Keymovie;
 import com.xinfan.wxshop.business.entity.Movie;
 import com.xinfan.wxshop.business.entity.Searchkey;
+import com.xinfan.wxshop.business.pay.weixin.MenuManger;
 import com.xinfan.wxshop.business.service.CustomerService;
 import com.xinfan.wxshop.business.service.KeymovieService;
 import com.xinfan.wxshop.business.service.MovieService;
@@ -145,5 +152,24 @@ public class WeixinController extends WeixinControllerSupport {
 		//欢迎关注爆品电影！回复“1”获取最新院线电影，回复“2”获取网络事件影片，回复“3”获取激情伦理电影，
 		//或者直接回复影片名获取电影。如果没有您想看的电影，请回复“我想看XXX”,我们将为您尽快添加。 
         
-     
+		
+		
+		@RequestMapping("/menu")
+		public void createmenu(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+			String opt = request.getParameter("opt");
+			if ("create".equals(opt)) {
+				MenuManger.createMenu();
+			} else if ("del".equals(opt)) {
+				MenuManger.deleteMenu();
+			} else {
+				response.getOutputStream().println("error code");
+			}
+		}
+
+		@Override
+		protected BaseMsg handleMenuClickEvent(MenuEvent event) {
+			return new TextMsg(ConfigUtils.getValue("subscribe","欢迎关注！"));
+		}
+
 }

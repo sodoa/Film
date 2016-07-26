@@ -1,8 +1,8 @@
  {
      "button":[
      {	
-          "type":"view",
-          "name":"果然逗商城",
-          "url":"http://www.11grand.cn"
+          "type":"click",
+          "name":"使用说明",
+   		  "key":"V1001_GOOD"
       }]
  }

@@ -36,9 +36,6 @@ public class CountLineListener implements HttpSessionListener,HttpSessionAttribu
     		LoginSession sessionMap = (LoginSession) event.getSession().getAttribute("BizConstants.CUSTOMER_USER_SESSION_KEY");
     		if(sessionMap!=null){
         		System.out.println("销毁session......");   
-        		int count = OnlineManager.getInstance().remove();
-				
-				 System.out.println("########################count" + count);
     	        
         		event.getSession().removeAttribute(BizConstants.CUSTOMER_USER_SESSION_KEY);
         	}
@@ -49,8 +46,16 @@ public class CountLineListener implements HttpSessionListener,HttpSessionAttribu
    }  
     
 	@Override
-	public void attributeRemoved(HttpSessionBindingEvent arg0) {
-		// TODO Auto-generated method stub
+	public void attributeRemoved(HttpSessionBindingEvent event) {
+		String name=event.getName();
+        System.out.println("########################name=" + name + ";value=" + event.getValue());
+		if (BizConstants.CUSTOMER_USER_SESSION_KEY.equals(name)) {
+			synchronized (LOCK) {
+				int count = OnlineManager.getInstance().remove();
+				
+				 System.out.println("########################count" + count);
+			}
+		}
 		
 	}
 

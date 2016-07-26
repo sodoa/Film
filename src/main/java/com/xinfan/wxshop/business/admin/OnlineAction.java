@@ -34,4 +34,17 @@ public class OnlineAction {
  		return mv;
 	}
 	
+	@RequestMapping("/admin/remonline.jspx")
+	public ModelAndView remonline(HttpServletRequest request){
+		ModelAndView mv = new ModelAndView("/admin/online");
+		
+		LoginSession session = new LoginSession();
+		RequestUtils.getSession().removeAttribute(BizConstants.CUSTOMER_USER_SESSION_KEY);
+		
+		 Integer count= OnlineManager.getInstance().get();
+         
+         mv.addObject("count", count);
+ 		return mv;
+	}
+	
 }
