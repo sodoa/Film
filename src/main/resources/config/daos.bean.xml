@@ -54,6 +54,16 @@
 		<property name="sqlSession" ref="sqlSession" />
 	</bean>
 
+	<bean id="PushDao" class="com.xinfan.wxshop.business.dao.PushDao">
+		<property name="namespace"
+			value="com.xinfan.wxshop.business.dao.PushMapper" />
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+	<bean id="PushMovieDao" class="com.xinfan.wxshop.business.dao.PushMovieDao">
+		<property name="namespace"
+			value="com.xinfan.wxshop.business.dao.PushMovieMapper" />
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
 	
 	
 </beans>

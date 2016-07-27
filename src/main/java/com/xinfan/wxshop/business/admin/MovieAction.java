@@ -1,6 +1,5 @@
 package com.xinfan.wxshop.business.admin;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;

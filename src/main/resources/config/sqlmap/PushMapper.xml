@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xinfan.wxshop.business.dao.PushMapper" >
+  <resultMap id="BaseResultMap" type="com.xinfan.wxshop.business.entity.Push" >
+    <id column="push_id" property="pushId" jdbcType="INTEGER" />
+    <result column="instruction" property="instruction" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    push_id, instruction, createtime, status
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xinfan.wxshop.business.entity.PushExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_push
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_push
+    where push_id = #{pushId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_push
+    where push_id = #{pushId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xinfan.wxshop.business.entity.PushExample" >
+    delete from t_push
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xinfan.wxshop.business.entity.Push" >
+    insert into t_push (push_id, instruction, createtime, 
+      status)
+    values (#{pushId,jdbcType=INTEGER}, #{instruction,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xinfan.wxshop.business.entity.Push" >
+    insert into t_push
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pushId != null" >
+        push_id,
+      </if>
+      <if test="instruction != null" >
+        instruction,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pushId != null" >
+        #{pushId,jdbcType=INTEGER},
+      </if>
+      <if test="instruction != null" >
+        #{instruction,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xinfan.wxshop.business.entity.PushExample" resultType="java.lang.Integer" >
+    select count(*) from t_push
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_push
+    <set >
+      <if test="record.pushId != null" >
+        push_id = #{record.pushId,jdbcType=INTEGER},
+      </if>
+      <if test="record.instruction != null" >
+        instruction = #{record.instruction,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_push
+    set push_id = #{record.pushId,jdbcType=INTEGER},
+      instruction = #{record.instruction,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xinfan.wxshop.business.entity.Push" >
+    update t_push
+    <set >
+      <if test="instruction != null" >
+        instruction = #{instruction,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where push_id = #{pushId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xinfan.wxshop.business.entity.Push" >
+    update t_push
+    set instruction = #{instruction,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER}
+    where push_id = #{pushId,jdbcType=INTEGER}
+  </update>
+  
+   <!-- 以下手动添加 -->
+  <select id="selectPageList" parameterType="com.xinfan.wxshop.common.base.DataMap" resultType="com.xinfan.wxshop.common.base.DataMap">
+  		select * from t_push t where 1=1
+		<if test="instruction != null">
+			and instruction like #{instruction,jdbcType=VARCHAR}
+		</if>
+		order by push_id desc 
+  </select>
+</mapper>

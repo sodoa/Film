@@ -38,9 +38,10 @@
 	 	<table tableName="t_searchkey" domainObjectName="Searchkey"/>
 	 	<table tableName="t_keymovie" domainObjectName="Keymovie"/>
 	 	<table tableName="t_movie" domainObjectName="Movie"/>
-	 -->
 	 	<table tableName="t_film" domainObjectName="Film"/>
-	 	
+		<table tableName="t_push" domainObjectName="Push"/>
+	 -->
+		<table tableName="t_pushmovie" domainObjectName="PushMovie"/>	 	
 
 	</context>
 </generatorConfiguration>
