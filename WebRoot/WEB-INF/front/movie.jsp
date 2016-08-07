@@ -57,7 +57,7 @@
 </section>
 </section>
 <p style="line-height: 25.6px; white-space: normal; text-align: center;"><span style="color: rgb(255, 0, 0); max-width: 100%; box-sizing: border-box !important;">
-<img src="${pageContext.request.contextPath}${film.picture}" style="width: auto\9; width:100%;visibility: visible !important; height: auto !important;">
+<img src="${pageContext.request.contextPath}/image.jspx?i=${film.picture}" style="width: auto\9; width:100%;visibility: visible !important; height: auto !important;">
 <br>
 </span></p>
 
