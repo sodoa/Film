@@ -93,7 +93,7 @@ public class WeixinController extends WeixinControllerSupport {
             			log.debug("################" +movie.getName());
             			Article article = new Article();
             			article.setTitle(movie.getName());
-            			article.setPicUrl(domain + StringUtils.replace( movie.getPicture(), "\\", "/"));
+            			article.setPicUrl(domain +"/image.jspx?i="+ StringUtils.replace( movie.getPicture(), "\\", "/"));
             			article.setUrl(domain+"/movie/see.jspx?fid="+movie.getFilmId());
             			articles.add(article);
             		}
@@ -136,7 +136,7 @@ public class WeixinController extends WeixinControllerSupport {
             			log.debug("################" +movie.getName());
             			Article article = new Article();
             			article.setTitle(movie.getName());
-            			article.setPicUrl(domain + StringUtils.replace( movie.getPicture(), "\\", "/"));
+            			article.setPicUrl(domain+"/image.jspx?i=" + StringUtils.replace( movie.getPicture(), "\\", "/"));
             			article.setUrl(domain+"/movie/see.jspx?fid="+movie.getFilmId());
             			
             			articles.add(article);

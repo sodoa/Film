@@ -107,7 +107,7 @@ public class FilmAction {
 	}
 	
 	@RequestMapping("/add-save.jspx")
-	public ModelAndView addsave(HttpServletRequest request,Film film) {
+	public ModelAndView addsave(HttpServletRequest request,Film film) throws IOException {
 		ModelAndView mv = new ModelAndView("/admin/film/tip");
 		
 		String thumdPath = FilePathHelper.getImageThumdUploadPath(request);
@@ -116,7 +116,12 @@ public class FilmAction {
 		int index = 0;
 		if (!thumdFile.isEmpty()) {
 			File thumdImage = thumdFile.iterator().next();
-			film.setPicture(thumdImage.getPath().split("film")[1]);
+			
+			File srcFile = thumdImage;
+			File destDir = new File(FilePathHelper.getFileStoreMainPath()+FilePathHelper.getFileStoreMainPathWithFilmHeader());
+			FileUtils.copyFileToDirectory(srcFile, destDir);
+			String newPath = FilePathHelper.getFileStoreMainPathWithFilmHeader() +"/"+srcFile.getName();
+			film.setPicture(newPath);
 		}
 		
 		filmService.saveFilm(film);

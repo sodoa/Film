@@ -30,6 +30,7 @@ import com.xinfan.wxshop.business.model.DataTableDataGrid;
 import com.xinfan.wxshop.business.model.JSONResult;
 import com.xinfan.wxshop.business.service.PushMovieService;
 import com.xinfan.wxshop.business.service.PushService;
+import com.xinfan.wxshop.business.util.FilePathHelper;
 import com.xinfan.wxshop.business.util.RequestUtils;
 import com.xinfan.wxshop.common.base.DataMap;
 import com.xinfan.wxshop.common.config.FileConfig;
@@ -125,7 +126,7 @@ public class PushMovieAction {
 		try {
 			String pushId = request.getParameter("pushId");
 
-			String path = request.getSession().getServletContext().getRealPath("");
+			String path = FilePathHelper.getFileStoreMainPath();
 			
 			System.out.println(path);
 			if (StringUtils.isNotEmpty(pushId)) {

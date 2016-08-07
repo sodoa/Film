@@ -10,6 +10,8 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.xinfan.wxshop.common.config.FileConfig;
+
 public class FilePathHelper {
 	
 	private static final Logger logger = LoggerFactory.getLogger(FilePathHelper.class);
@@ -107,6 +109,24 @@ public class FilePathHelper {
 	public static String getArticleImgToSavePath() {
 		String realdir = String.valueOf(new Date().getTime());
 		String path = "/file/article/image/" + realdir +".jpg";
+		return path;
+	}
+	
+	public static String getFileStoreMainPath(){
+		return FileConfig.getInstance().getString("file.store.path", "/opt/store");
+		//return FileConfig.getInstance().getString("file.store.path", "c://");
+	}
+	
+	public static String getFileStoreMainPathWithFilmHeader(){
+		//return FileConfig.getInstance().getString("file.store.path", "/opt/store");
+		return "/header"  ;
+	}
+	
+	public static String getImageUploadPath(String type,HttpServletRequest request) {
+		String time = request.getParameter("time");
+		String path = request.getSession().getServletContext().getRealPath("temp");
+		path = path.replace("\\", "/");
+		path = path + "/g/" + time + "/lt";
 		return path;
 	}
 	
