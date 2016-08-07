@@ -50,7 +50,7 @@ public class MovieController extends BaseController{
 		logger.debug("###########to see movie id : " + fid);
 
 		if (sessionMap == null) {
-			mv.setViewName("redirect:/movie/login.jspx?fid=" + fid);
+			mv.setViewName("redirect:/movie/login.jspx?type=1&fid=" + fid);
 			return mv;
 		} else {
 

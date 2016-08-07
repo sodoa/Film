@@ -15,7 +15,7 @@
 		<div style="height: 100%">
 			<div style="padding: 10px;" class="desc">点击右上角，将本页面分享到朋友圈吧！</div>
 			<div style="width:100%;">
-				<img alt="" src="${pageContext.request.contextPath}/theme/newest/images/share.jpg" width="49%" >
+				<%-- <img alt="" src="${pageContext.request.contextPath}/theme/newest/images/share.jpg" width="49%" > --%>
 				<img id="example2" class="example-image" width="90%" height="90%" src="${pageContext.request.contextPath}/share/image.html?t=${random}">
 			</div>
 			<div style="padding: 10px;" class="desc">通过扫描上方的“我的二维码”，赶快让朋友们注册“爆品电影”，享受优质影片同时，轻松赚取免费电影时间吧！</div>
@@ -24,7 +24,7 @@
 
 	<script type="text/javascript">
 	
-		var title = '我的果然逗名片|<sp:config id="goal.description"></sp:config>'	;
+		var title = '爆品电影真的真的很好看！朋友们，快点关注看电影！'	;
 		var imgUrl = 'http://'+window.location.host+":"+window.location.port+"/theme/newest/logo/128x128.png";
 	
 		function getMenuShareTimeline(wxsid){

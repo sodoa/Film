@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.xinfan.wxshop.business.util.LoginSessionUtils;
 import com.xinfan.wxshop.business.util.WxQrcodeUtils;
+import com.xinfan.wxshop.business.vo.LoginSession;
 
 /**
  * @author huangmin
@@ -27,9 +28,16 @@ public class ShareController extends BaseController {
 
 	@RequestMapping("/index.jspx")
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mv = new ModelAndView("/share");
-		mv.addObject("random", new Date().getTime());
-		return mv;
+		LoginSession sessionMap = LoginSessionUtils.getCustomerUserSessionMap();
+		if (sessionMap == null) {
+			ModelAndView mv = new ModelAndView("redirect:/movie/login.jspx?type=2");
+			return mv;
+		}else {
+			ModelAndView mv = new ModelAndView("/front/share");
+			mv.addObject("random", new Date().getTime());
+			return mv;
+		}
+		
 	}
 	
 	@RequestMapping("/image.html")

@@ -64,9 +64,10 @@ public class AutoLoginController  extends BaseController{
     		String appid = FileConfig.getInstance().getString("weixin.appid");
     		String backUri = FileConfig.getInstance().getDomainUrlString("weixin.authlogin.backurl");
     		
+    		String type = request.getParameter("type");
     		String fid = request.getParameter("fid");
 
-    		backUri = backUri + "?fid=" + fid;
+    		backUri = backUri + "?type=" + type + "&fid=" + fid;
     		backUri = URLEncoder.encode(backUri);
 
     		String url = "https://open.weixin.qq.com/connect/oauth2/authorize?" + "appid=" + appid + "&redirect_uri=" + backUri
@@ -76,8 +77,9 @@ public class AutoLoginController  extends BaseController{
 
     	@RequestMapping("/login_back.jspx")
     	public String loginAuthBack(HttpServletRequest request, HttpServletResponse response)  {
-
+    		
     		String code = request.getParameter("code");
+    		String type = request.getParameter("type");
     		String fid = request.getParameter("fid");
     		
     		String appid = FileConfig.getInstance().getString("weixin.appid");
@@ -108,7 +110,11 @@ public class AutoLoginController  extends BaseController{
 						
 						LoginSessionUtils.setCustomerUserSessionMap(session);
 						
-						return "redirect:/movie/see.jspx?fid="+fid;
+						if("2".equals(type)){
+							return "redirect:/share/index.jspx";
+						}else{
+							return "redirect:/movie/see.jspx?fid="+fid;
+						}
 					}
     			}
     		} 
