@@ -17,11 +17,8 @@
 		<div style="height: 100%">
 			<div style="padding: 10px;" class="desc">点击右上角，将本页面分享到朋友圈吧！</div>
 			<div style="width:100%;">
-				<p style="line-height: 25.6px; white-space: normal; text-align: center;"><span style="color: rgb(255, 0, 0); max-width: 100%; box-sizing: border-box !important;">
-					<img src="${pageContext.request.contextPath}/image.jspx?i=/temp/g/1469962486147/tb/1469962709622.jpg" style="width: auto\9; width:100%;visibility: visible !important; height: auto !important;">
-				<br>
-				</span></p>
-				<img id="example2" class="example-image" width="90%" height="90%" src="${pageContext.request.contextPath}/share/image.html?t=${random}">
+				<img src="${pageContext.request.contextPath}/image.jspx?i=/temp/g/1469279534276/tb/1469279579537.jpg" width="49%" style="width: auto\9; width:49%;visibility: visible !important; height: auto !important;">
+				<img id="example2" class="example-image" width="49%" height="90%" src="${pageContext.request.contextPath}/share/image.html?t=${random}">
 			</div>
 			<div style="padding: 10px;" class="desc">通过扫描上方的“我的二维码”，赶快让朋友们注册“爆品电影”，享受优质影片同时，轻松赚取免费电影时间吧！</div>
 		</div>
