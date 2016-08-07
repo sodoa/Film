@@ -1,6 +1,5 @@
 package com.xinfan.wxshop.business.admin;
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -18,9 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageDecoder;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import com.xinfan.wxshop.business.util.FilePathHelper;
 
 @Controller
