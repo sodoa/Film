@@ -39,29 +39,29 @@ import com.xinfan.wxshop.common.page.Pagination;
 @Controller
 @RequestMapping("/admin/film")
 public class FilmAction {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(FilmAction.class);
-	
+
 	@Autowired
 	private FilmService filmService;
-	
-	//数据绑定  
-    @InitBinder    
-    public void initBinder(WebDataBinder binder) {  
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");    
-        dateFormat.setLenient(false);    
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));    
-        //CustomDateEditor 可以换成自己定义的编辑器。  
-        //注册一个Date 类型的绑定器 。
-        binder.setAutoGrowCollectionLimit(Integer.MAX_VALUE);
-    }
-	
+
+	// 数据绑定
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		dateFormat.setLenient(false);
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+		// CustomDateEditor 可以换成自己定义的编辑器。
+		// 注册一个Date 类型的绑定器 。
+		binder.setAutoGrowCollectionLimit(Integer.MAX_VALUE);
+	}
+
 	@RequestMapping("/list.jspx")
 	public ModelAndView waitOrder(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("/admin/film/list");
 		return mv;
 	}
-	
+
 	@RequestMapping("/page.jspx")
 	public @ResponseBody
 	DataTableDataGrid waitOrderPage(HttpServletRequest request) {
@@ -77,27 +77,26 @@ public class FilmAction {
 		String name = request.getParameter("name");
 
 		if (StringUtils.isNotEmpty(name)) {
-			map.put("name", "%" + name +"%");
+			map.put("name", "%" + name + "%");
 		}
-		
+
 		String notin = request.getParameter("notin");
 		if (StringUtils.isNotEmpty(notin)) {
-			if(notin.trim().startsWith(",")){
+			if (notin.trim().startsWith(",")) {
 				notin = notin.trim().substring(1);
 			}
-			
+
 			map.put("notin", notin);
 		}
 
 		page = filmService.selectPageList(map, page);
 
-		DataTableDataGrid grid = new DataTableDataGrid(Integer.parseInt(draw), page,
-				new String[] { "film_id", "name","type", "director",
-				"actor","country","publish","count"});
+		DataTableDataGrid grid = new DataTableDataGrid(Integer.parseInt(draw), page, new String[] { "film_id", "name", "type", "director", "actor", "country",
+				"publish", "count" });
 
 		return grid;
 	}
-	
+
 	@RequestMapping("/add.jspx")
 	public ModelAndView add(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("/admin/film/add");
@@ -105,32 +104,34 @@ public class FilmAction {
 		mv.addObject("time", time);
 		return mv;
 	}
-	
-	@RequestMapping("/add-save.jspx")
-	public ModelAndView addsave(HttpServletRequest request,Film film) throws IOException {
-		ModelAndView mv = new ModelAndView("/admin/film/tip");
-		
-		String thumdPath = FilePathHelper.getImageThumdUploadPath(request);
-		Collection<File> thumdFile = FileUtils.listFiles(new File(thumdPath), new String[] { "jpg" }, true);
 
-		int index = 0;
-		if (!thumdFile.isEmpty()) {
-			File thumdImage = thumdFile.iterator().next();
-			
-			File srcFile = thumdImage;
-			File destDir = new File(FilePathHelper.getFileStoreMainPath()+FilePathHelper.getFileStoreMainPathWithFilmHeader());
-			FileUtils.copyFileToDirectory(srcFile, destDir);
-			String newPath = FilePathHelper.getFileStoreMainPathWithFilmHeader() +"/"+srcFile.getName();
-			film.setPicture(newPath);
+	@RequestMapping("/add-save.jspx")
+	public ModelAndView addsave(HttpServletRequest request, Film film) throws IOException {
+		ModelAndView mv = new ModelAndView("/admin/film/tip");
+
+		String thumdPath = FilePathHelper.getImageThumdUploadPath(request);
+		File thumdFilePath = new File(thumdPath);
+		if (thumdFilePath.exists()) {
+			Collection<File> thumdFile = FileUtils.listFiles(thumdFilePath, new String[] { "jpg" }, true);
+
+			if (!thumdFile.isEmpty()) {
+				File thumdImage = thumdFile.iterator().next();
+
+				File srcFile = thumdImage;
+				File destDir = new File(FilePathHelper.getFileStoreMainPath() + FilePathHelper.getFileStoreMainPathWithFilmHeader());
+				FileUtils.copyFileToDirectory(srcFile, destDir);
+				String newPath = FilePathHelper.getFileStoreMainPathWithFilmHeader() + "/" + srcFile.getName();
+				film.setPicture(newPath);
+			}
 		}
-		
+
 		filmService.saveFilm(film);
 		mv.addObject("msg", "添加成功");
 		return mv;
 	}
-	
+
 	@RequestMapping("/delete.jspx")
-	public @ResponseBody 
+	public @ResponseBody
 	JSONResult delete(HttpServletRequest request) {
 
 		JSONResult result = new JSONResult();
@@ -150,11 +151,13 @@ public class FilmAction {
 		}
 		return result;
 	}
-	
+
 	@RequestMapping("/update.jspx")
 	public ModelAndView update(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("/admin/film/update");
 		String filmId = request.getParameter("filmId");
+		String time = String.valueOf(new Date().getTime());
+		mv.addObject("time", time);
 
 		if (StringUtils.isNotEmpty(filmId)) {
 			Film film = filmService.getFilm(Integer.parseInt(filmId));
@@ -162,11 +165,28 @@ public class FilmAction {
 		}
 		return mv;
 	}
-	
+
 	@RequestMapping("/update-save.jspx")
-	public ModelAndView updatesave(HttpServletRequest request,Film film) {
+	public ModelAndView updatesave(HttpServletRequest request, Film film) throws IOException {
 		ModelAndView mv = new ModelAndView("/admin/film/tip");
-		
+
+		String thumdPath = FilePathHelper.getImageThumdUploadPath(request);
+		File thumdFilePath = new File(thumdPath);
+
+		if (thumdFilePath.exists()) {
+			Collection<File> thumdFile = FileUtils.listFiles(thumdFilePath, new String[] { "jpg" }, true);
+
+			if (!thumdFile.isEmpty()) {
+				File thumdImage = thumdFile.iterator().next();
+
+				File srcFile = thumdImage;
+				File destDir = new File(FilePathHelper.getFileStoreMainPath() + FilePathHelper.getFileStoreMainPathWithFilmHeader());
+				FileUtils.copyFileToDirectory(srcFile, destDir);
+				String newPath = FilePathHelper.getFileStoreMainPathWithFilmHeader() + "/" + srcFile.getName();
+				film.setPicture(newPath);
+			}
+		}
+
 		filmService.updateFilm(film);
 		mv.addObject("msg", "修改成功");
 		return mv;

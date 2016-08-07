@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import com.xinfan.wxshop.common.config.FileConfig;
 
 public class FilePathHelper {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(FilePathHelper.class);
 
 	public static String getImageListUploadPath(HttpServletRequest request) {
@@ -36,7 +36,7 @@ public class FilePathHelper {
 		String path = "/file/g/" + realdir + "/lt";
 		return path;
 	}
-	
+
 	public static String getGoodsImageListToSavePath(String realdir) {
 		String path = "/file/g/" + realdir + "/s";
 		return path;
@@ -47,31 +47,29 @@ public class FilePathHelper {
 		return path;
 	}
 
-
 	public static String getImageThumdToSavePath(String realdir) {
 		String path = "/file/g/" + realdir + "/tb/";
 		return path;
 	}
-	
-	
+
 	public static String getGoodsSummaryHtmlPath() {
 		String realdir = String.valueOf(new Date().getTime());
-		String path = "/file/static/g/" + realdir +".html";
+		String path = "/file/static/g/" + realdir + ".html";
 		return path;
 	}
-	
+
 	public static String getRealPath(HttpServletRequest request) {
 		String basepath = request.getSession().getServletContext().getRealPath("/");
 		basepath = basepath.replace("\\", "/");
 		return basepath;
 	}
-	
-	public static String getGoodsSummaryHtml(HttpServletRequest request,String realdir) {
+
+	public static String getGoodsSummaryHtml(HttpServletRequest request, String realdir) {
 		String basepath = request.getSession().getServletContext().getRealPath("/");
 		basepath = basepath.replace("\\", "/");
 
 		File file = new File(basepath + realdir);
-		if(file.exists()){
+		if (file.exists()) {
 			String html = "";
 			try {
 				html = FileUtils.readFileToString(file, "UTF-8");
@@ -82,13 +80,13 @@ public class FilePathHelper {
 		}
 		return "";
 	}
-	
-	public static String getArticleContentHtml(HttpServletRequest request,String realdir) {
+
+	public static String getArticleContentHtml(HttpServletRequest request, String realdir) {
 		String basepath = request.getSession().getServletContext().getRealPath("/");
 		basepath = basepath.replace("\\", "/");
 
 		File file = new File(basepath + realdir);
-		if(file.exists()){
+		if (file.exists()) {
 			String html = "";
 			try {
 				html = FileUtils.readFileToString(file, "UTF-8");
@@ -99,35 +97,42 @@ public class FilePathHelper {
 		}
 		return "";
 	}
-	
+
 	public static String getArticleContentHtmlToSavePath() {
 		String realdir = String.valueOf(new Date().getTime());
-		String path = "/file/article/content/"+realdir+".html";
+		String path = "/file/article/content/" + realdir + ".html";
 		return path;
 	}
 
 	public static String getArticleImgToSavePath() {
 		String realdir = String.valueOf(new Date().getTime());
-		String path = "/file/article/image/" + realdir +".jpg";
+		String path = "/file/article/image/" + realdir + ".jpg";
 		return path;
 	}
-	
-	public static String getFileStoreMainPath(){
-		return FileConfig.getInstance().getString("file.store.path", "/opt/store");
-		//return FileConfig.getInstance().getString("file.store.path", "c://");
+
+	public static String getFileStoreMainPath() {
+
+		String os_name = System.getProperties().get("os.name").toString().toLowerCase();
+		if (os_name.indexOf("windows") != -1) {
+			return FileConfig.getInstance().getString("file.store.path", "c://");
+		} else {
+			return FileConfig.getInstance().getString("file.store.path", "/opt/store");
+		}
+
 	}
-	
-	public static String getFileStoreMainPathWithFilmHeader(){
-		//return FileConfig.getInstance().getString("file.store.path", "/opt/store");
-		return "/header"  ;
+
+	public static String getFileStoreMainPathWithFilmHeader() {
+		// return FileConfig.getInstance().getString("file.store.path",
+		// "/opt/store");
+		return "/header";
 	}
-	
-	public static String getImageUploadPath(String type,HttpServletRequest request) {
+
+	public static String getImageUploadPath(String type, HttpServletRequest request) {
 		String time = request.getParameter("time");
 		String path = request.getSession().getServletContext().getRealPath("temp");
 		path = path.replace("\\", "/");
 		path = path + "/g/" + time + "/lt";
 		return path;
 	}
-	
+
 }
