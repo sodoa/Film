@@ -31,7 +31,12 @@ public class IpController {
 	}
 
 	@RequestMapping("/get.jspx")
-	public String get(HttpServletRequest request) {
-		return IpCache.cIp;
+	public void get(HttpServletRequest request,HttpServletResponse response) {
+		
+		try {
+			response.getOutputStream().println(IpCache.cIp);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
