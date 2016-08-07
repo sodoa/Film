@@ -4,5 +4,9 @@
           "type":"click",
           "name":"使用说明",
    		  "key":"V1001_GOOD"
+      },{	
+          "type":"view",
+          "name":"分享界面",
+          "url":"http://www.11grand.cn/film/share/index.jsp"
       }]
  }

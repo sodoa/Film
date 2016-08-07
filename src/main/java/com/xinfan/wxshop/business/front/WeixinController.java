@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +23,21 @@ import com.github.sd4324530.fastweixin.message.NewsMsg;
 import com.github.sd4324530.fastweixin.message.TextMsg;
 import com.github.sd4324530.fastweixin.message.req.BaseEvent;
 import com.github.sd4324530.fastweixin.message.req.MenuEvent;
-import com.github.sd4324530.fastweixin.message.req.SendMessageEvent;
+import com.github.sd4324530.fastweixin.message.req.ScanCodeEvent;
 import com.github.sd4324530.fastweixin.message.req.TextReqMsg;
 import com.github.sd4324530.fastweixin.servlet.WeixinControllerSupport;
+import com.xinfan.wxshop.business.entity.Customer;
 import com.xinfan.wxshop.business.entity.Keymovie;
 import com.xinfan.wxshop.business.entity.Movie;
 import com.xinfan.wxshop.business.entity.Searchkey;
 import com.xinfan.wxshop.business.pay.weixin.MenuManger;
+import com.xinfan.wxshop.business.pay.weixin.WxNotifyUtils;
 import com.xinfan.wxshop.business.service.CustomerService;
 import com.xinfan.wxshop.business.service.KeymovieService;
 import com.xinfan.wxshop.business.service.MovieService;
 import com.xinfan.wxshop.business.service.SearchkeyService;
 import com.xinfan.wxshop.business.util.ConfigUtils;
+import com.xinfan.wxshop.business.util.WeixinUtils;
 import com.xinfan.wxshop.common.base.DataMap;
 import com.xinfan.wxshop.common.config.FileConfig;
 
@@ -152,8 +156,7 @@ public class WeixinController extends WeixinControllerSupport {
 		//欢迎关注爆品电影！回复“1”获取最新院线电影，回复“2”获取网络事件影片，回复“3”获取激情伦理电影，
 		//或者直接回复影片名获取电影。如果没有您想看的电影，请回复“我想看XXX”,我们将为您尽快添加。 
         
-		
-		
+		//惨淡
 		@RequestMapping("/menu")
 		public void createmenu(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -167,9 +170,28 @@ public class WeixinController extends WeixinControllerSupport {
 			}
 		}
 
+		//点击菜单
 		@Override
 		protected BaseMsg handleMenuClickEvent(MenuEvent event) {
 			return new TextMsg(ConfigUtils.getValue("subscribe","欢迎关注！"));
+		}
+
+		//扫描二维码
+		@Override
+		protected BaseMsg handleScanCodeEvent(ScanCodeEvent event) {
+			if("subscribe".equals(event.getEvent())){
+				int customerId = WeixinUtils.getScanEventFromId(event.getEventKey());
+				
+				CustomerService.updateRewardData(customerId);
+				Customer customer = CustomerService.getById(customerId);
+				
+				String wxId = event.getFromUserName();
+				Customer newcustomer = CustomerService.getByWeixinId(wxId);
+				
+				WxNotifyUtils.customerShareJoinNotify(customer.getWxId(), newcustomer.getDisplayname(), customer.getExpirydate());
+			}
+			
+			return super.handleScanCodeEvent(event);
 		}
 
 }

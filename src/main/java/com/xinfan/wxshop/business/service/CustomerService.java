@@ -15,6 +15,7 @@ import com.xinfan.wxshop.business.dao.CustomerDao;
 import com.xinfan.wxshop.business.dao.SequenceDao;
 import com.xinfan.wxshop.business.entity.Customer;
 import com.xinfan.wxshop.business.pay.weixin.WxNotifyUtils;
+import com.xinfan.wxshop.business.util.ConfigUtils;
 import com.xinfan.wxshop.business.util.QueryParamterUtils;
 import com.xinfan.wxshop.common.base.BizException;
 import com.xinfan.wxshop.common.base.DataMap;
@@ -122,7 +123,7 @@ public class CustomerService {
 		Customer bean = customerDao.selectByWxId(wxId.trim());
 		return bean;
 	}
-
+	
 	public Customer getById(int id) {
 		Customer bean = customerDao.selectByPrimaryKey(id);
 		return bean;
@@ -144,6 +145,18 @@ public class CustomerService {
 			Customer update = new Customer();
 			update.setCustomerId(id);
 			update.setState(state);
+			this.customerDao.updateByPrimaryKeySelective(update);
+		}
+	}
+	
+	public void updateRewardData(int id) {
+
+		Customer customer = customerDao.selectByPrimaryKey(id);
+		if (customer != null) {
+
+			Customer update = new Customer();
+			int rewardData = Integer.valueOf(ConfigUtils.getValue("rewardData","1"));
+			update.setExpirydate(DateUtils.addDays(customer.getExpirydate(), rewardData));
 			this.customerDao.updateByPrimaryKeySelective(update);
 		}
 	}

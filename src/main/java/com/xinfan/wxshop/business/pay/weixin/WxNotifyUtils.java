@@ -132,5 +132,54 @@ public class WxNotifyUtils {
 		});
 
 	}
+	
+	public static void customerShareJoinNotify(final String openid, final String wx, final Date expirydate) {
+
+		ThreadUtils.run(new Thread() {
+
+			@Override
+			public void run() {
+				Map json = new HashMap();
+				json.put("template_id", "1GQMmWWR0Bh9gzNMdW3nMvubvO-Q9h1UvYno7nF-_0I");
+				json.put("touser", openid);
+				json.put("url", click_url);
+
+				Map<String, WxTemplateData> data = new HashMap<String, WxTemplateData>();
+				WxTemplateData firstData = new WxTemplateData("亲爱的会员，有新的会员通过您的分享加入我们", "#173177");
+				data.put("first", firstData);
+
+				WxTemplateData keyword1Data = new WxTemplateData(wx, "#173177");
+				data.put("keyword1", keyword1Data);
+
+				WxTemplateData keyword2Data = new WxTemplateData(DateHelper.formatFull(new Date()), "#173177");
+				data.put("keyword2", keyword2Data);
+				// keyword3
+				WxTemplateData keyword3Data = new WxTemplateData("你的到期日期为"+ DateHelper.formatFull(expirydate), "#173177");
+				data.put("keyword3", keyword3Data);
+
+				WxTemplateData remarkData = new WxTemplateData("来至微信" + wx +"的加入", "#173177");
+				data.put("remark", remarkData);
+
+				json.put("data", data);
+
+				String jsonString = JSONUtils.toJSONString(json);
+
+				if (logger.isDebugEnabled()) {
+					logger.debug("WxNotifyUtils:" + jsonString);
+				}
+
+				// remark
+
+				String tokenUrl = url + "?access_token=" + WeiXinSessionManager.getAccessToken();
+				JSONObject jsonResult = CommonUtil.httpsRequest(tokenUrl, "POST", jsonString);
+				if (logger.isDebugEnabled()) {
+					if (jsonResult != null) {
+						logger.debug("WxNotifyUtils:" + jsonResult.toString());
+					}
+				}
+			}
+		});
+
+	}
 
 }
