@@ -10,19 +10,22 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.github.sd4324530.fastweixin.api.UserAPI;
+import com.github.sd4324530.fastweixin.api.config.ApiConfig;
+import com.github.sd4324530.fastweixin.api.response.GetUserInfoResponse;
 import com.github.sd4324530.fastweixin.message.Article;
 import com.github.sd4324530.fastweixin.message.BaseMsg;
 import com.github.sd4324530.fastweixin.message.NewsMsg;
 import com.github.sd4324530.fastweixin.message.TextMsg;
 import com.github.sd4324530.fastweixin.message.req.BaseEvent;
 import com.github.sd4324530.fastweixin.message.req.MenuEvent;
+import com.github.sd4324530.fastweixin.message.req.QrCodeEvent;
 import com.github.sd4324530.fastweixin.message.req.ScanCodeEvent;
 import com.github.sd4324530.fastweixin.message.req.TextReqMsg;
 import com.github.sd4324530.fastweixin.servlet.WeixinControllerSupport;
@@ -63,6 +66,8 @@ public class WeixinController extends WeixinControllerSupport {
         
     	@Autowired
     	private CustomerService CustomerService;
+    	
+    	private ApiConfig config;
     	
         //设置TOKEN，用于绑定微信服务器
         @Override
@@ -173,20 +178,75 @@ public class WeixinController extends WeixinControllerSupport {
 		//点击菜单
 		@Override
 		protected BaseMsg handleMenuClickEvent(MenuEvent event) {
+			log.debug("关注---subscribe");
 			return new TextMsg(ConfigUtils.getValue("subscribe","欢迎关注！"));
+		}
+
+		@Override
+		protected BaseMsg handleQrCodeEvent(QrCodeEvent event) {
+			log.debug(event.getEvent());
+			
+			int customerId = WeixinUtils.getScanEventFromId(event.getEventKey());
+			
+			log.debug("subscribe from customerId:" + customerId);
+			CustomerService.updateRewardData(customerId);
+			Customer customer = CustomerService.getById(customerId);
+			
+			String wxId = event.getFromUserName();
+			Customer newcustomer = CustomerService.getByWeixinId(wxId);
+			if(null == newcustomer){
+				if(null == config){
+					config = new ApiConfig(FileConfig.getInstance().getString("weixin.appid"), 
+							FileConfig.getInstance().getString("weixin.appsecret"));
+				}
+				
+				UserAPI userAPI = new UserAPI(config);
+		        GetUserInfoResponse userInfo = userAPI.getUserInfo(wxId);
+		        
+		        String account = "";
+				String password = "12345678";
+				String displayName = userInfo.getNickname();
+				
+				newcustomer = CustomerService.regist(account, password, displayName, userInfo.getOpenid(),userInfo.getSex().toString());
+			}
+			log.debug("subscribe from wxId:" + wxId);
+			
+			WxNotifyUtils.customerShareJoinNotify(customer.getWxId(), newcustomer.getDisplayname(), customer.getExpirydate());
+			
+			return super.handleQrCodeEvent(event);
 		}
 
 		//扫描二维码
 		@Override
 		protected BaseMsg handleScanCodeEvent(ScanCodeEvent event) {
+			log.debug(event.getEvent());
+			
 			if("subscribe".equals(event.getEvent())){
 				int customerId = WeixinUtils.getScanEventFromId(event.getEventKey());
 				
+				log.debug("subscribe from customerId:" + customerId);
 				CustomerService.updateRewardData(customerId);
 				Customer customer = CustomerService.getById(customerId);
 				
 				String wxId = event.getFromUserName();
 				Customer newcustomer = CustomerService.getByWeixinId(wxId);
+				if(null == newcustomer){
+					if(null == config){
+						config = new ApiConfig(FileConfig.getInstance().getString("weixin.appid"), 
+								FileConfig.getInstance().getString("weixin.appsecret"));
+					}
+					
+					UserAPI userAPI = new UserAPI(config);
+			        GetUserInfoResponse userInfo = userAPI.getUserInfo(wxId);
+			        
+			        String account = "";
+					String password = "12345678";
+					String displayName = userInfo.getNickname();
+					
+					newcustomer = CustomerService.regist(account, password, displayName, userInfo.getOpenid(),userInfo.getSex().toString());
+				}
+				
+				log.debug("subscribe from wxId:" + wxId);
 				
 				WxNotifyUtils.customerShareJoinNotify(customer.getWxId(), newcustomer.getDisplayname(), customer.getExpirydate());
 			}

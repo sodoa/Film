@@ -155,6 +155,7 @@ public class CustomerService {
 		if (customer != null) {
 
 			Customer update = new Customer();
+			update.setCustomerId(id);
 			int rewardData = Integer.valueOf(ConfigUtils.getValue("rewardData","1"));
 			update.setExpirydate(DateUtils.addDays(customer.getExpirydate(), rewardData));
 			this.customerDao.updateByPrimaryKeySelective(update);
