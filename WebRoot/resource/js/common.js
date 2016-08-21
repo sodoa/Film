@@ -408,12 +408,13 @@ function isWeiXinBrowser(){
 	return false;
 }
 
+/**
 window.alert = function(msg){
 	layer.msg(msg,{
 		  time: 2000
 		});
 }
-
+**/
 
 //对话框
 //单键对话框
