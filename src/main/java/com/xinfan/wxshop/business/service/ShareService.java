@@ -2,6 +2,7 @@ package com.xinfan.wxshop.business.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -50,6 +51,9 @@ public class ShareService {
 		return id;
 	}
 	
+	
+	
+	
 	public void updateShare(Share pojo) {
 		ShareDao.updateByPrimaryKeySelective(pojo);
 	}
@@ -64,5 +68,17 @@ public class ShareService {
 		ShareImageDao.insertSelective(pojo);
 		return id;
 	}
+	
+	public Share randomShare() {
+		List<Share> list = ShareDao.listOnlineShare();
+		
+		if(list.size()>0){
+			int index = new Random().nextInt(list.size());
+			return list.get(index);
+		}
+		
+		return null;
+	}
+	
 
 }

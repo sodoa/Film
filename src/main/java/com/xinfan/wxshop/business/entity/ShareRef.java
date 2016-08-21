@@ -6,12 +6,23 @@ public class ShareRef {
     private Integer refid;
 
     private Integer filmid;
+    
+    private Integer shareid;
 
     private Integer customerid;
 
     private Date createdate;
+    
 
-    public Integer getRefid() {
+    public Integer getShareid() {
+		return shareid;
+	}
+
+	public void setShareid(Integer shareid) {
+		this.shareid = shareid;
+	}
+
+	public Integer getRefid() {
         return refid;
     }
 

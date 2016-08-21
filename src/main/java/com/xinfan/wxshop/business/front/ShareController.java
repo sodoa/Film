@@ -1,6 +1,7 @@
 package com.xinfan.wxshop.business.front;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,9 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.xinfan.wxshop.business.entity.Film;
+import com.xinfan.wxshop.business.entity.Share;
 import com.xinfan.wxshop.business.entity.ShareRef;
 import com.xinfan.wxshop.business.model.JSONResult;
 import com.xinfan.wxshop.business.service.ShareRefService;
+import com.xinfan.wxshop.business.service.ShareService;
 import com.xinfan.wxshop.business.util.LoginSessionUtils;
 import com.xinfan.wxshop.business.util.WeiXinSessionManager;
 import com.xinfan.wxshop.business.util.WeiXinShareSign;
@@ -39,6 +42,9 @@ public class ShareController extends BaseController {
 	
 	@Autowired
 	private ShareRefService ShareRefService;
+	
+	@Autowired
+	private ShareService ShareService;
 
 	@RequestMapping("/index.jspx")
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
@@ -46,9 +52,8 @@ public class ShareController extends BaseController {
 		mv.addObject("random", new Date().getTime());
 		
 		String refid = request.getParameter("refid");
-		String from = request.getParameter("from");
 		
-		if (from == null || from.trim().length() == 0 || "null".equals(from)) {
+		if (refid == null || refid.trim().length() == 0 || "null".equals(refid)) {
 			
 			LoginSession sessionMap = LoginSessionUtils.getCustomerUserSessionMap();
 			if (sessionMap == null) {
@@ -56,20 +61,27 @@ public class ShareController extends BaseController {
 				return mv;
 			}
 			
-			String filmId = "";
 			Integer customerId= LoginSessionUtils.getCustomerIdFromUserSessionMap();
 			
+			Share share = this.ShareService.randomShare();
+			List shareImages = this.ShareService.listImageShare(share.getShareid());
+			
 			mv.addObject("customerId",customerId);
-			mv.addObject("filmId", filmId);
+			mv.addObject("filmId", share.getFilmid());
 			mv.addObject("from", "1");
+			mv.addObject("list",shareImages);
+			mv.addObject("share", share);
 			
 			return mv;
 			
 		} else {
 			ShareRef ref = ShareRefService.get(Integer.parseInt(refid));
 			if (ref != null) {
-				Film film = null;
-				mv.addObject("film", film);
+				Share share = ShareService.getShare(ref.getShareid());
+				List shareImages = this.ShareService.listImageShare(share.getShareid());
+				
+				mv.addObject("list",shareImages);
+				mv.addObject("share", share);
 				mv.addObject("ref", ref);
 				mv.addObject("refid", ref.getRefid());
 				mv.addObject("from", "2");
@@ -108,11 +120,13 @@ public class ShareController extends BaseController {
 		if (ticket_token != null) {
 			
 			String filmid = request.getParameter("filmid");
+			String shareid = request.getParameter("shareid");
 			Integer customerId = LoginSessionUtils.getCustomerIdFromUserSessionMap();
 			
 			ShareRef ref = new ShareRef();
 			ref.setCustomerid(customerId);
 			ref.setFilmid(Integer.parseInt(filmid));
+			ref.setShareid(Integer.parseInt(shareid));
 			
 			int shareRefId = ShareRefService.insert(ref);
 

@@ -29,5 +29,13 @@ public class ShareDao extends SqlSessionDaoSupport {
 		share.setOrderByClause("online desc ,createdate desc");
 		return getSqlSession().selectList(wrapCommand("selectByExample"), share);
 	}
+	
+	
+	public List<Share> listOnlineShare() {
+		ShareExample share = new ShareExample();
+		share.setOrderByClause("online desc ,createdate desc");
+		share.createCriteria().andOnlineEqualTo(1);
+		return getSqlSession().selectList(wrapCommand("selectByExample"), share);
+	}
 
 }

@@ -29,6 +29,7 @@ import com.github.sd4324530.fastweixin.message.req.QrCodeEvent;
 import com.github.sd4324530.fastweixin.message.req.TextReqMsg;
 import com.github.sd4324530.fastweixin.servlet.WeixinControllerSupport;
 import com.xinfan.wxshop.business.entity.Customer;
+import com.xinfan.wxshop.business.entity.Film;
 import com.xinfan.wxshop.business.entity.Keymovie;
 import com.xinfan.wxshop.business.entity.Movie;
 import com.xinfan.wxshop.business.entity.Searchkey;
@@ -36,6 +37,7 @@ import com.xinfan.wxshop.business.entity.ShareRef;
 import com.xinfan.wxshop.business.pay.weixin.MenuManger;
 import com.xinfan.wxshop.business.pay.weixin.WxNotifyUtils;
 import com.xinfan.wxshop.business.service.CustomerService;
+import com.xinfan.wxshop.business.service.FilmService;
 import com.xinfan.wxshop.business.service.KeymovieService;
 import com.xinfan.wxshop.business.service.MovieService;
 import com.xinfan.wxshop.business.service.SearchkeyService;
@@ -58,6 +60,9 @@ public class WeixinController extends WeixinControllerSupport {
         
         @Autowired
         private MovieService movieService;
+        
+        @Autowired
+        private FilmService FilmService;
         
         @Autowired
         private KeymovieService keymovieService;
@@ -200,7 +205,7 @@ public class WeixinController extends WeixinControllerSupport {
 					
 					WxNotifyUtils.customerShareJoinNotify(customer.getWxId(), newcustomer.getDisplayname(), customer.getExpirydate());
 					
-					Movie movie = movieService.getMovie(shareRef.getFilmid());
+					Film movie = FilmService.getFilm(shareRef.getFilmid());
 					if (movie != null) {
 						String domain = FileConfig.getInstance().getString("domain.name");
 						List articles = new ArrayList();
