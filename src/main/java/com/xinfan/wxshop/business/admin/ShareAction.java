@@ -52,6 +52,12 @@ public class ShareAction {
 		mv.addObject("list", list);
 		return mv;
 	}
+	
+	@RequestMapping("/select.jspx")
+	public ModelAndView select(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("/admin/share/select");
+		return mv;
+	}
 
 	@RequestMapping("/update.jspx")
 	public ModelAndView update(HttpServletRequest request) {
