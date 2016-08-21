@@ -43,7 +43,7 @@
 		if (wx != null) {
 			$.ajax({
 				type : "POST",
-				url : "/film/share/sign.html?t="+new Date().getTime() + "&wxsid=" +${wxsid},
+				url : "/film/share/sign.html?t="+new Date().getTime() + "&wxsid=" +'${wxsid}',
 				data : {
 					"url" : GetClearUrlPath()
 				},
