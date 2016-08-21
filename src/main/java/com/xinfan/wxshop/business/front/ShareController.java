@@ -48,9 +48,6 @@ public class ShareController extends BaseController {
 		String refid = request.getParameter("refid");
 		String from = request.getParameter("from");
 		
-		
-		mv.addObject("from", from);
-		
 		if (from == null || from.trim().length() == 0 || "null".equals(from)) {
 			
 			LoginSession sessionMap = LoginSessionUtils.getCustomerUserSessionMap();
@@ -64,6 +61,8 @@ public class ShareController extends BaseController {
 			
 			mv.addObject("customerId",customerId);
 			mv.addObject("filmId", filmId);
+			mv.addObject("from", "1");
+			
 			return mv;
 			
 		} else {
@@ -72,8 +71,12 @@ public class ShareController extends BaseController {
 				Film film = null;
 				mv.addObject("film", film);
 				mv.addObject("ref", ref);
+				mv.addObject("refid", ref.getRefid());
+				mv.addObject("from", "2");
+				return mv;
 			}
-			return mv;
+			
+			return this.toError("影片不存在！");
 		}
 		
 	}
