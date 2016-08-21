@@ -15,5 +15,6 @@
 	<bean id="PushService" class="com.xinfan.wxshop.business.service.PushService" />
 	<bean id="PushMovieService" class="com.xinfan.wxshop.business.service.PushMovieService" />
 	<bean id="ShareRefService" class="com.xinfan.wxshop.business.service.ShareRefService" />
+	<bean id="ShareService" class="com.xinfan.wxshop.business.service.ShareService" />
 	<bean id="SmsService" class="com.xinfan.wxshop.common.sms.YunPianSmsServiceImpl" />
 </beans>

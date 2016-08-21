@@ -41,7 +41,8 @@
 	 	<table tableName="t_film" domainObjectName="Film"/>
 		<table tableName="t_push" domainObjectName="Push"/>
 	 -->
-		<table tableName="t_share_ref" domainObjectName="ShareRef"/>	 	
+		<table tableName="t_share" domainObjectName="Share"/>	 	
+		<table tableName="t_share_image" domainObjectName="ShareImage"/>	 
 
 	</context>
 </generatorConfiguration>
