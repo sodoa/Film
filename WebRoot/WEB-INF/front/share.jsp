@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ taglib prefix="sp" uri="http://mos.xinfan.com/"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,6 +28,8 @@
 </style>
 </head>
 <body>
+
+<c:if test="${from==1}">
 <div class="scroll-content">
 	<div style="height: 100%">
 		<div style="padding: 10px;" class="desc">点击右上角，将本页面分享到朋友圈吧！</div>
@@ -43,7 +49,7 @@
 		if (wx != null) {
 			$.ajax({
 				type : "POST",
-				url : "/film/share/sign.html?t="+new Date().getTime() + "&wxsid=" +'${wxsid}',
+				url : "/film/share/sign.html?t="+new Date().getTime() + "&filmid=" +'${filmid}',
 				data : {
 					"url" : GetClearUrlPath()
 				},
@@ -51,7 +57,7 @@
 				success : function(data) {
 					if (data.result == 0) {
 						
-						var wxsid = data["wxsid"];
+						var refid = data["refid"];
 						
 						//alert(data["signature"]);
 
@@ -69,7 +75,7 @@
 
 						wx.ready(function() {
 							console.log("wx config success");
-							onShareListner(wxsid);
+							onShareListner(refid);
 						});
 
 						wx.error(function(res) {
@@ -96,7 +102,7 @@
 		function getMenuShareTimeline(wxsid){
 			
 			var shareid = wxsid;
-			var link = addUrlPara('wxsid',shareid);
+			var link = addUrlPara('refid',shareid);
 			
 			return {
 			    title: title, // 分享标题
@@ -114,7 +120,7 @@
 		function getMenuShareAppMessage(wxsid){
 			
 			var shareid = wxsid;
-			var link = addUrlPara('wxsid',shareid);
+			var link = addUrlPara('refid',shareid);
 			
 			return {
 			    title: title, // 分享标题
@@ -135,7 +141,7 @@
 		function getMenuShareQQ(wxsid){
 			
 			var shareid = wxsid;
-			var link = addUrlPara('wxsid',shareid);
+			var link = addUrlPara('refid',shareid);
 			
 			return {
 			    title: title, // 分享标题
@@ -153,7 +159,12 @@
 		
 	
 	</script>
+</c:if>
 
+<c:if test="${from==2}">
+
+
+</c:if>
  
 </body>
 </html>
