@@ -39,10 +39,11 @@
 	<script type="text/javascript">
 		var title = '爆品电影！分享电影啦！在线影片，最新大片，在这里看电影真的很方便！朋友们，快点关注看电影！'	;
 		var imgUrl = 'http://'+window.location.host+":"+window.location.port+"/film/theme/images/icon.png";
+		
 		if (wx != null) {
 			$.ajax({
 				type : "POST",
-				url : "/film/share/sign.html?t="+new Date().getTime(),
+				url : "/film/share/sign.html?t="+new Date().getTime() + "&wxsid=" +${wxsid},
 				data : {
 					"url" : GetClearUrlPath()
 				},

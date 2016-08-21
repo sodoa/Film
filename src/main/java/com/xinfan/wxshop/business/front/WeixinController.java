@@ -154,8 +154,48 @@ public class WeixinController extends WeixinControllerSupport {
             }
             
         }
+        
+        /**
+         * 扫描
+         */
 		@Override
 		protected BaseMsg handleSubscribe(BaseEvent event) {
+			
+			
+			if(event instanceof QrCodeEvent){
+				QrCodeEvent qrevent = (QrCodeEvent)event;
+				
+				int customerId = WeixinUtils.getScanEventFromId(qrevent.getEventKey());
+				
+				log.debug("subscribe from customerId:" + customerId);
+				CustomerService.updateRewardData(customerId);
+				Customer customer = CustomerService.getById(customerId);
+				
+				String wxId = qrevent.getFromUserName();
+				Customer newcustomer = CustomerService.getByWeixinId(wxId);
+				if(null == newcustomer){
+					if(null == config){
+						config = new ApiConfig(FileConfig.getInstance().getString("weixin.appid"), 
+								FileConfig.getInstance().getString("weixin.appsecret"));
+					}
+					
+					UserAPI userAPI = new UserAPI(config);
+			        GetUserInfoResponse userInfo = userAPI.getUserInfo(wxId);
+			        
+			        String account = "";
+					String password = "12345678";
+					String displayName = userInfo.getNickname();
+					
+					newcustomer = CustomerService.regist(account, password, displayName,userInfo.getOpenid(),String.valueOf(userInfo.getSex()));
+				}
+				log.debug("subscribe from wxId:" + wxId);
+				
+				WxNotifyUtils.customerShareJoinNotify(customer.getWxId(), newcustomer.getDisplayname(), customer.getExpirydate());
+				
+			}
+			
+			
+			
 			return new TextMsg(ConfigUtils.getValue("subscribe","欢迎关注！"));
 		}
 		//欢迎关注爆品电影！回复“1”获取最新院线电影，回复“2”获取网络事件影片，回复“3”获取激情伦理电影，
@@ -178,80 +218,16 @@ public class WeixinController extends WeixinControllerSupport {
 		//点击菜单
 		@Override
 		protected BaseMsg handleMenuClickEvent(MenuEvent event) {
-			log.debug("关注---subscribe");
+			log.debug("菜单点击---MenuClick");
 			return new TextMsg(ConfigUtils.getValue("subscribe","欢迎关注！"));
 		}
 
+		/**
+		 * 用户已关注时扫描
+		 */
 		@Override
 		protected BaseMsg handleQrCodeEvent(QrCodeEvent event) {
-			log.debug(event.getEvent());
-			
-			int customerId = WeixinUtils.getScanEventFromId(event.getEventKey());
-			
-			log.debug("subscribe from customerId:" + customerId);
-			CustomerService.updateRewardData(customerId);
-			Customer customer = CustomerService.getById(customerId);
-			
-			String wxId = event.getFromUserName();
-			Customer newcustomer = CustomerService.getByWeixinId(wxId);
-			if(null == newcustomer){
-				if(null == config){
-					config = new ApiConfig(FileConfig.getInstance().getString("weixin.appid"), 
-							FileConfig.getInstance().getString("weixin.appsecret"));
-				}
-				
-				UserAPI userAPI = new UserAPI(config);
-		        GetUserInfoResponse userInfo = userAPI.getUserInfo(wxId);
-		        
-		        String account = "";
-				String password = "12345678";
-				String displayName = userInfo.getNickname();
-				
-				newcustomer = CustomerService.regist(account, password, displayName, userInfo.getOpenid(),userInfo.getSex().toString());
-			}
-			log.debug("subscribe from wxId:" + wxId);
-			
-			WxNotifyUtils.customerShareJoinNotify(customer.getWxId(), newcustomer.getDisplayname(), customer.getExpirydate());
-			
-			return super.handleQrCodeEvent(event);
-		}
-
-		//扫描二维码
-		@Override
-		protected BaseMsg handleScanCodeEvent(ScanCodeEvent event) {
-			log.debug(event.getEvent());
-			
-			if("subscribe".equals(event.getEvent())){
-				int customerId = WeixinUtils.getScanEventFromId(event.getEventKey());
-				
-				log.debug("subscribe from customerId:" + customerId);
-				CustomerService.updateRewardData(customerId);
-				Customer customer = CustomerService.getById(customerId);
-				
-				String wxId = event.getFromUserName();
-				Customer newcustomer = CustomerService.getByWeixinId(wxId);
-				if(null == newcustomer){
-					if(null == config){
-						config = new ApiConfig(FileConfig.getInstance().getString("weixin.appid"), 
-								FileConfig.getInstance().getString("weixin.appsecret"));
-					}
-					
-					UserAPI userAPI = new UserAPI(config);
-			        GetUserInfoResponse userInfo = userAPI.getUserInfo(wxId);
-			        
-			        String account = "";
-					String password = "12345678";
-					String displayName = userInfo.getNickname();
-					
-					newcustomer = CustomerService.regist(account, password, displayName, userInfo.getOpenid(),userInfo.getSex().toString());
-				}
-				
-				log.debug("subscribe from wxId:" + wxId);
-				
-				WxNotifyUtils.customerShareJoinNotify(customer.getWxId(), newcustomer.getDisplayname(), customer.getExpirydate());
-			}
-			
-			return super.handleScanCodeEvent(event);
+			return new TextMsg(ConfigUtils.getValue("subscribe","欢迎关注！"));
 		}
 
 }

@@ -91,6 +91,12 @@ public class CustomerService {
 		
 		Customer exist = customerDao.selectByWxId(wxId);
 		if (exist != null) {
+//			if(!displayName.equals(exist.getDisplayname())){
+//				exist.setDisplayname(displayName);
+//				exist.setSex(Integer.parseInt(sex));
+//				customerDao.updateByPrimaryKeySelective(exist);
+//			}
+			
 			return exist;
 		}
 
@@ -156,7 +162,7 @@ public class CustomerService {
 
 			Customer update = new Customer();
 			update.setCustomerId(id);
-			int rewardData = Integer.valueOf(ConfigUtils.getValue("rewardData","1"));
+			int rewardData = Integer.valueOf(ConfigUtils.getValue("rewardDate"));
 			update.setExpirydate(DateUtils.addDays(customer.getExpirydate(), rewardData));
 			this.customerDao.updateByPrimaryKeySelective(update);
 		}
