@@ -12,9 +12,10 @@
 <meta name="keywords" content="电影,爆品电影" />
 <meta name="description" content="我一直在这里看电影，最新大片，在线影片，真的很喜欢，朋友们快来看吧!扫描二维码就可以一起看了" />
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/theme/js/jquery-1.11.2.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resource/js/common.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/uiadmin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/uiadmin/lib/layer/1.9.3/layer.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/theme/js/wx.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resource/js/common.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/theme/js/jweixin-1.0.0.js"></script>
 <style type="text/css">
 .desc {
@@ -34,25 +35,37 @@
 	<div style="height: 100%">
 		<div style="padding: 10px;" class="desc">点击右上角，将本页面分享到朋友圈吧！</div>
 		<div style="width:100%;">
-			<div>点击右上角分享，如有好友加入可获得免费看电影一个月时间</div>
+			<div style="font-size: 26px;">点击右上角分享，如有好友加入可获得免费看电影一个月时间						"filmid" : '${share.filmid}',
+					"shareid": '${share.shareid}'</div>
 			<c:forEach var="item" items="${list}">
-				<img src="${pageContext.request.contextPath}/image.jspx?i=imageurl" width="99%" style="visibility: visible !important; height: auto !important;">
+				<img src="${pageContext.request.contextPath}/image.jspx?i=${item.imageurl}" width="99%" style="visibility: visible !important; height: auto !important;">
 			</c:forEach>
 		</div>
+		
+	
 	</div>
 	<div id="tt"></div>
 </div>
 
 	<script type="text/javascript">
 		var title = '${share.title}'	;
+		alert(title);
 		var imgUrl = 'http://'+window.location.host+":"+window.location.port+"/${pageContext.request.contextPath}/image.jspx?i=${share.headimg}";
+		alert(imgUrl);
 		
+		$(function(){
+				alert(wx);
 		if (wx != null) {
+			
+				alert('${share.filmid}--${share.shareid}');
+				window.title = '${share.filmid}--${share.shareid}';
 			$.ajax({
-				type : "POST",
-				url : "/film/share/sign.html?t="+new Date().getTime() + "&filmid=" +'${share.filmid}'+"&shareid=${share.shareid}",
+				type : "get",
+				url : "/film/share/sign.html?t="+new Date().getTime(),
 				data : {
-					"url" : GetClearUrlPath()
+					"url" : GetClearUrlPath(),
+					"filmid" : '${share.filmid}',
+					"shareid": '${share.shareid}'
 				},
 				dataType : "json",
 				success : function(data) {
@@ -88,7 +101,7 @@
 					}
 				}
 			});
-		}
+		}});
 		
 		function onShareListner(wxsid){
 
@@ -175,7 +188,7 @@
 <div class="scroll-content">
 	<div style="height: 100%">
 		<div style="width:100%;">
-			<div>长按二维码关注微信公众号后进行观看</div>
+			<div style="font-size: 26px;">长按二维码关注微信公众号后进行观看</div>
 			<img id="example2" class="example-image" width="100%" height="90%" src="${pageContext.request.contextPath}/share/image.html?t=${random}&refid=${refid}">
 			<div style="padding: 10px;border: 1px solid #eee;">
 				${share.description}
