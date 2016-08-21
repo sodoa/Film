@@ -23,4 +23,6 @@ public class SequenceConstants {
 	public static final String SEQ_PUSH = "seq_push";
 	
 	public static final String SEQ_PUSHMOVIE = "seq_pushmovie";
+	
+	public static final String SEQ_SHARE_REF = "seq_share_ref";
 }

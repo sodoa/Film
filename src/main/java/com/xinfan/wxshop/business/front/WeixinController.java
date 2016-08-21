@@ -26,19 +26,20 @@ import com.github.sd4324530.fastweixin.message.TextMsg;
 import com.github.sd4324530.fastweixin.message.req.BaseEvent;
 import com.github.sd4324530.fastweixin.message.req.MenuEvent;
 import com.github.sd4324530.fastweixin.message.req.QrCodeEvent;
-import com.github.sd4324530.fastweixin.message.req.ScanCodeEvent;
 import com.github.sd4324530.fastweixin.message.req.TextReqMsg;
 import com.github.sd4324530.fastweixin.servlet.WeixinControllerSupport;
 import com.xinfan.wxshop.business.entity.Customer;
 import com.xinfan.wxshop.business.entity.Keymovie;
 import com.xinfan.wxshop.business.entity.Movie;
 import com.xinfan.wxshop.business.entity.Searchkey;
+import com.xinfan.wxshop.business.entity.ShareRef;
 import com.xinfan.wxshop.business.pay.weixin.MenuManger;
 import com.xinfan.wxshop.business.pay.weixin.WxNotifyUtils;
 import com.xinfan.wxshop.business.service.CustomerService;
 import com.xinfan.wxshop.business.service.KeymovieService;
 import com.xinfan.wxshop.business.service.MovieService;
 import com.xinfan.wxshop.business.service.SearchkeyService;
+import com.xinfan.wxshop.business.service.ShareRefService;
 import com.xinfan.wxshop.business.util.ConfigUtils;
 import com.xinfan.wxshop.business.util.WeixinUtils;
 import com.xinfan.wxshop.common.base.DataMap;
@@ -66,6 +67,9 @@ public class WeixinController extends WeixinControllerSupport {
         
     	@Autowired
     	private CustomerService CustomerService;
+    	
+    	@Autowired
+    	private ShareRefService ShareRefService;
     	
     	private ApiConfig config;
     	
@@ -165,32 +169,49 @@ public class WeixinController extends WeixinControllerSupport {
 			if(event instanceof QrCodeEvent){
 				QrCodeEvent qrevent = (QrCodeEvent)event;
 				
-				int customerId = WeixinUtils.getScanEventFromId(qrevent.getEventKey());
+				int refId = WeixinUtils.getScanEventFromId(qrevent.getEventKey());
 				
-				log.debug("subscribe from customerId:" + customerId);
-				CustomerService.updateRewardData(customerId);
-				Customer customer = CustomerService.getById(customerId);
+				ShareRef shareRef = ShareRefService.get(refId);
 				
-				String wxId = qrevent.getFromUserName();
-				Customer newcustomer = CustomerService.getByWeixinId(wxId);
-				if(null == newcustomer){
-					if(null == config){
-						config = new ApiConfig(FileConfig.getInstance().getString("weixin.appid"), 
-								FileConfig.getInstance().getString("weixin.appsecret"));
+				if(shareRef!=null){
+					
+					log.debug("subscribe from refId:" + refId);
+					CustomerService.updateRewardData(shareRef.getCustomerid());
+					Customer customer = CustomerService.getById(shareRef.getCustomerid());
+					
+					String wxId = qrevent.getFromUserName();
+					Customer newcustomer = CustomerService.getByWeixinId(wxId);
+					if(null == newcustomer){
+						if(null == config){
+							config = new ApiConfig(FileConfig.getInstance().getString("weixin.appid"), 
+									FileConfig.getInstance().getString("weixin.appsecret"));
+						}
+						
+						UserAPI userAPI = new UserAPI(config);
+				        GetUserInfoResponse userInfo = userAPI.getUserInfo(wxId);
+				        
+				        String account = "";
+						String password = "12345678";
+						String displayName = userInfo.getNickname();
+						
+						newcustomer = CustomerService.regist(account, password, displayName,userInfo.getOpenid(),String.valueOf(userInfo.getSex()));
 					}
+					log.debug("subscribe from wxId:" + wxId);
 					
-					UserAPI userAPI = new UserAPI(config);
-			        GetUserInfoResponse userInfo = userAPI.getUserInfo(wxId);
-			        
-			        String account = "";
-					String password = "12345678";
-					String displayName = userInfo.getNickname();
+					WxNotifyUtils.customerShareJoinNotify(customer.getWxId(), newcustomer.getDisplayname(), customer.getExpirydate());
 					
-					newcustomer = CustomerService.regist(account, password, displayName,userInfo.getOpenid(),String.valueOf(userInfo.getSex()));
+					Movie movie = movieService.getMovie(shareRef.getFilmid());
+					if (movie != null) {
+						String domain = FileConfig.getInstance().getString("domain.name");
+						List articles = new ArrayList();
+						Article article = new Article();
+						article.setTitle(movie.getName());
+						article.setPicUrl(domain + "/image.jspx?i=" + StringUtils.replace(movie.getPicture(), "\\", "/"));
+						article.setUrl(domain + "/movie/see.jspx?fid=" + movie.getFilmId());
+						articles.add(article);
+						return new NewsMsg(articles);
+					}
 				}
-				log.debug("subscribe from wxId:" + wxId);
-				
-				WxNotifyUtils.customerShareJoinNotify(customer.getWxId(), newcustomer.getDisplayname(), customer.getExpirydate());
 			}
 			
 			return new TextMsg(ConfigUtils.getValue("subscribe","欢迎关注！"));
