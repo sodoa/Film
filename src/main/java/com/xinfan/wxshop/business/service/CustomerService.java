@@ -83,7 +83,7 @@ public class CustomerService {
 		return customer;
 	}
 
-	public Customer regist(String account, String password, String displayName, String wxId,String sex) {
+	public Customer regist(String account, String password, String displayName, String wxId,String sex,Integer shareuser) {
 
 		if (sex == null || sex.trim().length() == 0) {
 			sex = "1";
@@ -99,6 +99,10 @@ public class CustomerService {
 			
 			return exist;
 		}
+		
+		if(shareuser == null){
+			shareuser = 0;
+		}
 
 		int customerId = this.sequenceDao.getSequence(SequenceConstants.SEQ_CUSTOMER);
 
@@ -112,6 +116,7 @@ public class CustomerService {
 		bean.setWxId(wxId);
 		bean.setExpirydate(DateUtils.addDays(new Date(), 3));
 		bean.setRegType(1);
+		bean.setShareuser(shareuser);
 
 		this.customerDao.insertSelective(bean);
 		

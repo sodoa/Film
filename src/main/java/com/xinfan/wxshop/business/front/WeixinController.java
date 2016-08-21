@@ -194,7 +194,7 @@ public class WeixinController extends WeixinControllerSupport {
 						String password = "12345678";
 						String displayName = userInfo.getNickname();
 						
-						newcustomer = CustomerService.regist(account, password, displayName,userInfo.getOpenid(),String.valueOf(userInfo.getSex()));
+						newcustomer = CustomerService.regist(account, password, displayName,userInfo.getOpenid(),String.valueOf(userInfo.getSex()),shareRef.getCustomerid());
 					}
 					log.debug("subscribe from wxId:" + wxId);
 					

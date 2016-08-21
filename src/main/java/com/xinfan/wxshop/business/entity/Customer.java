@@ -4,124 +4,134 @@ import java.util.Date;
 
 import com.xinfan.wxshop.common.base.BaseEntity;
 
-public class Customer extends BaseEntity {
+public class Customer {
     private Integer customerId;
 
-    private String displayname;
+	private String displayname;
 
-    private String account;
+	private String account;
 
-    private String pwd;
+	private String pwd;
 
-    private Integer sex;
+	private Integer sex;
 
-    private String wxId;
+	private String wxId;
 
-    private Date regdate;
+	private Date regdate;
 
-    private Date expirydate;
+	private Date expirydate;
 
-    private String longitude;
+	private String longitude;
 
-    private String latitude;
+	private String latitude;
 
-    private Integer regType;
+	private Integer regType;
 
-    private Integer state;
+	private Integer state;
 
-    public Integer getCustomerId() {
-        return customerId;
-    }
+	private Integer shareuser;
 
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
-    }
+	public Integer getCustomerId() {
+		return customerId;
+	}
 
-    public String getDisplayname() {
-        return displayname;
-    }
+	public void setCustomerId(Integer customerId) {
+		this.customerId = customerId;
+	}
 
-    public void setDisplayname(String displayname) {
-        this.displayname = displayname == null ? null : displayname.trim();
-    }
+	public String getDisplayname() {
+		return displayname;
+	}
 
-    public String getAccount() {
-        return account;
-    }
+	public void setDisplayname(String displayname) {
+		this.displayname = displayname == null ? null : displayname.trim();
+	}
 
-    public void setAccount(String account) {
-        this.account = account == null ? null : account.trim();
-    }
+	public String getAccount() {
+		return account;
+	}
 
-    public String getPwd() {
-        return pwd;
-    }
+	public void setAccount(String account) {
+		this.account = account == null ? null : account.trim();
+	}
 
-    public void setPwd(String pwd) {
-        this.pwd = pwd == null ? null : pwd.trim();
-    }
+	public String getPwd() {
+		return pwd;
+	}
 
-    public Integer getSex() {
-        return sex;
-    }
+	public void setPwd(String pwd) {
+		this.pwd = pwd == null ? null : pwd.trim();
+	}
 
-    public void setSex(Integer sex) {
-        this.sex = sex;
-    }
+	public Integer getSex() {
+		return sex;
+	}
 
-    public String getWxId() {
-        return wxId;
-    }
+	public void setSex(Integer sex) {
+		this.sex = sex;
+	}
 
-    public void setWxId(String wxId) {
-        this.wxId = wxId == null ? null : wxId.trim();
-    }
+	public String getWxId() {
+		return wxId;
+	}
 
-    public Date getRegdate() {
-        return regdate;
-    }
+	public void setWxId(String wxId) {
+		this.wxId = wxId == null ? null : wxId.trim();
+	}
 
-    public void setRegdate(Date regdate) {
-        this.regdate = regdate;
-    }
+	public Date getRegdate() {
+		return regdate;
+	}
 
-    public Date getExpirydate() {
-        return expirydate;
-    }
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
+	}
 
-    public void setExpirydate(Date expirydate) {
-        this.expirydate = expirydate;
-    }
+	public Date getExpirydate() {
+		return expirydate;
+	}
 
-    public String getLongitude() {
-        return longitude;
-    }
+	public void setExpirydate(Date expirydate) {
+		this.expirydate = expirydate;
+	}
 
-    public void setLongitude(String longitude) {
-        this.longitude = longitude == null ? null : longitude.trim();
-    }
+	public String getLongitude() {
+		return longitude;
+	}
 
-    public String getLatitude() {
-        return latitude;
-    }
+	public void setLongitude(String longitude) {
+		this.longitude = longitude == null ? null : longitude.trim();
+	}
 
-    public void setLatitude(String latitude) {
-        this.latitude = latitude == null ? null : latitude.trim();
-    }
+	public String getLatitude() {
+		return latitude;
+	}
 
-    public Integer getRegType() {
-        return regType;
-    }
+	public void setLatitude(String latitude) {
+		this.latitude = latitude == null ? null : latitude.trim();
+	}
 
-    public void setRegType(Integer regType) {
-        this.regType = regType;
-    }
+	public Integer getRegType() {
+		return regType;
+	}
 
-    public Integer getState() {
-        return state;
-    }
+	public void setRegType(Integer regType) {
+		this.regType = regType;
+	}
 
-    public void setState(Integer state) {
-        this.state = state;
-    }
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
+	}
+
+	public Integer getShareuser() {
+		return shareuser;
+	}
+
+	public void setShareuser(Integer shareuser) {
+		this.shareuser = shareuser;
+	}
 }

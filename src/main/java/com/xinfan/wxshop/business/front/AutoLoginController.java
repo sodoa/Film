@@ -98,7 +98,7 @@ public class AutoLoginController  extends BaseController{
 						String password = "12345678";
 						String displayName = info.getNickname();
 						
-						Customer customer = CustomerService.regist(account, password, displayName, info.getOpenid(),info.getSex());
+						Customer customer = CustomerService.regist(account, password, displayName, info.getOpenid(),info.getSex(),0);
 						
 						LoginSession session = new LoginSession();
 						session.setCustomerId(customer.getCustomerId());
