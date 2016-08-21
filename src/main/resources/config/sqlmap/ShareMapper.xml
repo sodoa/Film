@@ -9,6 +9,7 @@
     <result column="headimg" property="headimg" jdbcType="VARCHAR" />
     <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
     <result column="online" property="online" jdbcType="INTEGER" />
+    <result column="smnt" property="smnt" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    shareid, title, description, filmid, headimg, createdate, online
+    shareid, title, description, filmid, headimg, createdate, online, smnt
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xinfan.wxshop.business.entity.ShareExample" >
     select
@@ -104,10 +105,10 @@
   <insert id="insert" parameterType="com.xinfan.wxshop.business.entity.Share" >
     insert into t_share (shareid, title, description, 
       filmid, headimg, createdate, 
-      online)
+      online, smnt)
     values (#{shareid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{filmid,jdbcType=INTEGER}, #{headimg,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, 
-      #{online,jdbcType=INTEGER})
+      #{online,jdbcType=INTEGER}, #{smnt,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.xinfan.wxshop.business.entity.Share" >
     insert into t_share
@@ -133,6 +134,9 @@
       <if test="online != null" >
         online,
       </if>
+      <if test="smnt != null" >
+        smnt,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="shareid != null" >
@@ -155,6 +159,9 @@
       </if>
       <if test="online != null" >
         #{online,jdbcType=INTEGER},
+      </if>
+      <if test="smnt != null" >
+        #{smnt,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -188,6 +195,9 @@
       <if test="record.online != null" >
         online = #{record.online,jdbcType=INTEGER},
       </if>
+      <if test="record.smnt != null" >
+        smnt = #{record.smnt,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -201,7 +211,8 @@
       filmid = #{record.filmid,jdbcType=INTEGER},
       headimg = #{record.headimg,jdbcType=VARCHAR},
       createdate = #{record.createdate,jdbcType=TIMESTAMP},
-      online = #{record.online,jdbcType=INTEGER}
+      online = #{record.online,jdbcType=INTEGER},
+      smnt = #{record.smnt,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -227,6 +238,9 @@
       <if test="online != null" >
         online = #{online,jdbcType=INTEGER},
       </if>
+      <if test="smnt != null" >
+        smnt = #{smnt,jdbcType=INTEGER},
+      </if>
     </set>
     where shareid = #{shareid,jdbcType=INTEGER}
   </update>
@@ -237,7 +251,8 @@
       filmid = #{filmid,jdbcType=INTEGER},
       headimg = #{headimg,jdbcType=VARCHAR},
       createdate = #{createdate,jdbcType=TIMESTAMP},
-      online = #{online,jdbcType=INTEGER}
+      online = #{online,jdbcType=INTEGER},
+      smnt = #{smnt,jdbcType=INTEGER}
     where shareid = #{shareid,jdbcType=INTEGER}
   </update>
 </mapper>
