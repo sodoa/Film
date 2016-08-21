@@ -24,8 +24,9 @@ public class ShareImageDao extends SqlSessionDaoSupport {
 		return getSqlSession().selectOne(wrapCommand("selectByPrimaryKey"), id);
 	}
 
-	public List<ShareImage> listImageShare() {
+	public List<ShareImage> listImageShare(int shareId) {
 		ShareImageExample share = new ShareImageExample();
+		share.createCriteria().andShareidEqualTo(shareId);
 		return getSqlSession().selectList(wrapCommand("selectByExample"), share);
 	}
 }

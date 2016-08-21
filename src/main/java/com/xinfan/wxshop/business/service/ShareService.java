@@ -34,11 +34,18 @@ public class ShareService {
 	public List<Share> listShare() {
 		return ShareDao.listShare();
 	}
+	
+	public List<ShareImage> listImageShare(int shareid) {
+		return ShareImageDao.listImageShare(shareid);
+	}
+
 
 	public int insertShare(Share pojo) {
 		int id = this.sequenceDao.getSequence(SequenceConstants.SEQ_SHARE);
 		pojo.setShareid(id);
 		pojo.setCreatedate(new Date());
+		pojo.setSmnt(0);
+		pojo.setOnline(1);
 		ShareDao.insertSelective(pojo);
 		return id;
 	}
