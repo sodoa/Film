@@ -159,11 +159,17 @@ public class CustomerService {
 
 		Customer customer = customerDao.selectByPrimaryKey(id);
 		if (customer != null) {
-
 			Customer update = new Customer();
 			update.setCustomerId(id);
 			int rewardData = Integer.valueOf(ConfigUtils.getValue("rewardDate"));
-			update.setExpirydate(DateUtils.addDays(customer.getExpirydate(), rewardData));
+			
+			Date now = new Date();
+			if(customer.getExpirydate().before(now)){
+				update.setExpirydate(DateUtils.addDays(now, rewardData));
+			}else{
+				update.setExpirydate(DateUtils.addDays(customer.getExpirydate(), rewardData));
+			}
+			
 			this.customerDao.updateByPrimaryKeySelective(update);
 		}
 	}
