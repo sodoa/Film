@@ -23,9 +23,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.xinfan.wxshop.business.entity.Film;
 import com.xinfan.wxshop.business.entity.Share;
 import com.xinfan.wxshop.business.entity.ShareImage;
 import com.xinfan.wxshop.business.model.JSONResult;
+import com.xinfan.wxshop.business.service.FilmService;
 import com.xinfan.wxshop.business.service.ShareService;
 import com.xinfan.wxshop.business.util.FilePathHelper;
 import com.xinfan.wxshop.common.base.DataMap;
@@ -39,6 +41,9 @@ public class ShareAction {
 
 	@Autowired
 	private ShareService ShareService;
+	
+	@Autowired
+	private FilmService FilmService;
 
 	@RequestMapping("/list.jspx")
 	public ModelAndView list(HttpServletRequest request) {
@@ -61,7 +66,6 @@ public class ShareAction {
 
 	@RequestMapping("/save-update.jspx")
 	public String saveUpdate(HttpServletRequest request, Share pojo) {
-		JSONResult result = new JSONResult();
 		try {
 
 			ShareService.updateShare(pojo);
@@ -103,8 +107,12 @@ public class ShareAction {
 	@RequestMapping("/add-save.jspx")
 	public ModelAndView addsave(HttpServletRequest request, Share pojo) {
 		try {
-			ShareService.insertShare(pojo);
-
+			
+			Film film = FilmService.getFilm(pojo.getFilmid());
+			if(film!=null){
+				pojo.setHeadimg(film.getPicture());
+				ShareService.insertShare(pojo);
+			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
