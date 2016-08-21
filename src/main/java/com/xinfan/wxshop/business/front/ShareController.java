@@ -41,31 +41,39 @@ public class ShareController extends BaseController {
 		mv.addObject("random", new Date().getTime());
 		
 		String wxsid = request.getParameter("wxsid");
+		String filmId = "";
+		
 		if(StringUtils.isNotBlank(wxsid) ){
 			mv.addObject("wxsid", wxsid);
+			mv.addObject("filmId", filmId);
 		}else{
 			LoginSession sessionMap = LoginSessionUtils.getCustomerUserSessionMap();
 			if (sessionMap == null) {
 				mv = new ModelAndView("redirect:/movie/login.jspx?type=2");
 			}
-			
 		}
-			
 		return mv;
-		
 	}
+	
+	@RequestMapping("/visit.jspx")
+	public ModelAndView visit(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("/front/visit");
+		mv.addObject("random", new Date().getTime());
+		
+		String wxsid = request.getParameter("wxsid");
+		String filmId = request.getParameter("filmid");
+		
+		return mv;
+	}	
 	
 	@RequestMapping("/image.html")
 	public void distriImage(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			Integer customerId;
-			
 			String wxsid = request.getParameter("wxsid");
-			if(StringUtils.isNotBlank(wxsid) ){
-				customerId = Integer.valueOf(wxsid);
-			}else{
-				customerId = LoginSessionUtils.getCustomerIdFromUserSessionMap();
-			}
+			String filmid = request.getParameter("filmid");
+			
+			Integer customerId = Integer.valueOf(wxsid);
+		
 			logger.debug(customerId + "");
 			byte[] images = WxQrcodeUtils.getQrcode(request, customerId);
 			response.getOutputStream().write(images);

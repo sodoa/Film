@@ -191,10 +191,7 @@ public class WeixinController extends WeixinControllerSupport {
 				log.debug("subscribe from wxId:" + wxId);
 				
 				WxNotifyUtils.customerShareJoinNotify(customer.getWxId(), newcustomer.getDisplayname(), customer.getExpirydate());
-				
 			}
-			
-			
 			
 			return new TextMsg(ConfigUtils.getValue("subscribe","欢迎关注！"));
 		}

@@ -80,7 +80,6 @@ public class WxQrcodeUtils {
 		}
 
 		return null;
-
 	}
 
 	public static byte[] download(String urlString, String filename, String savePath) {

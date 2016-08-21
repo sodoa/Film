@@ -181,6 +181,9 @@ public class PushMovieAction {
 	@RequestMapping("/movie/list.jspx")
 	public ModelAndView movielist(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("/admin/pushmovie/movielist");
+		
+		mv.addObject("push_id",request.getParameter("push_id"));
+		
 		return mv;
 	}
 	
