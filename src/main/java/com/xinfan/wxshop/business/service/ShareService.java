@@ -90,6 +90,8 @@ public class ShareService {
 	public Share randomShare() {
 		List<Share> list = ShareDao.listOnlineShare();
 		
+		
+		
 		if(list.size()>0){
 			int index = new Random().nextInt(list.size());
 			return list.get(index);
