@@ -34,22 +34,23 @@
 	<div style="height: 100%">
 		<div style="padding: 10px;" class="desc">点击右上角，将本页面分享到朋友圈吧！</div>
 		<div style="width:100%;">
-			<img src="${pageContext.request.contextPath}/image.jspx?i=/temp/g/1469279534276/tb/1469279579537.jpg" width="49%" style="visibility: visible !important; height: auto !important;">
-			<img id="example2" class="example-image" width="49%" height="90%" src="${pageContext.request.contextPath}/share/image.html?t=${random}&wxsid=${wxsid}">
+			<div>点击右上角分享，如有好友加入可获得免费看电影一个月时间</div>
+			<c:forEach var="item" items="${list}">
+				<img src="${pageContext.request.contextPath}/image.jspx?i=imageurl" width="99%" style="visibility: visible !important; height: auto !important;">
+			</c:forEach>
 		</div>
-		<div style="padding: 10px;" class="desc">通过扫描上方的“我的二维码”，赶快让朋友们注册“爆品电影”，享受优质影片同时，轻松赚取免费电影时间吧！</div>
 	</div>
 	<div id="tt"></div>
 </div>
 
 	<script type="text/javascript">
-		var title = '爆品电影！分享电影啦！在线影片，最新大片，在这里看电影真的很方便！朋友们，快点关注看电影！'	;
-		var imgUrl = 'http://'+window.location.host+":"+window.location.port+"/film/theme/images/icon.png";
+		var title = '${share.title}'	;
+		var imgUrl = 'http://'+window.location.host+":"+window.location.port+"/${pageContext.request.contextPath}/image.jspx?i=${share.headimg}";
 		
 		if (wx != null) {
 			$.ajax({
 				type : "POST",
-				url : "/film/share/sign.html?t="+new Date().getTime() + "&filmid=" +'${filmid}',
+				url : "/film/share/sign.html?t="+new Date().getTime() + "&filmid=" +'${share.filmid}'+"&shareid=${share.shareid}",
 				data : {
 					"url" : GetClearUrlPath()
 				},
@@ -109,6 +110,7 @@
 			    link: link, // 分享链接
 			    imgUrl: imgUrl, // 分享图标
 			    success: function () { 
+			    	updateCount(shareid);
 			    	alert('分享成功');
 			    },
 			    cancel: function () { 
@@ -130,6 +132,7 @@
 			    type: 'link', // 分享类型,music、video或link，不填默认为link
 			    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
 			    success: function () { 
+			    	updateCount(shareid);
 			    	alert('分享成功');
 			    },
 			    cancel: function () { 
@@ -149,6 +152,7 @@
 			    link: link, // 分享链接
 			    imgUrl: imgUrl, // 分享图标
 			    success: function () { 
+			    	updateCount(shareid);
 			    	alert('分享成功');
 			    },
 			    cancel: function () { 
@@ -157,12 +161,32 @@
 			};
 		}
 		
-	
+		function updateCount(refid){
+			$.ajax({
+				type : "POST",
+				url : "./sharecount.jspx?t="+new Date().getTime() + "&refid=" +refid,
+				dataType : "json"
+			});
+		}
 	</script>
 </c:if>
 
 <c:if test="${from==2}">
-
+<div class="scroll-content">
+	<div style="height: 100%">
+		<div style="width:100%;">
+			<div>长按二维码关注微信公众号后进行观看</div>
+			<img id="example2" class="example-image" width="100%" height="90%" src="${pageContext.request.contextPath}/share/image.html?t=${random}&refid=${refid}">
+			<div style="padding: 10px;border: 1px solid #eee;">
+				${share.description}
+			</div>
+			<c:forEach var="item" items="${list}">
+				<img src="${pageContext.request.contextPath}/image.jspx?i=imageurl" width="99%" style="visibility: visible !important; height: auto !important;">
+			</c:forEach>
+		</div>
+	</div>
+	<div id="tt"></div>
+</div>
 
 </c:if>
  
