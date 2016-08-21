@@ -10,8 +10,10 @@ import com.xinfan.wxshop.business.constants.SequenceConstants;
 import com.xinfan.wxshop.business.dao.SequenceDao;
 import com.xinfan.wxshop.business.dao.ShareDao;
 import com.xinfan.wxshop.business.dao.ShareImageDao;
+import com.xinfan.wxshop.business.dao.ShareRefDao;
 import com.xinfan.wxshop.business.entity.Share;
 import com.xinfan.wxshop.business.entity.ShareImage;
+import com.xinfan.wxshop.business.entity.ShareRef;
 
 public class ShareService {
 
@@ -20,6 +22,9 @@ public class ShareService {
 
 	@Autowired
 	private ShareImageDao ShareImageDao;
+	
+	@Autowired
+	private ShareRefDao ShareRefDao;
 
 	@Autowired
 	private SequenceDao sequenceDao;
@@ -56,6 +61,19 @@ public class ShareService {
 	
 	public void updateShare(Share pojo) {
 		ShareDao.updateByPrimaryKeySelective(pojo);
+	}
+	
+	public void updateShareCount(int refId) {
+		
+		ShareRef ref = ShareRefDao.selectByPrimaryKey(refId);
+		
+		Share share = this.ShareDao.selectByPrimaryKey(ref.getShareid());
+		
+		Share updateShare  = new Share();
+		updateShare.setShareid(ref.getShareid());
+		updateShare.setSmnt(share.getSmnt()+1);
+		
+		ShareDao.updateByPrimaryKeySelective(updateShare);
 	}
 	
 	public void deleteShareImage(Integer id) {

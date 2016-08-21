@@ -37,12 +37,12 @@ import com.xinfan.wxshop.common.util.JSONUtils;
 @Controller
 @RequestMapping("/share")
 public class ShareController extends BaseController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(ShareController.class);
-	
+
 	@Autowired
 	private ShareRefService ShareRefService;
-	
+
 	@Autowired
 	private ShareService ShareService;
 
@@ -50,56 +50,56 @@ public class ShareController extends BaseController {
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("/front/share");
 		mv.addObject("random", new Date().getTime());
-		
+
 		String refid = request.getParameter("refid");
-		
+
 		if (refid == null || refid.trim().length() == 0 || "null".equals(refid)) {
-			
+
 			LoginSession sessionMap = LoginSessionUtils.getCustomerUserSessionMap();
 			if (sessionMap == null) {
 				mv = new ModelAndView("redirect:/movie/login.jspx?type=2");
 				return mv;
 			}
-			
-			Integer customerId= LoginSessionUtils.getCustomerIdFromUserSessionMap();
-			
+
+			Integer customerId = LoginSessionUtils.getCustomerIdFromUserSessionMap();
+
 			Share share = this.ShareService.randomShare();
 			List shareImages = this.ShareService.listImageShare(share.getShareid());
-			
-			mv.addObject("customerId",customerId);
+
+			mv.addObject("customerId", customerId);
 			mv.addObject("filmId", share.getFilmid());
 			mv.addObject("from", "1");
-			mv.addObject("list",shareImages);
+			mv.addObject("list", shareImages);
 			mv.addObject("share", share);
-			
+
 			return mv;
-			
+
 		} else {
 			ShareRef ref = ShareRefService.get(Integer.parseInt(refid));
 			if (ref != null) {
 				Share share = ShareService.getShare(ref.getShareid());
 				List shareImages = this.ShareService.listImageShare(share.getShareid());
-				
-				mv.addObject("list",shareImages);
+
+				mv.addObject("list", shareImages);
 				mv.addObject("share", share);
 				mv.addObject("ref", ref);
 				mv.addObject("refid", ref.getRefid());
 				mv.addObject("from", "2");
 				return mv;
 			}
-			
+
 			return this.toError("影片不存在！");
 		}
-		
+
 	}
-	
+
 	@RequestMapping("/image.html")
 	public void distriImage(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			String refidStr = request.getParameter("refid");
 			Integer refid = Integer.valueOf(refidStr);
-		
-			logger.debug("image refid : "+refid + "");
+
+			logger.debug("image refid : " + refid + "");
 			byte[] images = WxQrcodeUtils.getQrcode(request, refid);
 			response.getOutputStream().write(images);
 
@@ -110,35 +110,34 @@ public class ShareController extends BaseController {
 
 	@RequestMapping("/sign.html")
 	public @ResponseBody
-	JSONResult shareSign(HttpServletRequest request,
-			HttpServletResponse response) {
+	JSONResult shareSign(HttpServletRequest request, HttpServletResponse response) {
 
 		String appid = FileConfig.getInstance().getString("weixin.appid");
 
 		String ticket_token = WeiXinSessionManager.getTicketToken();
 
 		if (ticket_token != null) {
-			
+
 			String filmid = request.getParameter("filmid");
 			String shareid = request.getParameter("shareid");
 			Integer customerId = LoginSessionUtils.getCustomerIdFromUserSessionMap();
-			
+
 			ShareRef ref = new ShareRef();
 			ref.setCustomerid(customerId);
 			ref.setFilmid(Integer.parseInt(filmid));
 			ref.setShareid(Integer.parseInt(shareid));
-			
+
 			int shareRefId = ShareRefService.insert(ref);
 
 			String url = request.getParameter("url");
-			
+
 			logger.debug("share_sign sign url : " + url);
-			
-			//url = URLEncoder.encode(url);
+
+			// url = URLEncoder.encode(url);
 
 			Map<String, String> ret = WeiXinShareSign.sign(ticket_token, url);
 			logger.debug("share_sign sign data : " + JSONUtils.toJSONString(ret));
-			
+
 			ret.put("refid", String.valueOf(shareRefId));
 			ret.put("appId", appid);
 
@@ -148,6 +147,16 @@ public class ShareController extends BaseController {
 			logger.error("ticket_token is null");
 			return JSONResult.error("ticket_token is null");
 		}
-		
+
+	}
+
+	@RequestMapping("/sharecount.jspx")
+	public void sharecount(HttpServletRequest request, HttpServletResponse response) {
+
+		String refid = request.getParameter("refid");
+		if (refid != null && refid.trim().length() > 0) {
+			this.ShareService.updateShareCount(Integer.parseInt(refid));
+		}
+
 	}
 }
