@@ -35,7 +35,7 @@
 	<div style="height: 100%">
 		<div style="padding: 10px;" class="desc">点击右上角，将本页面分享到朋友圈吧！</div>
 		<div style="width:100%;">
-			<div style="font-size:18px;">点击右上角分享，<b>如有好友加入可获得免费获得观影时间</b></div>
+			<div  class="desc">如有好友加入可获得免费获得观影时间</div>
 			<c:forEach var="item" items="${list}">
 				<img src="${pageContext.request.contextPath}/image.jspx?i=${item.imageurl}" width="99%" style="visibility: visible !important; height: auto !important;">
 			</c:forEach>
@@ -48,8 +48,9 @@
 	<script type="text/javascript">
 		var title = '${share.title}'	;
 		var desc = '${share.description}';
-		var imgUrl = 'http://'+window.location.host+":"+window.location.port+"/${pageContext.request.contextPath}/image.jspx?i=${share.headimg}";
+		var imgUrl = 'http://'+window.location.host+"${pageContext.request.contextPath}/image.jspx?i=${share.headimg}";
 		
+		alert(imgUrl);
 		
 		if (wx != null) {
 			
