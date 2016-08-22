@@ -87,6 +87,7 @@ public class MovieController extends BaseController{
 						logger.debug("########## see film url" +film.getUrl());
 						mv.setViewName("/front/movie");
 						mv.addObject("film", film);
+						mv.addObject("expiryDate", expiryDate);
 						return mv;
 					}
 				}
