@@ -17,8 +17,9 @@
 <body style="font-family: 微软雅黑;">
 <div style="min-height:350px;max-width:650px;float:0 auto; MARGIN-RIGHT: auto; MARGIN-LEFT: auto; ">
 <h3 style="text-align: center;" >爆品电影，精挑细选 ，周周更新</h3>
+<h5 style="text-align: center;" >您的VIP过期时间是：<sp:dateformat time="${expiryDate}" format="yyyy-MM-dd"/></h5>
 
-  <video src="${film.url}" width="100%" height="256" controls preload></video> 
+<video src="${film.url}" width="100%" height="256" controls preload></video> 
 
 <p style="text-align: center;">${film.name}</p>
 <section style="text-align: center;">

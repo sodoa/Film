@@ -10,7 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>分享电影啦！在线影片，最新大片，在这里看电影真的很方便！朋友们，快点关注看电影！</title>
 <meta name="keywords" content="电影,爆品电影" />
-<meta name="description" content="我一直在这里看电影，最新大片，在线影片，真的很喜欢，朋友们快来看吧!扫描二维码就可以一起看了" />
+<meta name="description" content="${share.description}" />
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/jslib/uiadmin/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jslib/uiadmin/lib/layer/1.9.3/layer.js"></script>
@@ -35,13 +35,11 @@
 	<div style="height: 100%">
 		<div style="padding: 10px;" class="desc">点击右上角，将本页面分享到朋友圈吧！</div>
 		<div style="width:100%;">
-			<div style="font-size: 26px;">点击右上角分享，如有好友加入可获得免费看电影一个月时间						"filmid" : '${share.filmid}',
-					"shareid": '${share.shareid}'</div>
+			<div style="font-size:18px;">点击右上角分享，<b>如有好友加入可获得免费获得观影时间</b></div>
 			<c:forEach var="item" items="${list}">
 				<img src="${pageContext.request.contextPath}/image.jspx?i=${item.imageurl}" width="99%" style="visibility: visible !important; height: auto !important;">
 			</c:forEach>
 		</div>
-		
 	
 	</div>
 	<div id="tt"></div>
@@ -49,16 +47,12 @@
 
 	<script type="text/javascript">
 		var title = '${share.title}'	;
-		alert(title);
+		var desc = '${share.description}';
 		var imgUrl = 'http://'+window.location.host+":"+window.location.port+"/${pageContext.request.contextPath}/image.jspx?i=${share.headimg}";
-		alert(imgUrl);
 		
-		$(function(){
-				alert(wx);
+		
 		if (wx != null) {
 			
-				alert('${share.filmid}--${share.shareid}');
-				window.title = '${share.filmid}--${share.shareid}';
 			$.ajax({
 				type : "get",
 				url : "/film/share/sign.html?t="+new Date().getTime(),
@@ -101,7 +95,7 @@
 					}
 				}
 			});
-		}});
+		};
 		
 		function onShareListner(wxsid){
 
@@ -139,7 +133,7 @@
 			
 			return {
 			    title: title, // 分享标题
-			    desc: title, // 分享描述
+			    desc: desc, // 分享描述
 			    link: link, // 分享链接
 			    imgUrl: imgUrl, // 分享图标
 			    type: 'link', // 分享类型,music、video或link，不填默认为link
@@ -161,7 +155,7 @@
 			
 			return {
 			    title: title, // 分享标题
-			    desc: title, // 分享描述
+			    desc: desc, // 分享描述
 			    link: link, // 分享链接
 			    imgUrl: imgUrl, // 分享图标
 			    success: function () { 
@@ -194,7 +188,7 @@
 				${share.description}
 			</div>
 			<c:forEach var="item" items="${list}">
-				<img src="${pageContext.request.contextPath}/image.jspx?i=imageurl" width="99%" style="visibility: visible !important; height: auto !important;">
+				<img src="${pageContext.request.contextPath}/image.jspx?i=${item.imageurl}" width="99%" style="visibility: visible !important; height: auto !important;">
 			</c:forEach>
 		</div>
 	</div>
