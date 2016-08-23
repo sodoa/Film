@@ -168,50 +168,7 @@ public class WeixinController extends WeixinControllerSupport {
 
 		if (event instanceof QrCodeEvent) {
 			QrCodeEvent qrevent = (QrCodeEvent) event;
-
-			int refId = WeixinUtils.getScanEventFromId(qrevent.getEventKey());
-
-			ShareRef shareRef = ShareRefService.get(refId);
-
-			if (shareRef != null) {
-
-				log.debug("subscribe from refId:" + refId);
-				CustomerService.updateRewardData(shareRef.getCustomerid());
-				Customer customer = CustomerService.getById(shareRef.getCustomerid());
-
-				String wxId = qrevent.getFromUserName();
-				Customer newcustomer = CustomerService.getByWeixinId(wxId);
-				if (null == newcustomer) {
-					if (null == config) {
-						config = new ApiConfig(FileConfig.getInstance().getString("weixin.appid"), FileConfig.getInstance().getString("weixin.appsecret"));
-					}
-
-					UserAPI userAPI = new UserAPI(config);
-					GetUserInfoResponse userInfo = userAPI.getUserInfo(wxId);
-
-					String account = "";
-					String password = "12345678";
-					String displayName = userInfo.getNickname();
-
-					newcustomer = CustomerService.regist(account, password, displayName, userInfo.getOpenid(), String.valueOf(userInfo.getSex()),
-							shareRef.getCustomerid());
-				}
-				log.debug("subscribe from wxId:" + wxId);
-
-				WxNotifyUtils.customerShareJoinNotify(customer.getWxId(), newcustomer.getDisplayname(), customer.getExpirydate());
-
-				Film movie = FilmService.getFilm(shareRef.getFilmid());
-				if (movie != null) {
-					String domain = FileConfig.getInstance().getString("domain.name");
-					List articles = new ArrayList();
-					Article article = new Article();
-					article.setTitle(movie.getName());
-					article.setPicUrl(domain + "/image.jspx?i=" + StringUtils.replace(movie.getPicture(), "\\", "/"));
-					article.setUrl(domain + "/movie/see.jspx?fid=" + movie.getFilmId());
-					articles.add(article);
-					return new NewsMsg(articles);
-				}
-			}
+			return subscrEvent(qrevent.getEventKey(),qrevent.getFromUserName());
 		}
 
 		return new TextMsg(ConfigUtils.getValue("subscribe", "欢迎关注！"));
@@ -222,20 +179,22 @@ public class WeixinController extends WeixinControllerSupport {
 
 	@Override
 	protected BaseMsg handleScanCodeEvent(ScanCodeEvent qrevent) {
+		return subscrEvent(qrevent.getEventKey(),qrevent.getFromUserName());
+	}
+	
+	private BaseMsg subscrEvent(String eventKey,String fromuserName){
 
-		log.debug("ScanCodeEvent event :" + qrevent.getMsgType() + ",json :" + qrevent.toString());
-
-		int refId = WeixinUtils.getScanEventFromId(qrevent.getEventKey());
+		int refId = WeixinUtils.getScanEventFromId(eventKey);
 
 		ShareRef shareRef = ShareRefService.get(refId);
 
 		if (shareRef != null) {
 
 			log.debug("subscribe from refId:" + refId);
-			CustomerService.updateRewardData(shareRef.getCustomerid());
+			
 			Customer customer = CustomerService.getById(shareRef.getCustomerid());
 
-			String wxId = qrevent.getFromUserName();
+			String wxId = fromuserName;
 			Customer newcustomer = CustomerService.getByWeixinId(wxId);
 			if (null == newcustomer) {
 				if (null == config) {
@@ -251,10 +210,12 @@ public class WeixinController extends WeixinControllerSupport {
 
 				newcustomer = CustomerService.regist(account, password, displayName, userInfo.getOpenid(), String.valueOf(userInfo.getSex()),
 						shareRef.getCustomerid());
+				CustomerService.updateRewardData(shareRef.getCustomerid());
+				WxNotifyUtils.customerShareJoinNotify(customer.getWxId(), newcustomer.getDisplayname(), customer.getExpirydate());
 			}
 			log.debug("subscribe from wxId:" + wxId);
 
-			WxNotifyUtils.customerShareJoinNotify(customer.getWxId(), newcustomer.getDisplayname(), customer.getExpirydate());
+		
 
 			Film movie = FilmService.getFilm(shareRef.getFilmid());
 			if (movie != null) {
@@ -297,8 +258,8 @@ public class WeixinController extends WeixinControllerSupport {
 	 * 用户已关注时扫描
 	 */
 	@Override
-	protected BaseMsg handleQrCodeEvent(QrCodeEvent event) {
-		return new TextMsg(ConfigUtils.getValue("subscribe", "欢迎关注！"));
+	protected BaseMsg handleQrCodeEvent(QrCodeEvent qrevent) {
+		return subscrEvent(qrevent.getEventKey(),qrevent.getFromUserName());
 	}
 
 }
