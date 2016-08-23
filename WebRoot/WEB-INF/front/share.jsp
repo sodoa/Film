@@ -48,9 +48,9 @@
 	<script type="text/javascript">
 		var title = '${share.title}'	;
 		var desc = '${share.description}';
-		var imgUrl = 'http://'+window.location.host+"${pageContext.request.contextPath}/image.jspx?i=${share.headimg}";
+		var imgUrl = 'http://'+window.location.host+"${pageContext.request.contextPath}/theme/images/icon.png";
 		
-		alert(imgUrl);
+		//alert(imgUrl);
 		
 		if (wx != null) {
 			
